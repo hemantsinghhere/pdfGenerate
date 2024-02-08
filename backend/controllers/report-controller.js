@@ -21,13 +21,11 @@ const submitBug = async (req, res, next) => {
         // Create a new BugReport document and save it to the database
         const bugReport = new BugReport(bugReportData);
         await bugReport.save();
-
         res.json({ message: 'Bug report submitted successfully.' });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-
 }
 
 const generatePdf = async (req, res, next) => {
@@ -54,8 +52,33 @@ const generatePdf = async (req, res, next) => {
         });
 
 
-        const tableContent = await Promise.all(bugReports.map(async (report, index) => {
-            return `
+        // Create HTML template with dynamic table of contents
+        const html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Report</title>
+                <style>
+                    /* CSS for table of contents */
+                </style>
+            </head>
+            <body>
+                <h1>Report Title</h1>
+                <h2>Table of Contents</h2>
+                <ol>
+                    ${bugReports.map(section => `<li><a>${section.Status}</a>
+                        <ol>
+                            ${bugReports.map(item => `<li><a>${item.Status}</a></li>`).join('')}
+                        </ol>
+                    </li>`).join('')}
+                </ol>
+                
+                </body>
+            </html>
+        `;
+
+
+        const tableContent =  `
             <ol>
             <li>Executive Summary</li>
             <ul type="none" >
@@ -107,7 +130,7 @@ const generatePdf = async (req, res, next) => {
             <li>Copyright Notice</li>
         </ol>
       `;
-        }));
+        
 
         const chartData = {
             labels: ['Low', 'Medium', 'High'], // Adjust based on your data categories
@@ -153,11 +176,13 @@ const generatePdf = async (req, res, next) => {
         }));
 
         content +=
-            `<table>
+            `${html}
+            <table>
                 <tbody>
                     ${tableContent}
                 </tbody>
             </table>
+            
             <div>
                 <canvas id="myChart"></canvas>
             </div>

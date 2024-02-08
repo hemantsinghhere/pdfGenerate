@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", bugReport );
 router.post("/submitReport", submitBug);
 router.get("/generatedPdf", generatePdf)
-router.put("/updae/:id", updateBug);
+router.put("/update/:id", updateBug);
 router.get("/:id", getBugById);
 
 
