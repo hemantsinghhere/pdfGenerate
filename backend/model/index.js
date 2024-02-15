@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const schema = mongoose.Schema;
 
+const imageSchema = new schema({
+    data: Buffer,
+    contentType: String
+});
+
 const bugReportSchema = new schema({
     Status: String,
     Severity: String,

@@ -41,9 +41,23 @@ const generatePdf = async (req, res, next) => {
         const latexContent = `
             \\documentclass{article}
             \\usepackage{enumitem}
+            \\usepackage{roboto}
+            \\linespread{1.5}
+            \\usepackage{xcolor}
+            \\usepackage{geometry} 
+
+      
+            \\geometry{
+                left=2.5cm,
+                right=2.5cm,
+                top=3cm,
+                bottom=3cm,
+            }
+
             \\begin{document}
             \\title{Bug Report Summary}
             \\maketitle
+            
             
             \\tableofcontents
             
@@ -64,18 +78,19 @@ const generatePdf = async (req, res, next) => {
             
             \\section{Technical Reports}
             ${bugReports.map((report, index) => `
+                \\newpage
                 \\subsection{Bug ${index + 1}}
-                \\begin{itemize}[noitemsep]
-                    \\item Status: ${report.Status}
-                    \\item Severity: ${report.Severity}
-                    \\item OWASP Category: ${report.OWASP_Category}
-                    \\item CVSS Score: ${report.CVSS_Score}
-                    \\item Affected Hosts/URLs: 
-                    \\item Summary: ${report.Summary}
-                    \\item proof od concept: ${report.Proof_of_concept}
-                    \\item Reference: ${report.Proof_of_concept}
-                \\end{itemize}`).join('\n')}
-            
+                \\begin{description}
+                    \\item \\large \\textbf{\\textcolor{black} Status:} ${report.Status}
+                    \\item \\large \\textbf{Severity: \\textcolor{blue}{${report.Severity}}}
+                    \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
+                    \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score}
+                    \\item \\large \\textbf{Affected Hosts/URLs:} \\\\ ${report.Affected_Hosts}
+                    \\item \\large \\textbf{Summary:} \\\\${report.Summary}
+                    \\item \\large \\textbf{proof of concept:} \\\\${report.Proof_of_concept}
+                    \\item \\large \\textbf{Remediation:} \\\\${report.Remediation}
+                    \\item Reference: 
+                \\end{description}`).join('\n')}
             \\end{document}
         `;
 
