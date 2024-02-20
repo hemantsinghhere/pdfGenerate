@@ -1,13 +1,12 @@
 const express = require('express');
 const multer = require('multer');
 
+const { bugReport, generatePdf, updateBug, getBugById } = require("../controllers/report-controller");
+const { submitBug } = require("../controllers/report-controller");
+
 // set multer storage
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage})
-
-const { bugReport, generatePdf, updateBug, getBugById } = require("../controllers/report-controller");
-const { submitBug } = require("../controllers/report-controller");
- 
 
 const router = express.Router();
 

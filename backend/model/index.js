@@ -8,15 +8,25 @@ const imageSchema = new schema({
 });
 
 const bugReportSchema = new schema({
+    Title: String,
     Status: String,
     Severity: String,
     OWASP_Category: String,
-    CVSS_Score: Number,
+    CVSS_Score: {
+        
+            type: mongoose.Decimal128,
+            validate: {
+              validator: (score) => score >= 0 && score <= 10,
+              message: "CVSS_Score must be between 0 and 10"
+            }
+          
+    },
     Affected_Hosts : String,
     Summary : String,
-    Proof_of_concept: String,
+    Proof_of_concept: [imageSchema],
     Remediation : String,
-    Reference: String,
+    Ref: String,
+    Remediation_effort: String,
 });
 
 
