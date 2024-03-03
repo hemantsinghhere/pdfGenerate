@@ -13,7 +13,6 @@ const bugReportSchema = new schema({
     Severity: String,
     OWASP_Category: String,
     CVSS_Score: {
-        
             type: mongoose.Decimal128,
             validate: {
               validator: (score) => score >= 0 && score <= 10,
@@ -23,8 +22,9 @@ const bugReportSchema = new schema({
     },
     Affected_Hosts : String,
     Summary : String,
-    Proof_of_concept: [imageSchema],
+    Proof_of_concept: imageSchema,
     Remediation : String,
+    Links: String,
     Ref: String,
     Remediation_effort: String,
 });

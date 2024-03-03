@@ -1,27 +1,14 @@
-\contentsline {section}{\numberline {1}\large Executive Summary}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1} \large Strategic Recommendation }{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}\large Scope of Work}{3}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}\large Summary of Findings}{3}{subsection.1.3}%
-\contentsline {section}{\numberline {2}\large CVSS: Score Vulnerabilities}{5}{section.2}%
-\contentsline {subsection}{\numberline {2.1}\large How to use this report}{6}{subsection.2.1}%
-\contentsline {section}{\numberline {3}\large Findings Overview}{9}{section.3}%
-\contentsline {section}{\numberline {4}\large Technical Reports}{11}{section.4}%
-\contentsline {subsection}{\numberline {4.1}\large Application Does Not Implement HSTS Best Practices }{13}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}\large Inadequate, Inconsistent or Missing Cookie Attributes }{15}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}\large Missing Content Security Policy Header }{17}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}\large Application Displays Web Server Banner }{19}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}\large Misconfigured Content Security Policy }{21}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}\large Application does not have a strong password policy }{23}{subsection.4.6}%
-\contentsline {subsection}{\numberline {4.7}\large Application is Vulnerable to Clickjacking }{25}{subsection.4.7}%
-\contentsline {subsection}{\numberline {4.8}\large Application is vulnerable to Improper Session Management }{27}{subsection.4.8}%
-\contentsline {subsection}{\numberline {4.9}\large Application is vulnerable to Session Fixation Attack. }{29}{subsection.4.9}%
-\contentsline {subsection}{\numberline {4.10}\large Application is vulnerable to Session Hijacking }{31}{subsection.4.10}%
-\contentsline {subsection}{\numberline {4.11}\large HTTP Methods enabled on server(HEAD, PUT, DELETE, TRACE, TRACK, OPTIONS, DEBUG, PROPFIND) }{33}{subsection.4.11}%
-\contentsline {subsection}{\numberline {4.12}\large Reset Password Link not expire }{35}{subsection.4.12}%
-\contentsline {subsection}{\numberline {4.13}\large Response modification }{37}{subsection.4.13}%
-\contentsline {subsection}{\numberline {4.14}\large Jquery version disclose }{39}{subsection.4.14}%
-\contentsline {subsection}{\numberline {4.15}\large Session logout add member }{41}{subsection.4.15}%
-\contentsline {subsection}{\numberline {4.16}\large Simultaneous login }{43}{subsection.4.16}%
-\contentsline {subsection}{\numberline {4.17}\large Time based sql injection in remove user }{45}{subsection.4.17}%
-\contentsline {subsection}{\numberline {4.18}\large User id and password in clear text }{47}{subsection.4.18}%
-\contentsline {subsection}{\numberline {4.19}\large Email Spoofing Mail Server Misconfiguration }{49}{subsection.4.19}%
+\contentsline {section}{\numberline {1}Executive Summary}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}\large Strategic Recommendation }{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}\large Scope of Work}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}\large Summary of Findings}{2}{subsection.1.3}%
+\contentsline {section}{\numberline {2}\large CVSS: Score Vulnerabilities}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}\large How to use this report}{5}{subsection.2.1}%
+\contentsline {section}{\numberline {3}\large Findings Overview}{7}{section.3}%
+\contentsline {section}{\numberline {4}\large Technical Reports}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}\large Application Does Not Implement HSTS Best Practices}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}\large Inadequate, Inconsistent or Missing Cookie Attributes}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}\large Missing Content Security Policy Header}{13}{subsection.4.3}%
+\contentsline {section}{\numberline {5}\large Annexures}{15}{section.5}%
+\contentsline {subsection}{\numberline {5.1}\large OWASP TOP 10:2021}{15}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}\large Tools Used}{16}{subsection.5.2}%
