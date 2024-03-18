@@ -48,7 +48,7 @@ const submitBug = async (req, res, next) => {
 
 
 const generatePdf = async (req, res, next) => {
-    try {
+    
         const bugReports = await BugReport.find({});
 
         let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
@@ -83,17 +83,17 @@ const generatePdf = async (req, res, next) => {
             \\hline
             \\textbf{Finding Name} & \\textbf{Remediation Effort}  \\\\
             \\hline
-            \\normalsize \\textbf{Critical Severity Findings} & \\\\
+            \\normalsize \\textcolor{red!100}{\\textbf{Critical Severity Findings}} & \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue}{\\textbf{High Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{orange}{\\textbf{High Severity Findings}}} \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue}{\\textbf{Medium Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{yellow}{\\textbf{Medium Severity Findings}}} \\\\
             \\hline
             \\normalsize \\textbf{Reflected Cross Site Scripting (XSS) } & {Quick}\\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue}{\\textbf{Low Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{green}{\\textbf{Low Severity Findings}}} \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue}{\\textbf{Informational Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue!70}{\\textbf{Informational Findings}}} \\\\
             \\hline
             `;
 
@@ -121,15 +121,26 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{hyperref}
             \\usepackage{fancyhdr}
             \\usepackage{lastpage}
+            \\usepackage{tcolorbox}
             \\usepackage{tikz}
+            \\usepackage{background}
             \\usetikzlibrary{calc}
             \\usetikzlibrary{fadings}
+            \\usepackage{titletoc}
             \\usepackage{adjustbox}
             \\usepackage{subfigure}
-            \\usepackage{graphicx}
             \\usepackage{pagecolor}
+            \\usepackage{titletoc}
             \\usepackage[T1]{fontenc}
             \\usepackage[scaled]{uarial}
+            \\usetikzlibrary{pie, fit}
+            \\usepackage[calc,useregional]{datetime2}
+            \\usepackage{datetime}
+            \\usepackage{array}
+            \\usepackage{wheelchart}
+            \\usetikzlibrary{decorations.markings}
+            \\usepackage{siunitx}
+            \\usetikzlibrary{shapes.geometric, positioning}
             \\definecolor{darkgray}{RGB}{64,64,64}
             \\definecolor{tablecol}{RGB}{15, 117, 114}
             \\definecolor{tableco2}{RGB}{44, 163, 135}
@@ -147,19 +158,45 @@ const generatePdf = async (req, res, next) => {
             \\pagecolor{white}
             \\pagestyle{fancy}
             \\fancyhf{}
-            \\fancyhead[R]{\\large \\textbf{PSG | Penetration Testing Services}}
+            \\fancyheadoffset[R]{0cm}
+            \\fancyhead[R]{\\includegraphics[width=.18\\textwidth]{vapt.jpeg}}
             \\fancyfoot[R]{\\textbf{\\thepage}}
             \\fancyfoot[c]{ \\textbf{Company Confidential}} 
             \\fancyfoot[l]{ \\textbf{VAPTLabs Report}} 
             \\renewcommand{\\headrulewidth}{0pt}
+            \\renewcommand{\\footrule}{\\hspace{-2cm}\\makebox[\\dimexpr\\paperwidth\\relax]{\\rule{\\dimexpr\\paperwidth-1.5cm}{1.0pt}} }
             
+
+            
+            \\fancypagestyle{plain}{
+            \\fancyhf{} 
+            \\fancyhead{} 
+            \\renewcommand{\\headrulewidth}{0pt}
+            \\fancyfoot[R]{\\textbf{\\thepage}}
+            \\fancyfoot[c]{ \\textbf{Company Confidential}} 
+            \\fancyfoot[l]{ \\textbf{VAPTLabs Report}} 
+            }
+
+            \\thispagestyle{plain}
       
             \\geometry{
-                left=2.5cm,
-                right=2.5cm,
+                left=2.0cm,
+                right=2.0cm,
                 top=3cm,
                 bottom=3cm,
             }
+
+            \\backgroundsetup{
+                scale=1,
+                angle=0,
+                opacity=1,
+                color=black,
+                contents={
+                    \\begin{tikzpicture}[remember picture, overlay] 
+                    \\draw[line width=1pt] ($(current page.north west)+(0.3in, -0.3in)$) rectangle ($(current page.south east)+(-0.3in, 0.3in)$);
+                    \\end{tikzpicture}
+                    }
+                }
 
             \\pgfkeys{
                 /piechartthreed/.cd,
@@ -218,33 +255,70 @@ const generatePdf = async (req, res, next) => {
                         } 
                     \\end{scope}
                 \\end{scope}  
-                \\end{scope}
+            \\end{scope}
             }   
 
 
             \\makeatletter
             \\renewcommand{\\section}{\\@startsection{section}{1}{\\z@}%
-            {-3.5ex \\@plus -1ex \\@minus -.2ex}%
-            {2.3ex \\@plus.2ex}%
-            {\\normalfont\\normalsize\\bfseries\\color{sectioncolor}}}
+            {-1ex \\@plus -.1ex \\@minus -.01ex}%
+            {1.0ex \\@plus  .01ex}%
+            {\\normalfont\\large\\bfseries\\color{sectioncolor}}}
 
             
             \\renewcommand{\\subsection}{\\@startsection{subsection}{2}{\\z@}%
-            {-3.25ex\\@plus -1ex \\@minus -.2ex}%
-            {1.5ex \\@plus .2ex}%
+            {-.5ex\\@plus -.1ex \\@minus -.01ex}%
+            {1.0ex \\@plus .01ex}%
             {\\normalfont\\large\\color{subsectioncolor}}}
             \\makeatother
 
 
-            \\begin{document}
-            \\title{\\large Bug Report Summary}
-            \\maketitle
+            \\renewcommand{\\contentsname}{Table of Contents}
+            \\titlecontents{section}
+            [15pt] 
+            {} 
+            {\\contentslabel{2em}}
+            {} % numberless format
+            {\\titlerule*[0.5pc]{.}\\contentspage}
 
+            \\begin{document}
+
+
+            \\begin{minipage}{.3\\textwidth}
+            \\begin{center}
+            \\includegraphics[width=.8\\textwidth]{vapt.jpeg} 
+            \\end{center}
+            \\end{minipage}
+            \\begin{minipage}{.65\\textwidth}
+            \\huge MyGate Web Applications Security Assessment Report                
+            \\end{minipage}
+            \\vspace{80pt}
+
+            \\large MyGate Web App
+            \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\\textwidth,height=5pt]
+            \\end{tcolorbox}
+
+            \\begin{minipage}{.40\\textwidth}
+            \\textbf{REPORT PUBLISH DATE}
+            \\end{minipage}
+            \\begin{minipage}{.60\\textwidth}
+            \\textbf{
+            \\dayofweekname{\\day}{\\month}{\\year}
+            \\shortmonthname[\\month] 
+            \\the\\day \\
+            \\the\\year \\
+            \\currenttime~GMT+0000~(UTC)
+            }
+            \\end{minipage}
+
+
+            \\vfill
+            \\clearpage
+            \\title{\\large Bug Report Summary}
             
             \\tableofcontents
-
             \\newpage
-            \\section{Executive Summary}
+            \\section{\\large Executive Summary}
                 \\subsection{\\large Strategic Recommendation }
                 \\large It is recommended to fix all critical, high and medium vulnerabilities before releasing the application to
                     customer.
@@ -270,33 +344,65 @@ const generatePdf = async (req, res, next) => {
                 \\begin{minipage}{.50\\textwidth}
                 \\normalsize \\textbf{Vulnerability v/s Severity Pie Chart} 
                 \\end{minipage}
-                \\begin{minipage}{.50\\textwidth}
+                \\begin{minipage}{.40\\textwidth}
                 \\normalsize \\textbf{Vulnerability Summary}                
                 \\end{minipage}
 
+                \\vspace{20pt}
+                \\begin{minipage} {0.50\\textwidth}                     
                 
-
-                \\begin{minipage} {0.30\\textwidth}
-             
                 \\begin{tikzpicture}
-                \\piechartthreed[scale= 0.3, mix color= darkgray]{${low_per}*3.6/red, ${medium_per}*3.6/blue, ${critical_per}*3.6 /green, ${high_per}*3.6/purple, ${info_per}*3.6/darkgray}
-                \\foreach \\i in {1,...,5} { \\fill (pc \\i) circle (.5mm);}
-                \\draw[darkgray] (pc 1)  -- ++(3,0) coordinate (s1) node[anchor=south east] {\\colorbox{black!60}{\\textcolor{white}{Low}}} node[anchor=north east] {\\colorbox{black!60}{\\textcolor{white}{ ${low_per}\\%, ${lo}}} };
-                \\draw[darkgray] (pc 2)  -- ++(-3, 0) coordinate (s2)  node[anchor=south west] {Medium} node[anchor=north west] {${medium_per}\\% ,${med}}; 
-                \\draw[darkgray] (pc 3)  -- ++(-1.5,-2.5) coordinate (s3) -- ++(1,0) node[anchor=south west] {Critical} node[anchor=north west] {${critical_per}\\%,${cri}}; 
-                \\draw[darkgray] (pc 4)  -- ++(-2, -2) coordinate (s4) -- ++(-1,0) node[anchor=south west] {High} node[anchor=north west] {${high_per}\\%, ${hi}}; 
-                \\draw[darkgray] (pc 5)  -- ++(1,-1) coordinate (s5) -- ++(1,0) node[anchor=south west] {Info} node[anchor=north west] {${info_per}\\%, ${info}}; 
+                \\centering
+                \\pie[color={red, orange, yellow, green, black!10}, text=inside]{
+                    0/Critical,
+                    57/High,
+                    29/Medium,
+                    14/Low,
+                    0/Info
+                }
                 \\end{tikzpicture}
-                
-                \\end{minipage}
 
+                \\begin{minipage} {.02\\textwidth}
+                \\colorbox{red!100}{}
+                \\end{minipage}
+                \\begin{minipage} {.16\\textwidth}
+                Critical
+                \\end{minipage}
+                \\begin{minipage} {.02\\textwidth}
+                \\colorbox{orange}{}
+                \\end{minipage}
+                \\begin{minipage} {.12\\textwidth}
+                High
+                \\end{minipage}
+                \\begin{minipage} {.02\\textwidth}
+                \\colorbox{yellow}{}
+                \\end{minipage}
+                \\begin{minipage} {.16\\textwidth}
+                Medium
+                \\end{minipage}
+                \\begin{minipage} {.02\\textwidth}
+                \\colorbox{green!100}{}
+                \\end{minipage}
+                \\begin{minipage} {.14\\textwidth}
+                Low
+                \\end{minipage}
+                \\begin{minipage} {.02\\textwidth}
+                \\colorbox{black!10}{}
+                \\end{minipage}
+                \\begin{minipage} {.14\\textwidth}
+                Info
+                \\end{minipage}
                 
-                \\begin{minipage} {0.40\\textwidth}
-                \\begin{tabular}{|p{7em}|c|}
+                
+                
+
+                \\end{minipage}
+                \\begin{minipage}{.40\\textwidth}
+                \\begin{tabular}{|p{8em}|>{\\centering\\arraybackslash}p{5em}|}
                 \\hline
                 \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\textbf{Count} \\\\
                  \\hline
-                 \\normalsize Critical & \\normalsize \\cellcolor{red!100} ${cri} \\\\
+                 \\normalsize Critical &   \\normalsize \\cellcolor{red!100} ${cri}  \\\\
                  \\hline
                  \\normalsize High & \\normalsize \\cellcolor{orange} ${hi} \\\\
                  \\hline
@@ -309,16 +415,12 @@ const generatePdf = async (req, res, next) => {
                  \\normalsize Total & \\normalsize \\cellcolor{blue!30} ${total} \\\\
                  \\hline    
                 \\end{tabular}
-               
                 \\end{minipage}
-            
+
+
                 
-            \\begin{figure}
-            \\centering
+
                 
-            \\end{figure}    
-                
-            
 
             \\newpage
             \\section{\\large CVSS: Score Vulnerabilities}
@@ -357,7 +459,7 @@ const generatePdf = async (req, res, next) => {
 
             \\large As indicated above, the assessment of these characteristics results in a severity score which ranges
             from 1-10. This score can be further broken down into the following rating levels: \\\\
-
+            \\newpage
             \\begin{center}
                 \\begin{longtable} {|p{4.5em}|p{4.5em}|p{30em}|}
                 \\hline 
@@ -431,6 +533,7 @@ const generatePdf = async (req, res, next) => {
             \\large The appendix will contain information about the testing environment and further details gathered during testing that do not fit within the first three chapters. 
             This information is necessary to have a complete picture of the penetration test, but it is in the appendix to make accessing the testing results more userfriendly.
 
+
             \\newpage
             \\section{\\large Findings Overview}
             \\ \\  \\ The following table summarizes the list of findings discovered during the security assessment
@@ -458,15 +561,20 @@ const generatePdf = async (req, res, next) => {
             ${bugReports.map((report, index) => `
                 \\newpage
                 \\subsection{\\large ${report.Title}}
-                \\begin{description}
+                \\begin{description}[itemsep=2pt, leftmargin=0.4cm]
                     \\item \\large \\textbf{\\textcolor{black} Status:} ${report.Status}
                     \\item \\large \\textbf{Severity: \\textcolor{blue}{${report.Severity}}}
                     \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
                     \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score} 
-                    \\item \\large \\textbf{Affected Hosts/URLs:} \\\\ \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
-                    \\item \\large \\textbf{Summary:} \\\\${report.Summary}
-                    \\item \\large \\textbf{proof of concept: } \\\\ 
+                    \\item \\large \\textbf{Affected Hosts/URLs:}
+                           \\begin{itemize} 
+                           \\item \\large \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
+                           \\end{itemize}
+                    \\item \\large \\textbf{Summary:} \\\\  ${report.Summary}
+                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png} } \\\\ 
+                    \\item \\large \\textbf{Remediation:} \\\\ ${report.Remediation} \\\\
                     \\item \\large \\textbf{Reference:\\\\} \\large \\href{${report.Links}} {${report.Links.toString()}} \\\\ 
+                    
                 \\end{description}`).join('\n')}
 
 
@@ -549,9 +657,9 @@ const generatePdf = async (req, res, next) => {
                 \\subsection{\\large Tools Used}
 
                 \\begin{center}
-                \\begin{longtable} {|p{5em}|p{34em}|}
+                \\begin{longtable} {|p{5em}|p{28em}|}
                 \\hline
-                \\multicolumn{2}{|p{40em}|} {\\cellcolor{tablecol} \\textbf{Tools:}} \\\\
+                \\multicolumn{2}{|p{34em}|} {\\cellcolor{tablecol} \\textbf{Tools:}} \\\\
                 \\hline
                 \\large \\cellcolor{tableco2} \\textbf{Name} & \\large \\cellcolor{tableco2} \\textbf{Description} \\\\
                 \\hline
@@ -566,9 +674,6 @@ const generatePdf = async (req, res, next) => {
             \\end{document}
         `; 
 
-        
-        
-        
 
         // Write LaTeX content to .tex file
         fs.writeFileSync('bug_report.tex', latexContent);
@@ -591,16 +696,7 @@ const generatePdf = async (req, res, next) => {
 
         console.log("Bug report generated");
 
-    } catch (err) {
-        console.log("Error :", err);
-        res.status(500).json({ err: "Internal Server Error" });
-    } finally {
-        // Clean up temporary files
-        fs.unlinkSync('bug_report.tex');
-        fs.unlinkSync('bug_report.log');
-        fs.unlinkSync('bug_report.aux');
-        fs.unlinkSync('bug_report.pdf');
-    }
+     
 }
 
 const updateBug = async (req, res, next) => {
@@ -627,32 +723,29 @@ const getBugById = async (req, res, next) => {
 }
 module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById };
 
-// let imagesContent = ''; // Initialize imagesContent variable
-
-//         // Iterate through each bug report
-//         for (const report of bugReports) {
-//             // Check if the report has proof of concept images
-//             if (report.Proof_of_concept && report.Proof_of_concept.length > 0) {
-//                 // Iterate through each proof of concept image
-//                 for (const [imageIndex, image] of report.Proof_of_concept.entries()) {
-//                     // Convert binary data to Base64
-//                     const base64Image = image.data.toString('base64');
-//                     // Add LaTeX code for including the image to imagesContent
-//                     imagesContent += `
-//                         \\includegraphics[width=0.5\\textwidth]{data:${image.contentType};base64,${base64Image}}
-//                     `;
-//                 }
-//             }  \\includegraphics[width=0.5\\textwidth]{data:image/png;base64,${Buffer.from(report.proof_of_concept.data).toString('base64')}}
-//         } ${report.Proof_of_concept.map(image => `\\includegraphics[width=0.5\\textwidth]{data:${image.contentType};base64,${image.data.toString('base64')}}`).join('\n')} 
-
 
 // \\begin{ figure } [htbp]
 // \\includegraphics[width = 0.5\\textwidth]{ data:${ bugReports.Proof_of_concept.contentType }; base64, ${ base64Image } }
 // \\end{ figure }
 
-// \begin{figure}[htbp]
-//     \centering
-//     \includegraphics[width=0.5\textwidth]{https://example.com/image.png}
-//     \caption{Caption of the image}
-//     \label{fig:image}
-// \end{figure}
+
+
+// finally {
+//     // Clean up temporary files
+//     fs.unlinkSync('bug_report.tex');
+//     fs.unlinkSync('bug_report.log');
+//     fs.unlinkSync('bug_report.aux');
+//     fs.unlinkSync('bug_report.pdf');
+// }    \\colorbox{black!60}{\\textcolor{white}{${info_per}\\%, ${info}}}  \\colorbox{black!60}{\\textcolor{white}{Info}} 
+
+
+                // \\begin{tikzpicture}
+                // \\centering
+                // \\piechartthreed[scale= 0.4, mix color= darkgray]{${low_per}*3.6/red, ${medium_per}*3.6/blue, ${critical_per}*3.6 /green, ${high_per}*3.6/purple, ${info_per}*3.6/darkgray}
+                // \\foreach \\i in {1,...,5} { \\fill (pc \\i) circle (.5mm);}
+                // \\draw[darkgray] (pc 1)  -- ++(3,0) coordinate (s1) node[anchor=south east] {\\colorbox{black!60}{\\textcolor{white}{Low}}} node[anchor=north east] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(low_per)}\\%, ${lo}}} };
+                // \\draw[darkgray] (pc 2)  -- ++(-3, 0) coordinate (s2)  node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Medium}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(medium_per)}\\% ,${med}}} }; 
+                // \\draw[darkgray] (pc 3)  -- ++(-1.5,-2.5) coordinate (s3) -- ++(1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Critical}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(critical_per)}\\%,${cri}}}}; 
+                // \\draw[darkgray] (pc 4)  -- ++(-2, -2) coordinate (s4) -- ++(-1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{High}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(high_per)}\\%, ${hi}}}}; 
+                // \\draw[darkgray] (pc 5)  -- ++(1,-1) coordinate (s5) -- ++(1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Info}} } node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{${Math.floor(info_per)}\\%, ${info}}}}; 
+                // \\end{tikzpicture}
