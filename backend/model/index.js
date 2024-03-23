@@ -22,10 +22,12 @@ const bugReportSchema = new schema({
     },
     Affected_Hosts : String,
     Summary : String,
+    Steps_of_Reproduce: [String],
     Proof_of_concept: imageSchema,
-    Remediation : String,
-    Links: String,
-    Ref: String,
+    Impact: [String],
+    Remediation : [String],
+    Links: [String],
+    Ref: [String],
     Remediation_effort: String,
 });
 

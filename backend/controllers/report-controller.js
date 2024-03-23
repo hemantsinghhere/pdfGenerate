@@ -83,17 +83,17 @@ const generatePdf = async (req, res, next) => {
             \\hline
             \\textbf{Finding Name} & \\textbf{Remediation Effort}  \\\\
             \\hline
-            \\normalsize \\textcolor{red!100}{\\textbf{Critical Severity Findings}} & \\\\
+            \\normalsize \\textcolor{critical}{\\textbf{Critical Severity Findings}} & \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{orange}{\\textbf{High Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{high}{\\textbf{High Severity Findings}}} \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{yellow}{\\textbf{Medium Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{medium}{\\textbf{Medium Severity Findings}}} \\\\
             \\hline
             \\normalsize \\textbf{Reflected Cross Site Scripting (XSS) } & {Quick}\\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{green}{\\textbf{Low Severity Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{low}{\\textbf{Low Severity Findings}}} \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{blue!70}{\\textbf{Informational Findings}}} \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{infotext}{\\textbf{Informational Findings}}} \\\\
             \\hline
             `;
 
@@ -142,13 +142,21 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{siunitx}
             \\usetikzlibrary{shapes.geometric, positioning}
             \\definecolor{darkgray}{RGB}{64,64,64}
-            \\definecolor{tablecol}{RGB}{15, 117, 114}
-            \\definecolor{tableco2}{RGB}{44, 163, 135}
-            \\definecolor{textbold}{RGB}{5, 122, 119}
+            \\definecolor{tablecol}{RGB}{9,62,82}
+            \\definecolor{tableco2}{RGB}{140,207,183}
+            \\definecolor{textbold}{RGB}{9,62,82}
             \\definecolor{lightgray}{RGB}{245, 245, 245}
-            \\definecolor{textcolor}{RGB}{5, 38, 37}
+            \\definecolor{textcolor}{RGB}{9,62,82}
             \\definecolor{sectioncolor}{RGB}{5, 38, 37}
-            \\definecolor{subsectioncolor}{RGB}{5, 122, 119}
+            \\definecolor{subsectioncolor}{RGB}{64,110,140}
+            \\definecolor{critical}{RGB}{192,0,0}
+            \\definecolor{high}{RGB}{255,0,0}
+            \\definecolor{medium}{RGB}{255,192,0}
+            \\definecolor{low}{RGB}{146,208,80}
+            \\definecolor{info}{RGB}{242,242,242}
+            \\definecolor{total}{RGB}{218,238,243}
+            \\definecolor{shadow}{RGB}{227,227,227}
+            \\definecolor{infotext}{RGB}{0,176,240}
             
 
             
@@ -198,66 +206,7 @@ const generatePdf = async (req, res, next) => {
                     }
                 }
 
-            \\pgfkeys{
-                /piechartthreed/.cd,
-                scale/.code                =  {\\def\\piechartthreedscale{#1}},
-                mix color/.code            =  {\\def\\piechartthreedmixcolor{#1}},
-                background color/.code     =  {\\def\\piechartthreedbackcolor{#1}},
-                name/.code                 =  {\\def\\piechartthreedname{#1}}
-            }
-
-            \\newcommand\\piechartthreed[2][]{ 
-                \\pgfkeys{/piechartthreed/.cd,
-                    scale            = 1,
-                    mix color        = gray,
-                    background color = white,
-                    name             = pc
-                } 
-
-                \\pgfqkeys{/piechartthreed}{#1}
-                \\begin{scope}[scale=\\piechartthreedscale] 
-                \\begin{scope}[xscale=5,yscale=3] 
-                    \\path[preaction={fill=black,opacity=.8,
-                        path fading=circle with fuzzy edge 20 percent,
-                        transform canvas={yshift=-15mm*\\piechartthreedscale}}] (0,0) circle (1cm);
-                    \\pgfmathsetmacro\\totan{0} 
-                    \\global\\let\\totan\\totan 
-                    \\pgfmathsetmacro\\bottoman{180} \\global\\let\\bottoman\\bottoman 
-                    \\pgfmathsetmacro\\toptoman{0}   \\global\\let\\toptoman\\toptoman 
-                    \\begin{scope}[draw=black,thin]
-                        \\foreach \\an/\\col [count=\\xi] in {#2}{%
-                            \\def\\space{ } 
-                            \\coordinate (\\piechartthreedname\\space\\xi) at (\\totan+\\an/2:0.75cm); 
-                            \\ifdim 180pt>\\totan pt 
-                                \\ifdim 0pt=\\toptoman pt
-                                    \\pgfmathsetmacro\\toptoman{180} 
-                                    \\global\\let\\toptoman\\toptoman         
-                                \\else
-                                \\fi
-                            \\fi   
-                            \\fill[\\col!80!gray,draw=black] (0,0)--(\\totan:1cm)  arc(\\totan:\\totan+\\an:1cm) --cycle;     
-                            \\pgfmathsetmacro\\finan{\\totan+\\an}
-                            \\ifdim 180pt<\\finan pt 
-                                \\ifdim 180pt=\\bottoman pt
-                                    \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
-                                        right color=\\col!5!\\piechartthreedmixcolor,
-                                        draw=black,very thin] (180:1cm) -- ++(0,-3mm) arc (180:\\totan+\\an:1cm) -- ++(0,3mm) arc (\\totan+\\an:180:1cm);
-                                    \\pgfmathsetmacro\\bottoman{0}
-                                    \\global\\let\\bottoman\\bottoman
-                                \\else
-                                    \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
-                                        right color=\\col!5!\\piechartthreedmixcolor,
-                                        draw=black,very thin](\\totan:1cm)-- ++(0,-3mm) arc(\\totan:\\totan+\\an:1cm) -- ++(0,3mm)  arc(\\totan+\\an:\\totan:1cm); 
-                                \\fi
-                            \\fi
-                            \\pgfmathsetmacro\\totan{\\totan+\\an}  
-                            \\global\\let\\totan\\totan 
-                        } 
-                    \\end{scope}
-                \\end{scope}  
-            \\end{scope}
-            }   
-
+            
 
             \\makeatletter
             \\renewcommand{\\section}{\\@startsection{section}{1}{\\z@}%
@@ -297,6 +246,7 @@ const generatePdf = async (req, res, next) => {
             \\large MyGate Web App
             \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\\textwidth,height=5pt]
             \\end{tcolorbox}
+            
 
             \\begin{minipage}{.40\\textwidth}
             \\textbf{REPORT PUBLISH DATE}
@@ -341,7 +291,7 @@ const generatePdf = async (req, res, next) => {
                     \\item \\large Graphical Summary
                 \\end{itemize}
                 
-                \\begin{minipage}{.50\\textwidth}
+                \\begin{minipage}{.55\\textwidth}
                 \\normalsize \\textbf{Vulnerability v/s Severity Pie Chart} 
                 \\end{minipage}
                 \\begin{minipage}{.40\\textwidth}
@@ -350,10 +300,10 @@ const generatePdf = async (req, res, next) => {
 
                 \\vspace{20pt}
                 \\begin{minipage} {0.50\\textwidth}                     
-                
+                \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\\textwidth]
                 \\begin{tikzpicture}
                 \\centering
-                \\pie[color={red, orange, yellow, green, black!10}, text=inside]{
+                \\pie[color={critical, high, medium, low, info}, text=inside]{
                     0/Critical,
                     57/High,
                     29/Medium,
@@ -362,57 +312,56 @@ const generatePdf = async (req, res, next) => {
                 }
                 \\end{tikzpicture}
 
-                \\begin{minipage} {.02\\textwidth}
-                \\colorbox{red!100}{}
+                \\begin{minipage} {.025\\textwidth}
+                \\colorbox{critical}{}
                 \\end{minipage}
-                \\begin{minipage} {.16\\textwidth}
+                \\begin{minipage} {.165\\textwidth}
                 Critical
                 \\end{minipage}
-                \\begin{minipage} {.02\\textwidth}
-                \\colorbox{orange}{}
+                \\begin{minipage} {.025\\textwidth}
+                \\colorbox{high}{}
                 \\end{minipage}
                 \\begin{minipage} {.12\\textwidth}
                 High
                 \\end{minipage}
-                \\begin{minipage} {.02\\textwidth}
-                \\colorbox{yellow}{}
+                \\begin{minipage} {.025\\textwidth}
+                \\colorbox{medium}{}
                 \\end{minipage}
-                \\begin{minipage} {.16\\textwidth}
+                \\begin{minipage} {.19\\textwidth}
                 Medium
                 \\end{minipage}
-                \\begin{minipage} {.02\\textwidth}
-                \\colorbox{green!100}{}
+                \\begin{minipage} {.03\\textwidth}
+                \\colorbox{low}{}
                 \\end{minipage}
-                \\begin{minipage} {.14\\textwidth}
+                \\begin{minipage} {.11\\textwidth}
                 Low
                 \\end{minipage}
                 \\begin{minipage} {.02\\textwidth}
-                \\colorbox{black!10}{}
+                \\colorbox{info}{}
                 \\end{minipage}
                 \\begin{minipage} {.14\\textwidth}
                 Info
                 \\end{minipage}
                 
-                
-                
-
+                \\end{tcolorbox}
                 \\end{minipage}
                 \\begin{minipage}{.40\\textwidth}
-                \\begin{tabular}{|p{8em}|>{\\centering\\arraybackslash}p{5em}|}
+                \\renewcommand{\\arraystretch}{1.63}
+                \\begin{tabular}{|p{11em}|>{\\centering\\arraybackslash}p{6em}|}
                 \\hline
                 \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\textbf{Count} \\\\
                  \\hline
-                 \\normalsize Critical &   \\normalsize \\cellcolor{red!100} ${cri}  \\\\
+                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} ${cri}  \\\\
                  \\hline
-                 \\normalsize High & \\normalsize \\cellcolor{orange} ${hi} \\\\
+                 \\normalsize High & \\normalsize \\cellcolor{high} ${hi} \\\\
                  \\hline
-                 \\normalsize Medium & \\normalsize \\cellcolor{yellow} ${med} \\\\
+                 \\normalsize Medium & \\normalsize \\cellcolor{medium} ${med} \\\\
                  \\hline
-                 \\normalsize Low & \\normalsize \\cellcolor{green!100} ${lo} \\\\
+                 \\normalsize Low & \\normalsize \\cellcolor{low} ${lo} \\\\
                  \\hline
-                 \\normalsize Informational & \\normalsize \\cellcolor{black!10} ${info} \\\\
+                 \\normalsize Informational & \\normalsize \\cellcolor{info} ${info} \\\\
                  \\hline
-                 \\normalsize Total & \\normalsize \\cellcolor{blue!30} ${total} \\\\
+                 \\normalsize Total & \\normalsize \\cellcolor{total} ${total} \\\\
                  \\hline    
                 \\end{tabular}
                 \\end{minipage}
@@ -465,20 +414,20 @@ const generatePdf = async (req, res, next) => {
                 \\hline 
                 \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Range}} & \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Rating}} & \\large \\textcolor{white}{\\cellcolor{tablecol} \\textbf{Description}}   \\\\    
                 \\hline
-                \\normalsize \\textbf{9.0 - 10.0} & \\normalsize \\textcolor{red!100}{\\textbf{Critical}} & \\normalsize These types of vulnerabilities should be reviewed immediately for impact to the
+                \\normalsize \\textbf{9.0 - 10.0} & \\normalsize \\textcolor{critical}{\\textbf{Critical}} & \\normalsize These types of vulnerabilities should be reviewed immediately for impact to the
                 business. This rating usually indicates that an exploit exists that could easily be use
                 severely impact confidentiality, integrity and/or availability.  \\\\
                 \\hline
-                \\normalsize \\textbf{7.0 - 8.9} & \\normalsize \\textcolor{orange}{\\textbf{High}} & \\normalsize These types of vulnerabilities need to be assessed in the short term for impact to the
+                \\normalsize \\textbf{7.0 - 8.9} & \\normalsize \\textcolor{high}{\\textbf{High}} & \\normalsize These types of vulnerabilities need to be assessed in the short term for impact to the
                 business. A score in this range indicates that a vulnerability could be exploited with
                 low to medium complexity and could have moderate or high impact on confidentiality,
                 integrity and/or availability.  \\\\
                 \\hline
-                \\normalsize \\textbf{4.0 - 6.9} & \\normalsize \\textcolor{yellow}{\\textbf{Medium}} & \\normalsize These vulnerabilities should also be evaluated for impact to the business, but the
+                \\normalsize \\textbf{4.0 - 6.9} & \\normalsize \\textcolor{medium}{\\textbf{Medium}} & \\normalsize These vulnerabilities should also be evaluated for impact to the business, but the
                 base score shows that these types of vulnerabilities may be only exploitable with
                 increased effort or have little impact to confidentiality, integrity and/or availability.  \\\\
                 \\hline
-                \\normalsize \\textbf{0.1 - 3.9}  & \\normalsize \\textcolor{green}{\\textbf{Low}} & \\normalsize These vulnerabilities should also be evaluated, but from evaluating the base
+                \\normalsize \\textbf{0.1 - 3.9}  & \\normalsize \\textcolor{low}{\\textbf{Low}} & \\normalsize These vulnerabilities should also be evaluated, but from evaluating the base
                 characteristics, the exploitation of these vulnerabilities is likely to result in little
                 negative impact to confidentiality, integrity and/or availability.  \\\\
                 \\hline
@@ -545,7 +494,7 @@ const generatePdf = async (req, res, next) => {
                     \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Vulnerability Name} & \\normalsize \\cellcolor{tableco2} \\textbf{OWASP Category} & \\normalsize \\cellcolor{tableco2} \\textbf{Severity} & \\normalsize \\cellcolor{tableco2} \\textbf{CVSS Score++} \\\\    
                     \\hline
                     ${bugReports.map((report, index) => `
-                    \\normalsize \\center \\textbf{${index + 1}} & \\normalsize \\textbf{${report.Title}} & \\normalsize \\textbf{A05-security Misconfiguration} & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{blue}{Info}` : report.Severity === 'Medium' ? `\\textcolor{yellow}{Medium}`: report.Severity ==='High' ? `\\textcolor{orange}{High}` : report.Severity === 'Critical' ? `\\textcolor{red!100}{Critical}` : `\\textcolor{green}{Low}` }} &  ${report.CVSS_Score} \\\\
+                    \\normalsize \\center \\textbf{${index + 1}} & \\normalsize \\textbf{${report.Title}} & \\normalsize \\textbf{A05-security Misconfiguration} & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}`: report.Severity ==='High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}` }} &  ${report.CVSS_Score} \\\\
                     \\hline
                     `).join('\n')} 
                 \\end{longtable}   
@@ -561,9 +510,9 @@ const generatePdf = async (req, res, next) => {
             ${bugReports.map((report, index) => `
                 \\newpage
                 \\subsection{\\large ${report.Title}}
-                \\begin{description}[itemsep=2pt, leftmargin=0.4cm]
-                    \\item \\large \\textbf{\\textcolor{black} Status:} ${report.Status}
-                    \\item \\large \\textbf{Severity: \\textcolor{blue}{${report.Severity}}}
+                \\begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                    \\item \\large \\textbf{Status:} ${report.Status}
+                    \\item \\large \\textbf{Severity: \\textcolor{infotext} {${report.Severity}}}
                     \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
                     \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score} 
                     \\item \\large \\textbf{Affected Hosts/URLs:}
@@ -571,9 +520,37 @@ const generatePdf = async (req, res, next) => {
                            \\item \\large \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
                            \\end{itemize}
                     \\item \\large \\textbf{Summary:} \\\\  ${report.Summary}
-                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png} } \\\\ 
-                    \\item \\large \\textbf{Remediation:} \\\\ ${report.Remediation} \\\\
-                    \\item \\large \\textbf{Reference:\\\\} \\large \\href{${report.Links}} {${report.Links.toString()}} \\\\ 
+
+                    \\item \\large \\textbf{Steps of Reproduce:}
+                            \\linespread{1.0}
+                            \\begin{enumerate}[leftmargin=0.5cm]
+                             ${report.Steps_of_Reproduce.map((step) => `
+                             \\item \\large ${step}`).join('\n')}
+                             \\end{enumerate}
+
+                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png} } 
+
+                    \\item \\large \\textbf{Impact:}
+                            \\linespread{1.0}
+                            \\begin{enumerate}[leftmargin=0.5cm]
+                             ${report.Impact.map((impactItem) => 
+                                `\\item \\large ${impactItem.toString()}`).join('\n')} 
+                            \\end{enumerate}  
+                            
+                            
+                    \\item \\large \\textbf{Remediation:}
+                            \\linespread{1.0}
+                            \\begin{enumerate}[leftmargin=0.5cm]
+                             ${report.Remediation.map((remediation, index) => `
+                                \\item \\large ${remediation.toString()}`).join('\n')}
+                            \\end{enumerate}
+
+                    \\item \\large \\textbf{Reference:}
+                            \\linespread{1.0}
+                            \\begin{enumerate}[leftmargin=0.5cm, ]
+                                ${report.Links.map((link, index) => `
+                            \\item \\large \\underline{\\href{${link}} {${link.toString()}}}`).join('\n')}
+                            \\end{enumerate}
                     
                 \\end{description}`).join('\n')}
 
@@ -681,12 +658,12 @@ const generatePdf = async (req, res, next) => {
         // Compile LaTeX to PDF
         const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
 
-        if (pdflatex.status === 0) {
-            console.log('PDF report generated successfully.');
-        } else {
-            console.error('Error generating PDF report:', pdflatex.stderr.toString());
-            throw new Error('Failed to generate PDF report.');
-        }
+        // if (pdflatex.status === 0) {
+        //     console.log('PDF report generated successfully.');
+        // } else {
+        //     console.error('Error generating PDF report:', pdflatex.stderr.toString());
+        //     throw new Error('Failed to generate PDF report.');
+        // }
 
         // Send the generated PDF as a response
         const pdfBuffer = fs.readFileSync('bug_report.pdf');
@@ -749,3 +726,66 @@ module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById };
                 // \\draw[darkgray] (pc 4)  -- ++(-2, -2) coordinate (s4) -- ++(-1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{High}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(high_per)}\\%, ${hi}}}}; 
                 // \\draw[darkgray] (pc 5)  -- ++(1,-1) coordinate (s5) -- ++(1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Info}} } node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{${Math.floor(info_per)}\\%, ${info}}}}; 
                 // \\end{tikzpicture}
+
+
+            //     \\pgfkeys{
+            //     /piechartthreed/.cd,
+            //     scale/.code                =  {\\def\\piechartthreedscale{#1}},
+            //     mix color/.code            =  {\\def\\piechartthreedmixcolor{#1}},
+            //     background color/.code     =  {\\def\\piechartthreedbackcolor{#1}},
+            //     name/.code                 =  {\\def\\piechartthreedname{#1}}
+            // }
+
+            // \\newcommand\\piechartthreed[2][]{ 
+            //     \\pgfkeys{/piechartthreed/.cd,
+            //         scale            = 1,
+            //         mix color        = gray,
+            //         background color = white,
+            //         name             = pc
+            //     } 
+
+            //     \\pgfqkeys{/piechartthreed}{#1}
+            //     \\begin{scope}[scale=\\piechartthreedscale] 
+            //     \\begin{scope}[xscale=5,yscale=3] 
+            //         \\path[preaction={fill=black,opacity=.8,
+            //             path fading=circle with fuzzy edge 20 percent,
+            //             transform canvas={yshift=-15mm*\\piechartthreedscale}}] (0,0) circle (1cm);
+            //         \\pgfmathsetmacro\\totan{0} 
+            //         \\global\\let\\totan\\totan 
+            //         \\pgfmathsetmacro\\bottoman{180} \\global\\let\\bottoman\\bottoman 
+            //         \\pgfmathsetmacro\\toptoman{0}   \\global\\let\\toptoman\\toptoman 
+            //         \\begin{scope}[draw=black,thin]
+            //             \\foreach \\an/\\col [count=\\xi] in {#2}{%
+            //                 \\def\\space{ } 
+            //                 \\coordinate (\\piechartthreedname\\space\\xi) at (\\totan+\\an/2:0.75cm); 
+            //                 \\ifdim 180pt>\\totan pt 
+            //                     \\ifdim 0pt=\\toptoman pt
+            //                         \\pgfmathsetmacro\\toptoman{180} 
+            //                         \\global\\let\\toptoman\\toptoman         
+            //                     \\else
+            //                     \\fi
+            //                 \\fi   
+            //                 \\fill[\\col!80!gray,draw=black] (0,0)--(\\totan:1cm)  arc(\\totan:\\totan+\\an:1cm) --cycle;     
+            //                 \\pgfmathsetmacro\\finan{\\totan+\\an}
+            //                 \\ifdim 180pt<\\finan pt 
+            //                     \\ifdim 180pt=\\bottoman pt
+            //                         \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
+            //                             right color=\\col!5!\\piechartthreedmixcolor,
+            //                             draw=black,very thin] (180:1cm) -- ++(0,-3mm) arc (180:\\totan+\\an:1cm) -- ++(0,3mm) arc (\\totan+\\an:180:1cm);
+            //                         \\pgfmathsetmacro\\bottoman{0}
+            //                         \\global\\let\\bottoman\\bottoman
+            //                     \\else
+            //                         \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
+            //                             right color=\\col!5!\\piechartthreedmixcolor,
+            //                             draw=black,very thin](\\totan:1cm)-- ++(0,-3mm) arc(\\totan:\\totan+\\an:1cm) -- ++(0,3mm)  arc(\\totan+\\an:\\totan:1cm); 
+            //                     \\fi
+            //                 \\fi
+            //                 \\pgfmathsetmacro\\totan{\\totan+\\an}  
+            //                 \\global\\let\\totan\\totan 
+            //             } 
+            //         \\end{scope}
+            //     \\end{scope}  
+            // \\end{scope}
+            // }   
+
+            // ${index !== report.Remediation.length - 1 ? '\\vspace{-10pt}' : ''}

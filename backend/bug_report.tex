@@ -34,13 +34,21 @@
             \usepackage{siunitx}
             \usetikzlibrary{shapes.geometric, positioning}
             \definecolor{darkgray}{RGB}{64,64,64}
-            \definecolor{tablecol}{RGB}{15, 117, 114}
-            \definecolor{tableco2}{RGB}{44, 163, 135}
-            \definecolor{textbold}{RGB}{5, 122, 119}
+            \definecolor{tablecol}{RGB}{9,62,82}
+            \definecolor{tableco2}{RGB}{140,207,183}
+            \definecolor{textbold}{RGB}{9,62,82}
             \definecolor{lightgray}{RGB}{245, 245, 245}
-            \definecolor{textcolor}{RGB}{5, 38, 37}
+            \definecolor{textcolor}{RGB}{9,62,82}
             \definecolor{sectioncolor}{RGB}{5, 38, 37}
-            \definecolor{subsectioncolor}{RGB}{5, 122, 119}
+            \definecolor{subsectioncolor}{RGB}{64,110,140}
+            \definecolor{critical}{RGB}{192,0,0}
+            \definecolor{high}{RGB}{255,0,0}
+            \definecolor{medium}{RGB}{255,192,0}
+            \definecolor{low}{RGB}{146,208,80}
+            \definecolor{info}{RGB}{242,242,242}
+            \definecolor{total}{RGB}{218,238,243}
+            \definecolor{shadow}{RGB}{227,227,227}
+            \definecolor{infotext}{RGB}{0,176,240}
             
 
             
@@ -90,66 +98,7 @@
                     }
                 }
 
-            \pgfkeys{
-                /piechartthreed/.cd,
-                scale/.code                =  {\def\piechartthreedscale{#1}},
-                mix color/.code            =  {\def\piechartthreedmixcolor{#1}},
-                background color/.code     =  {\def\piechartthreedbackcolor{#1}},
-                name/.code                 =  {\def\piechartthreedname{#1}}
-            }
-
-            \newcommand\piechartthreed[2][]{ 
-                \pgfkeys{/piechartthreed/.cd,
-                    scale            = 1,
-                    mix color        = gray,
-                    background color = white,
-                    name             = pc
-                } 
-
-                \pgfqkeys{/piechartthreed}{#1}
-                \begin{scope}[scale=\piechartthreedscale] 
-                \begin{scope}[xscale=5,yscale=3] 
-                    \path[preaction={fill=black,opacity=.8,
-                        path fading=circle with fuzzy edge 20 percent,
-                        transform canvas={yshift=-15mm*\piechartthreedscale}}] (0,0) circle (1cm);
-                    \pgfmathsetmacro\totan{0} 
-                    \global\let\totan\totan 
-                    \pgfmathsetmacro\bottoman{180} \global\let\bottoman\bottoman 
-                    \pgfmathsetmacro\toptoman{0}   \global\let\toptoman\toptoman 
-                    \begin{scope}[draw=black,thin]
-                        \foreach \an/\col [count=\xi] in {#2}{%
-                            \def\space{ } 
-                            \coordinate (\piechartthreedname\space\xi) at (\totan+\an/2:0.75cm); 
-                            \ifdim 180pt>\totan pt 
-                                \ifdim 0pt=\toptoman pt
-                                    \pgfmathsetmacro\toptoman{180} 
-                                    \global\let\toptoman\toptoman         
-                                \else
-                                \fi
-                            \fi   
-                            \fill[\col!80!gray,draw=black] (0,0)--(\totan:1cm)  arc(\totan:\totan+\an:1cm) --cycle;     
-                            \pgfmathsetmacro\finan{\totan+\an}
-                            \ifdim 180pt<\finan pt 
-                                \ifdim 180pt=\bottoman pt
-                                    \shadedraw[left color=\col!20!\piechartthreedmixcolor,
-                                        right color=\col!5!\piechartthreedmixcolor,
-                                        draw=black,very thin] (180:1cm) -- ++(0,-3mm) arc (180:\totan+\an:1cm) -- ++(0,3mm) arc (\totan+\an:180:1cm);
-                                    \pgfmathsetmacro\bottoman{0}
-                                    \global\let\bottoman\bottoman
-                                \else
-                                    \shadedraw[left color=\col!20!\piechartthreedmixcolor,
-                                        right color=\col!5!\piechartthreedmixcolor,
-                                        draw=black,very thin](\totan:1cm)-- ++(0,-3mm) arc(\totan:\totan+\an:1cm) -- ++(0,3mm)  arc(\totan+\an:\totan:1cm); 
-                                \fi
-                            \fi
-                            \pgfmathsetmacro\totan{\totan+\an}  
-                            \global\let\totan\totan 
-                        } 
-                    \end{scope}
-                \end{scope}  
-            \end{scope}
-            }   
-
+            
 
             \makeatletter
             \renewcommand{\section}{\@startsection{section}{1}{\z@}%
@@ -189,6 +138,7 @@
             \large MyGate Web App
             \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\textwidth,height=5pt]
             \end{tcolorbox}
+            
 
             \begin{minipage}{.40\textwidth}
             \textbf{REPORT PUBLISH DATE}
@@ -233,7 +183,7 @@
                     \item \large Graphical Summary
                 \end{itemize}
                 
-                \begin{minipage}{.50\textwidth}
+                \begin{minipage}{.55\textwidth}
                 \normalsize \textbf{Vulnerability v/s Severity Pie Chart} 
                 \end{minipage}
                 \begin{minipage}{.40\textwidth}
@@ -242,10 +192,10 @@
 
                 \vspace{20pt}
                 \begin{minipage} {0.50\textwidth}                     
-                
+                \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={red, orange, yellow, green, black!10}, text=inside]{
+                \pie[color={critical, high, medium, low, info}, text=inside]{
                     0/Critical,
                     57/High,
                     29/Medium,
@@ -254,57 +204,56 @@
                 }
                 \end{tikzpicture}
 
-                \begin{minipage} {.02\textwidth}
-                \colorbox{red!100}{}
+                \begin{minipage} {.025\textwidth}
+                \colorbox{critical}{}
                 \end{minipage}
-                \begin{minipage} {.16\textwidth}
+                \begin{minipage} {.165\textwidth}
                 Critical
                 \end{minipage}
-                \begin{minipage} {.02\textwidth}
-                \colorbox{orange}{}
+                \begin{minipage} {.025\textwidth}
+                \colorbox{high}{}
                 \end{minipage}
                 \begin{minipage} {.12\textwidth}
                 High
                 \end{minipage}
-                \begin{minipage} {.02\textwidth}
-                \colorbox{yellow}{}
+                \begin{minipage} {.025\textwidth}
+                \colorbox{medium}{}
                 \end{minipage}
-                \begin{minipage} {.16\textwidth}
+                \begin{minipage} {.19\textwidth}
                 Medium
                 \end{minipage}
-                \begin{minipage} {.02\textwidth}
-                \colorbox{green!100}{}
+                \begin{minipage} {.03\textwidth}
+                \colorbox{low}{}
                 \end{minipage}
-                \begin{minipage} {.14\textwidth}
+                \begin{minipage} {.11\textwidth}
                 Low
                 \end{minipage}
                 \begin{minipage} {.02\textwidth}
-                \colorbox{black!10}{}
+                \colorbox{info}{}
                 \end{minipage}
                 \begin{minipage} {.14\textwidth}
                 Info
                 \end{minipage}
                 
-                
-                
-
+                \end{tcolorbox}
                 \end{minipage}
                 \begin{minipage}{.40\textwidth}
-                \begin{tabular}{|p{8em}|>{\centering\arraybackslash}p{5em}|}
+                \renewcommand{\arraystretch}{1.63}
+                \begin{tabular}{|p{11em}|>{\centering\arraybackslash}p{6em}|}
                 \hline
                 \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \textbf{Count} \\
                  \hline
-                 \normalsize Critical &   \normalsize \cellcolor{red!100} 0  \\
+                 \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{orange} 8 \\
+                 \normalsize High & \normalsize \cellcolor{high} 8 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{yellow} 4 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium} 4 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{green!100} 2 \\
+                 \normalsize Low & \normalsize \cellcolor{low} 2 \\
                  \hline
-                 \normalsize Informational & \normalsize \cellcolor{black!10} 0 \\
+                 \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{blue!30} 14 \\
+                 \normalsize Total & \normalsize \cellcolor{total} 14 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -357,20 +306,20 @@
                 \hline 
                 \large \cellcolor{tablecol} \textcolor{white}{\textbf{Range}} & \large \cellcolor{tablecol} \textcolor{white}{\textbf{Rating}} & \large \textcolor{white}{\cellcolor{tablecol} \textbf{Description}}   \\    
                 \hline
-                \normalsize \textbf{9.0 - 10.0} & \normalsize \textcolor{red!100}{\textbf{Critical}} & \normalsize These types of vulnerabilities should be reviewed immediately for impact to the
+                \normalsize \textbf{9.0 - 10.0} & \normalsize \textcolor{critical}{\textbf{Critical}} & \normalsize These types of vulnerabilities should be reviewed immediately for impact to the
                 business. This rating usually indicates that an exploit exists that could easily be use
                 severely impact confidentiality, integrity and/or availability.  \\
                 \hline
-                \normalsize \textbf{7.0 - 8.9} & \normalsize \textcolor{orange}{\textbf{High}} & \normalsize These types of vulnerabilities need to be assessed in the short term for impact to the
+                \normalsize \textbf{7.0 - 8.9} & \normalsize \textcolor{high}{\textbf{High}} & \normalsize These types of vulnerabilities need to be assessed in the short term for impact to the
                 business. A score in this range indicates that a vulnerability could be exploited with
                 low to medium complexity and could have moderate or high impact on confidentiality,
                 integrity and/or availability.  \\
                 \hline
-                \normalsize \textbf{4.0 - 6.9} & \normalsize \textcolor{yellow}{\textbf{Medium}} & \normalsize These vulnerabilities should also be evaluated for impact to the business, but the
+                \normalsize \textbf{4.0 - 6.9} & \normalsize \textcolor{medium}{\textbf{Medium}} & \normalsize These vulnerabilities should also be evaluated for impact to the business, but the
                 base score shows that these types of vulnerabilities may be only exploitable with
                 increased effort or have little impact to confidentiality, integrity and/or availability.  \\
                 \hline
-                \normalsize \textbf{0.1 - 3.9}  & \normalsize \textcolor{green}{\textbf{Low}} & \normalsize These vulnerabilities should also be evaluated, but from evaluating the base
+                \normalsize \textbf{0.1 - 3.9}  & \normalsize \textcolor{low}{\textbf{Low}} & \normalsize These vulnerabilities should also be evaluated, but from evaluating the base
                 characteristics, the exploitation of these vulnerabilities is likely to result in little
                 negative impact to confidentiality, integrity and/or availability.  \\
                 \hline
@@ -437,15 +386,15 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center \textbf{1} & \normalsize \textbf{Application Does Not Implement HSTS Best Practices} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{blue}{Info}} &  2.0 \\
+                    \normalsize \center \textbf{1} & \normalsize \textbf{Application Does Not Implement HSTS Best Practices} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.0 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{2} & \normalsize \textbf{Inadequate, Inconsistent or Missing Cookie Attributes} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{blue}{Info}} &  8.0 \\
+                    \normalsize \center \textbf{2} & \normalsize \textbf{Inadequate, Inconsistent or Missing Cookie Attributes} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  8.0 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{3} & \normalsize \textbf{Missing Content Security Policy Header} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{blue}{Info}} &  4.2 \\
+                    \normalsize \center \textbf{3} & \normalsize \textbf{Missing Content Security Policy Header} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  4.2 \\
                     \hline
                      
                 \end{longtable}   
@@ -460,17 +409,17 @@
             \hline
             \textbf{Finding Name} & \textbf{Remediation Effort}  \\
             \hline
-            \normalsize \textcolor{red!100}{\textbf{Critical Severity Findings}} & \\
+            \normalsize \textcolor{critical}{\textbf{Critical Severity Findings}} & \\
             \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{orange}{\textbf{High Severity Findings}}} \\
+            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
             \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{yellow}{\textbf{Medium Severity Findings}}} \\
+            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
             \hline
             \normalsize \textbf{Reflected Cross Site Scripting (XSS) } & {Quick}\\
             \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{green}{\textbf{Low Severity Findings}}} \\
+            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{low}{\textbf{Low Severity Findings}}} \\
             \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{blue!70}{\textbf{Informational Findings}}} \\
+            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
             \hline
             
                     Application Does Not Implement HSTS Best Practices & Planned \\
@@ -483,9 +432,9 @@
             
                 \newpage
                 \subsection{\large Application Does Not Implement HSTS Best Practices}
-                \begin{description}[itemsep=2pt, leftmargin=0.4cm]
-                    \item \large \textbf{\textcolor{black} Status:} New
-                    \item \large \textbf{Severity: \textcolor{blue}{Informational}}
+                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                    \item \large \textbf{Status:} New
+                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
                     \item \large \textbf{OWASP Category: Security Misconfiguration}
                     \item \large \textbf{CVSS Score:} 2.0 
                     \item \large \textbf{Affected Hosts/URLs:}
@@ -499,21 +448,57 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
 HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } \\ 
-                    \item \large \textbf{Remediation:} \\ The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
 
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year). \\
-                    \item \large \textbf{Reference:\\} \large \href{https://www.techtarget.com/searchsecurity/definition/email-spoofing} {https://www.techtarget.com/searchsecurity/definition/email-spoofing} \\ 
+                    \item \large \textbf{Steps of Reproduce:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                             \item \large Log in to the Aurm Anfroid/IOS application.
+
+                             \item \large Go to Profile and click on Nominee Tab.
+
+                             \item \large Click on Add Nominee.
+
+                             \item \large Now Capture the vulnerable HTTP request and replace the account id in the API request witth your Authtoken. Here Account id belongs to the victim's account.
+
+                             \item \large And place any random number in the RequestBody.
+                             \end{enumerate}
+
+                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } 
+
+                    \item \large \textbf{Impact:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
+\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse 
+                            \end{enumerate}  
+                            
+                            
+                    \item \large \textbf{Remediation:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                                \item \large  Introduce a strong password policy that ensures password length, complexity, reuse and aging.
+
+                                \item \large Additionally implement two factor authentication methods for more authentication controls.
+                            \end{enumerate}
+
+                    \item \large \textbf{Reference:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm, ]
+                                
+                            \item \large \underline{\href{https://www.techtarget.com/searchsecurity/definition/email-spoofing.} {https://www.techtarget.com/searchsecurity/definition/email-spoofing.}}
+
+                            \item \large \underline{\href{https://www.appsecmonkey.com/blog/session-fixation} {https://www.appsecmonkey.com/blog/session-fixation}}
+                            \end{enumerate}
                     
                 \end{description}
 
                 \newpage
                 \subsection{\large Inadequate, Inconsistent or Missing Cookie Attributes}
-                \begin{description}[itemsep=2pt, leftmargin=0.4cm]
-                    \item \large \textbf{\textcolor{black} Status:} New
-                    \item \large \textbf{Severity: \textcolor{blue}{Informational}}
+                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                    \item \large \textbf{Status:} New
+                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
                     \item \large \textbf{OWASP Category: Security Misconfiguration}
                     \item \large \textbf{CVSS Score:} 8.0 
                     \item \large \textbf{Affected Hosts/URLs:}
@@ -527,21 +512,64 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
 HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } \\ 
-                    \item \large \textbf{Remediation:} \\ The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
 
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year). \\
-                    \item \large \textbf{Reference:\\} \large \href{https://hstspreload.org} {https://hstspreload.org} \\ 
+                    \item \large \textbf{Steps of Reproduce:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                             \item \large Open any Browser.
+
+                             \item \large Type the Ip in browser url box. IP is 3.109.225.159:80
+
+                             \item \large You will see that browser is showing Not Secure for this IP and asking for visit this IP with own your risk.
+
+                             \item \large You will see that browser is showing `Not Secure` for this IP and asking for visit this IP with own your risk.
+
+                             \item \large And when You visit it will take you to another site. Which does not come under the aurn network.
+                             \end{enumerate}
+
+                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } 
+
+                    \item \large \textbf{Impact:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
+\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse. 
+                            \end{enumerate}  
+                            
+                            
+                    \item \large \textbf{Remediation:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                                \item \large Efficient algorithms should be used by the session management controls to ensure the random generation of session identifiers.
+
+
+                                \item \large  Ensure that the logging out functionality terminates the associated connection/session entirely.
+
+                                \item \large Generate a new session identifier when a user re-authenticates or opens a new browser session.
+
+                                \item \large Appropriate access controls should be implemented to protect all server-side session data from unauthorized access by other users.
+                            \end{enumerate}
+
+                    \item \large \textbf{Reference:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm, ]
+                                
+                            \item \large \underline{\href{https://hstspreload.org} {https://hstspreload.org}}
+
+                            \item \large \underline{\href{https://capec.mitre.org/data/definitions/593.html} {https://capec.mitre.org/data/definitions/593.html}}
+
+                            \item \large \underline{\href{https://www.contrastsecurity.com/glossary/session-hijacking} {https://www.contrastsecurity.com/glossary/session-hijacking}}
+                            \end{enumerate}
                     
                 \end{description}
 
                 \newpage
                 \subsection{\large Missing Content Security Policy Header}
-                \begin{description}[itemsep=2pt, leftmargin=0.4cm]
-                    \item \large \textbf{\textcolor{black} Status:} New
-                    \item \large \textbf{Severity: \textcolor{blue}{Informational}}
+                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                    \item \large \textbf{Status:} New
+                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
                     \item \large \textbf{OWASP Category: Security Misconfiguration}
                     \item \large \textbf{CVSS Score:} 4.2 
                     \item \large \textbf{Affected Hosts/URLs:}
@@ -555,13 +583,49 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
 HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
  The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } \\ 
-                    \item \large \textbf{Remediation:} \\ The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
 
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year).
-The strongest protection is to ensure that all requested resources use only TLS with a well-formed HSTS header.  It is advisable to assign the max-age directive's value to be greater than 10368000 seconds (120days) and ideally to 31536000 (one year). \\
-                    \item \large \textbf{Reference:\\} \large \href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard} \\ 
+                    \item \large \textbf{Steps of Reproduce:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                             \item \large Log in to the Aurm Anfroid/IOS application
+
+                             \item \large Open in any Browser.
+
+                             \item \large You will see that browser is showing Not Secure for this IP and asking for visit this IP with own your risk.
+                             \end{enumerate}
+
+                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png} } 
+
+                    \item \large \textbf{Impact:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             \item \large Publicly Opened Ports can be used to leverage vulnerability.
+\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse. 
+                            \end{enumerate}  
+                            
+                            
+                    \item \large \textbf{Remediation:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                                \item \large  Use cookies marked as HttpOnly and Secure to set and store session identifiers.
+
+                                \item \large  Never use GET or POST variables to transmit session IDs.
+
+                                \item \large  Change the Session ID after login. The server should generate a new Session ID and set it as a cookie after the user has signed in.
+
+                                \item \large Provide a logout feature and expire old sessions.
+
+                                \item \large  Set a time limit for old session IDs.
+                            \end{enumerate}
+
+                    \item \large \textbf{Reference:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm, ]
+                                
+                            \item \large \underline{\href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}}
+                            \end{enumerate}
                     
                 \end{description}
 
