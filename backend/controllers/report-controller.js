@@ -658,12 +658,12 @@ const generatePdf = async (req, res, next) => {
         // Compile LaTeX to PDF
         const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
 
-        // if (pdflatex.status === 0) {
-        //     console.log('PDF report generated successfully.');
-        // } else {
-        //     console.error('Error generating PDF report:', pdflatex.stderr.toString());
-        //     throw new Error('Failed to generate PDF report.');
-        // }
+        if (pdflatex.status === 0) {
+            console.log('PDF report generated successfully.');
+        } else {
+            console.error('Error generating PDF report:', pdflatex.stderr.toString());
+            throw new Error('Failed to generate PDF report.');
+        }
 
         // Send the generated PDF as a response
         const pdfBuffer = fs.readFileSync('bug_report.pdf');
