@@ -1,6 +1,4 @@
-const puppeteer = require('puppeteer');
 const BugReport = require("../model/index.js");
-
 const fs = require("fs");
 
 const { spawnSync } = require('child_process');
@@ -10,7 +8,7 @@ const bugReport = async (req, res, next) => {
         // Retrieve all BugReport documents from the database
         const bugReports = await BugReport.find({});
 
-        const image = bugReports.map(report)
+        // const image = bugReports.map(report)
         console.log(bugReports)
         res.json(bugReports);
 
@@ -239,11 +237,11 @@ const generatePdf = async (req, res, next) => {
             \\end{center}
             \\end{minipage}
             \\begin{minipage}{.65\\textwidth}
-            \\huge MyGate Web Applications Security Assessment Report                
+            \\huge XYZ Web Applications Security Assessment Report.                
             \\end{minipage}
             \\vspace{80pt}
 
-            \\large MyGate Web App
+            \\large XYZ Web App
             \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\\textwidth,height=5pt]
             \\end{tcolorbox}
             
@@ -701,91 +699,3 @@ const getBugById = async (req, res, next) => {
 module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById };
 
 
-// \\begin{ figure } [htbp]
-// \\includegraphics[width = 0.5\\textwidth]{ data:${ bugReports.Proof_of_concept.contentType }; base64, ${ base64Image } }
-// \\end{ figure }
-
-
-
-// finally {
-//     // Clean up temporary files
-//     fs.unlinkSync('bug_report.tex');
-//     fs.unlinkSync('bug_report.log');
-//     fs.unlinkSync('bug_report.aux');
-//     fs.unlinkSync('bug_report.pdf');
-// }    \\colorbox{black!60}{\\textcolor{white}{${info_per}\\%, ${info}}}  \\colorbox{black!60}{\\textcolor{white}{Info}} 
-
-
-                // \\begin{tikzpicture}
-                // \\centering
-                // \\piechartthreed[scale= 0.4, mix color= darkgray]{${low_per}*3.6/red, ${medium_per}*3.6/blue, ${critical_per}*3.6 /green, ${high_per}*3.6/purple, ${info_per}*3.6/darkgray}
-                // \\foreach \\i in {1,...,5} { \\fill (pc \\i) circle (.5mm);}
-                // \\draw[darkgray] (pc 1)  -- ++(3,0) coordinate (s1) node[anchor=south east] {\\colorbox{black!60}{\\textcolor{white}{Low}}} node[anchor=north east] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(low_per)}\\%, ${lo}}} };
-                // \\draw[darkgray] (pc 2)  -- ++(-3, 0) coordinate (s2)  node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Medium}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(medium_per)}\\% ,${med}}} }; 
-                // \\draw[darkgray] (pc 3)  -- ++(-1.5,-2.5) coordinate (s3) -- ++(1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Critical}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(critical_per)}\\%,${cri}}}}; 
-                // \\draw[darkgray] (pc 4)  -- ++(-2, -2) coordinate (s4) -- ++(-1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{High}}} node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{ ${Math.floor(high_per)}\\%, ${hi}}}}; 
-                // \\draw[darkgray] (pc 5)  -- ++(1,-1) coordinate (s5) -- ++(1,0) node[anchor=south west] {\\colorbox{black!60}{\\textcolor{white}{Info}} } node[anchor=north west] {\\colorbox{black!60}{\\textcolor{white}{${Math.floor(info_per)}\\%, ${info}}}}; 
-                // \\end{tikzpicture}
-
-
-            //     \\pgfkeys{
-            //     /piechartthreed/.cd,
-            //     scale/.code                =  {\\def\\piechartthreedscale{#1}},
-            //     mix color/.code            =  {\\def\\piechartthreedmixcolor{#1}},
-            //     background color/.code     =  {\\def\\piechartthreedbackcolor{#1}},
-            //     name/.code                 =  {\\def\\piechartthreedname{#1}}
-            // }
-
-            // \\newcommand\\piechartthreed[2][]{ 
-            //     \\pgfkeys{/piechartthreed/.cd,
-            //         scale            = 1,
-            //         mix color        = gray,
-            //         background color = white,
-            //         name             = pc
-            //     } 
-
-            //     \\pgfqkeys{/piechartthreed}{#1}
-            //     \\begin{scope}[scale=\\piechartthreedscale] 
-            //     \\begin{scope}[xscale=5,yscale=3] 
-            //         \\path[preaction={fill=black,opacity=.8,
-            //             path fading=circle with fuzzy edge 20 percent,
-            //             transform canvas={yshift=-15mm*\\piechartthreedscale}}] (0,0) circle (1cm);
-            //         \\pgfmathsetmacro\\totan{0} 
-            //         \\global\\let\\totan\\totan 
-            //         \\pgfmathsetmacro\\bottoman{180} \\global\\let\\bottoman\\bottoman 
-            //         \\pgfmathsetmacro\\toptoman{0}   \\global\\let\\toptoman\\toptoman 
-            //         \\begin{scope}[draw=black,thin]
-            //             \\foreach \\an/\\col [count=\\xi] in {#2}{%
-            //                 \\def\\space{ } 
-            //                 \\coordinate (\\piechartthreedname\\space\\xi) at (\\totan+\\an/2:0.75cm); 
-            //                 \\ifdim 180pt>\\totan pt 
-            //                     \\ifdim 0pt=\\toptoman pt
-            //                         \\pgfmathsetmacro\\toptoman{180} 
-            //                         \\global\\let\\toptoman\\toptoman         
-            //                     \\else
-            //                     \\fi
-            //                 \\fi   
-            //                 \\fill[\\col!80!gray,draw=black] (0,0)--(\\totan:1cm)  arc(\\totan:\\totan+\\an:1cm) --cycle;     
-            //                 \\pgfmathsetmacro\\finan{\\totan+\\an}
-            //                 \\ifdim 180pt<\\finan pt 
-            //                     \\ifdim 180pt=\\bottoman pt
-            //                         \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
-            //                             right color=\\col!5!\\piechartthreedmixcolor,
-            //                             draw=black,very thin] (180:1cm) -- ++(0,-3mm) arc (180:\\totan+\\an:1cm) -- ++(0,3mm) arc (\\totan+\\an:180:1cm);
-            //                         \\pgfmathsetmacro\\bottoman{0}
-            //                         \\global\\let\\bottoman\\bottoman
-            //                     \\else
-            //                         \\shadedraw[left color=\\col!20!\\piechartthreedmixcolor,
-            //                             right color=\\col!5!\\piechartthreedmixcolor,
-            //                             draw=black,very thin](\\totan:1cm)-- ++(0,-3mm) arc(\\totan:\\totan+\\an:1cm) -- ++(0,3mm)  arc(\\totan+\\an:\\totan:1cm); 
-            //                     \\fi
-            //                 \\fi
-            //                 \\pgfmathsetmacro\\totan{\\totan+\\an}  
-            //                 \\global\\let\\totan\\totan 
-            //             } 
-            //         \\end{scope}
-            //     \\end{scope}  
-            // \\end{scope}
-            // }   
-
-            // ${index !== report.Remediation.length - 1 ? '\\vspace{-10pt}' : ''}
