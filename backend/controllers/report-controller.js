@@ -45,39 +45,42 @@ const submitBug = async (req, res, next) => {
 }
 
 
+
 const generatePdf = async (req, res, next) => {
-    
-        const bugReports = await BugReport.find({});
 
-        let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
-        for (const report of bugReports) {
-            const cvssScore = parseFloat(report.CVSS_Score.toString());
-            if (cvssScore >= 0.0 && cvssScore < 4.0) {
-                low += cvssScore;
-            }
-            else if (cvssScore >= 4.0 && cvssScore < 7.0) {
-                medium += cvssScore;
-            }
-            else if (cvssScore >= 7.0 && cvssScore < 9.0) {
-                high += cvssScore;
-            }
-            else {
-                critical += cvssScore;
-            }
+    const bugReports = await BugReport.find({});
+
+   
+
+    let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
+    for (const report of bugReports) {
+        const cvssScore = parseFloat(report.CVSS_Score.toString());
+        if (cvssScore >= 0.0 && cvssScore < 4.0) {
+            low += cvssScore;
         }
-        const lo = Math.floor(low);
-        const med = Math.floor(medium);
-        const hi = Math.floor(high);
-        const cri = Math.floor(critical);
-        total = lo + med + hi + cri + info;
-        const low_per = (lo / total) * 100;
-        const medium_per = (med / total) * 100;
-        const high_per = (hi / total) * 100;
-        const critical_per = (cri / total) * 100;
-        const info_per = (info / total) * 100;
+        else if (cvssScore >= 4.0 && cvssScore < 7.0) {
+            medium += cvssScore;
+        }
+        else if (cvssScore >= 7.0 && cvssScore < 9.0) {
+            high += cvssScore;
+        }
+        else {
+            critical += cvssScore;
+        }
+    }
+    const lo = Math.floor(low);
+    const med = Math.floor(medium);
+    const hi = Math.floor(high);
+    const cri = Math.floor(critical);
+    total = lo + med + hi + cri + info;
+    const low_per = (lo / total) * 100;
+    const medium_per = (med / total) * 100;
+    const high_per = (hi / total) * 100;
+    const critical_per = (cri / total) * 100;
+    const info_per = (info / total) * 100;
 
 
-        let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
+    let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
             \\hline
             \\textbf{Finding Name} & \\textbf{Remediation Effort}  \\\\
             \\hline
@@ -95,16 +98,16 @@ const generatePdf = async (req, res, next) => {
             \\hline
             `;
 
-        bugReports.forEach(report => {
-            table4 += `
+    bugReports.forEach(report => {
+        table4 += `
                     ${report.Title} & ${report.Remediation_effort} \\\\
                     \\hline`;
-        });
+    });
 
-        table4 += `\\end{longtable}`;
+    table4 += `\\end{longtable}`;
 
-        // LaTeX template
-        const latexContent = `
+    // LaTeX template
+    const latexContent = `
             \\documentclass{article}
             \\usepackage{enumitem}
             \\usepackage{roboto}
@@ -231,12 +234,12 @@ const generatePdf = async (req, res, next) => {
             \\begin{document}
 
 
-            \\begin{minipage}{.3\\textwidth}
+            \\begin{minipage}{.30\\textwidth}
             \\begin{center}
             \\includegraphics[width=.8\\textwidth]{vapt.jpeg} 
             \\end{center}
             \\end{minipage}
-            \\begin{minipage}{.65\\textwidth}
+            \\begin{minipage}{.60\\textwidth}
             \\huge XYZ Web Applications Security Assessment Report.                
             \\end{minipage}
             \\vspace{80pt}
@@ -275,11 +278,11 @@ const generatePdf = async (req, res, next) => {
                     \\begin{center}
                         \\begin{longtable} {|p{4em}|p{7em}|p{10em}|p{18em}|}
                         \\hline 
-                        \\multicolumn{4}{|p{42.8em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Scope Details}}} \\\\
+                        \\multicolumn{4}{|p{42.7em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Scope Details}}} \\\\
                         \\hline
                         \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Application Name} & \\normalsize \\cellcolor{tableco2} \\textbf{Application URL} & \\normalsize \\cellcolor{tableco2} \\textbf{Scope}  \\\\    
                         \\hline
-                        \\normalsize 1. & \\normalsize Callyzer & \\normalsize http://65.21.6.24/ & \\normalsize Callyzer web Application Manually \\& using Burpsuite \\\\
+                        \\normalsize 1. & \\normalsize XYZ & \\normalsize http://65.21.6.24/ & \\normalsize XYZ web Application Manually \\& using Burpsuite \\\\
                         \\hline
                         \\end{longtable}   
                     \\end{center}
@@ -492,7 +495,7 @@ const generatePdf = async (req, res, next) => {
                     \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Vulnerability Name} & \\normalsize \\cellcolor{tableco2} \\textbf{OWASP Category} & \\normalsize \\cellcolor{tableco2} \\textbf{Severity} & \\normalsize \\cellcolor{tableco2} \\textbf{CVSS Score++} \\\\    
                     \\hline
                     ${bugReports.map((report, index) => `
-                    \\normalsize \\center \\textbf{${index + 1}} & \\normalsize \\textbf{${report.Title}} & \\normalsize \\textbf{A05-security Misconfiguration} & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}`: report.Severity ==='High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}` }} &  ${report.CVSS_Score} \\\\
+                    \\normalsize \\center \\textbf{${index + 1}} & \\normalsize \\textbf{${report.Title}} & \\normalsize \\textbf{A05-security Misconfiguration} & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}` : report.Severity === 'High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}`}} &  ${report.CVSS_Score} \\\\
                     \\hline
                     `).join('\n')} 
                 \\end{longtable}   
@@ -526,13 +529,16 @@ const generatePdf = async (req, res, next) => {
                              \\item \\large ${step}`).join('\n')}
                              \\end{enumerate}
 
-                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png} } 
+                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png}} 
+
+
+                    
 
                     \\item \\large \\textbf{Impact:}
                             \\linespread{1.0}
                             \\begin{enumerate}[leftmargin=0.5cm]
-                             ${report.Impact.map((impactItem) => 
-                                `\\item \\large ${impactItem.toString()}`).join('\n')} 
+                             ${report.Impact.map((impactItem) =>
+        `\\item \\large ${impactItem.toString()}`).join('\n')} 
                             \\end{enumerate}  
                             
                             
@@ -645,33 +651,34 @@ const generatePdf = async (req, res, next) => {
                 \\end{longtable}
                 \\end{center}
 
+
                 
             \\end{document}
-        `; 
+        `;
 
 
-        // Write LaTeX content to .tex file
-        fs.writeFileSync('bug_report.tex', latexContent);
+    // Write LaTeX content to .tex file
+    fs.writeFileSync('bug_report.tex', latexContent);
 
-        // Compile LaTeX to PDF
-        const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
+    // Compile LaTeX to PDF
+    const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
 
-        // if (pdflatex.status === 0) {
-        //     console.log('PDF report generated successfully.');
-        // } else {
-        //     console.error('Error generating PDF report:', pdflatex.stderr.toString());
-        //     throw new Error('Failed to generate PDF report.');
-        // }
+    // if (pdflatex.status === 0) {
+    //     console.log('PDF report generated successfully.');
+    // } else {
+    //     console.error('Error generating PDF report:', pdflatex.stderr.toString());
+    //     throw new Error('Failed to generate PDF report.');
+    // }
 
-        // Send the generated PDF as a response
-        const pdfBuffer = fs.readFileSync('bug_report.pdf');
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'inline; filename=BugReport.pdf');
-        res.send(pdfBuffer);
+    // Send the generated PDF as a response
+    const pdfBuffer = fs.readFileSync('bug_report.pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=BugReport.pdf');
+    res.send(pdfBuffer);
 
-        console.log("Bug report generated");
+    console.log("Bug report generated");
 
-     
+
 }
 
 const updateBug = async (req, res, next) => {
