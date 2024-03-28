@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.component {
+    /* display: flex; */
+    justify-content: center;
+    margin: 100px auto;
+}
+
+.button {
+    border: solid 1px black;
+    /* display: flex; */
+    margin: 10px auto;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: auto;
+    width: 500px;
+    background-color: darkgrey;
+}
+
+.button button{
+    color: blue;
+    margin-bottom: 10px;
+}

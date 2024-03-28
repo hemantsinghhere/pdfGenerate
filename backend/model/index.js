@@ -27,7 +27,6 @@ const bugReportSchema = new schema({
     Impact: [String],
     Remediation : [String],
     Links: [String],
-    Ref: [String],
     Remediation_effort: String,
 });
 

@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require("mongoose");
 const { router } = require('./routes/bug-routes');
-// const fs = require("fs");
-// const { spawnSync } = require('child_process');
-// const BugReport = require("../backend/model/index.js")
+const cors = require("cors");
+
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 mongoose.connect("mongodb+srv://admin:9zNBhxNG56ua13sg@cluster0.oj7avns.mongodb.net/pdfGenerate?retryWrites=true&w=majority")
     .then(() => app.listen(5000))

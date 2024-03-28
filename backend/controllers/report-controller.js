@@ -367,10 +367,7 @@ const generatePdf = async (req, res, next) => {
                 \\end{tabular}
                 \\end{minipage}
 
-
-                
-
-                
+ 
 
             \\newpage
             \\section{\\large CVSS: Score Vulnerabilities}
