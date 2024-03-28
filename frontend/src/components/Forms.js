@@ -6,24 +6,23 @@ const Forms = () => {
 
     // State to manage form data
     const [formData, setFormData] = useState({
-        title: '',
-        status: '',
-        severity: 'info',
-        owaspCategory: '',
-        cvssScore: '',
-        affectedHost: '',
-        summary: '',
-        proofOfSummary: null,
-        stepsToReproduce: [''],
-        impact: [''],
-        remediationEffect: 'Planned',
-        remediation: [''],
-        links: ['']
+        Title: '',
+        Status: '',
+        Severity: 'info',
+        OWASP_Category: '',
+        CVSS_Score: '',
+        Affected_Hosts: '',
+        Summary: '',
+        images: null,
+        Steps_of_Reproduce: [''],
+        Impact: [''],
+        Remediation_effort: 'Planned',
+        Remediation: [''],
+        Links: ['']
     });
 
     // State to manage CVSS score warning
     const [cvssWarning, setCvssWarning] = useState('');
-
 
 
     // Function to handle form submission
@@ -32,23 +31,23 @@ const Forms = () => {
         // Perform any validation before submitting
 
         try {
-            const response = await axios.post('http://localhost:5000/api/getReport/generatedPdf', formData);
+            const response = await axios.post("https://pdfgenerate-0339.onrender.com/api/getReport/submitReport", formData);
             console.log('Form submitted successfully:', response.data);
             // Reset the form after successful submission
             setFormData({ // Reset form data
-                title: '',
-                status: '',
-                severity: 'info',
-                owaspCategory: '',
-                cvssScore: '',
-                affectedHost: '',
-                summary: '',
-                proofOfSummary: null,
-                stepsToReproduce: [''],
-                impact: [''],
-                remediationEffect: 'Planned',
-                remediation: [''],
-                links: ['']
+                Title: '',
+                Status: '',
+                Severity: 'info',
+                OWASP_Category: '',
+                CVSS_Score: '',
+                Affected_Hosts: '',
+                Summary: '',
+                images: null,
+                Steps_of_Reproduce: [''],
+                Impact: [''],
+                Remediation_effort: 'Planned',
+                Remediation: [''],
+                Links: ['']
             });
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -71,6 +70,15 @@ const Forms = () => {
         }
     };
 
+     // Function to handle file upload
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    setFormData({
+      ...formData,
+      images: file,
+    });
+  };
+
     // Function to add a new empty string to the array fields
     const addField = (field) => {
         setFormData({
@@ -78,17 +86,7 @@ const Forms = () => {
             [field]: [...formData[field], '']
         });
     };
-    // Function to handle changes in array fields (Step of Reproduce, Impact)
-    // const handleArrayChange = (event, field) => {
-    //     const index = parseInt(event.target.dataset.index);
-    //     const value = event.target.value;
-    //     const updatedArray = [...formData[field]];
-    //     updatedArray[index] = value;
-    //     setFormData({
-    //         ...formData,
-    //         [field]: updatedArray
-    //     });
-    // };
+ 
 
 
     return (
@@ -98,23 +96,23 @@ const Forms = () => {
                 <label>Title:</label>
                 <input
                     type="text"
-                    name="title"
-                    value={formData.title}
+                    name="Title"
+                    value={formData.Title}
                     onChange={handleChange}
                     required
                 />
                 <label>Status:</label>
                 <input
                     type="text"
-                    name="status"
-                    value={formData.status}
+                    name="Status"
+                    value={formData.Status}
                     onChange={handleChange}
                     required
                 />
                 <label>Severity:</label>
                 <select
-                    name="severity"
-                    value={formData.severity}
+                    name="Severity"
+                    value={formData.Severity}
                     onChange={handleChange}
                     required
                 >
@@ -126,16 +124,16 @@ const Forms = () => {
                 <label>OWASP Category:</label>
                 <input
                     type="text"
-                    name="owaspCategory"
-                    value={formData.owaspCategory}
+                    name="OWASP_Category"
+                    value={formData.OWASP_Category}
                     onChange={handleChange}
                     required
                 />
                 <label>CVSS Score:</label>
                 <input
                     type="number"
-                    name="cvssScore"
-                    value={formData.cvssScore}
+                    name="CVSS_Score"
+                    value={formData.CVSS_Score}
                     onChange={handleChange}
                     required
                 />
@@ -143,15 +141,15 @@ const Forms = () => {
                 <label>Affected Host:</label>
                 <input
                     type="text"
-                    name="affectedHost"
-                    value={formData.affectedHost}
+                    name="Affected_Hosts"
+                    value={formData.Affected_Hosts}
                     onChange={handleChange}
                     required
                 />
                 <label>Summary:</label>
                 <textarea
-                    name="summary"
-                    value={formData.summary}
+                    name="Summary"
+                    value={formData.Summary}
                     onChange={handleChange}
                     required
                 />
@@ -159,70 +157,70 @@ const Forms = () => {
                 <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => setFormData({ ...formData, proofOfSummary: e.target.files[0] })}
+                    onChange={handleFileUpload}
                     required
                 />
                 <label>Step of Reproduce:</label>
-                {formData.stepsToReproduce.map((step, index) => (
+                {formData.Steps_of_Reproduce.map((step, index) => (
                     <input
                         key={index}
                         type="text"
                         value={step}
                         onChange={(e) => {
-                            const updatedSteps = [...formData.stepsToReproduce];
+                            const updatedSteps = [...formData.Steps_of_Reproduce];
                             updatedSteps[index] = e.target.value;
-                            setFormData({ ...formData, stepsToReproduce: updatedSteps });
+                            setFormData({ ...formData, Steps_of_Reproduce: updatedSteps });
                         }}
                         required
                     />
                 ))}
-                <button type="button" onClick={() => addField('stepsToReproduce')}>
+                <button type="button" onClick={() => addField('Steps Steps_of_Reproduce')}>
                     Add Step
                 </button>
                 <label>Impact:</label>
-                {formData.impact.map((impact, index) => (
+                {formData.Impact.map((impact, index) => (
                     <input
                         key={index}
                         type="text"
                         value={impact}
                         onChange={(e) => {
-                            const updatedImpact = [...formData.impact];
+                            const updatedImpact = [...formData.Impact];
                             updatedImpact[index] = e.target.value;
-                            setFormData({ ...formData, impact: updatedImpact });
+                            setFormData({ ...formData, Impact: updatedImpact });
                         }}
                         required
                     />
                 ))}
-                <button type="button" onClick={() => addField('impact')}>
+                <button type="button" onClick={() => addField('Impact')}>
                     Add Impact
                 </button>
                 <label>Remediation:</label>
-                {formData.remediation.map((remediation, index) => (
+                {formData.Remediation.map((remediation, index) => (
                     <input
                         key={index}
                         type="text"
                         value={remediation}
                         onChange={(e) => {
-                            const updatedRemediation = [...formData.remediation];
+                            const updatedRemediation = [...formData.Remediation];
                             updatedRemediation[index] = e.target.value;
-                            setFormData({ ...formData, remediation: updatedRemediation });
+                            setFormData({ ...formData, Remediation: updatedRemediation });
                         }}
                         required
                     />
                 ))}
-                <button type="button" onClick={() => addField('remediation')}>
+                <button type="button" onClick={() => addField('Remediation')}>
                     Add Remediation
                 </button>
                 <label>Links:</label>
-                {formData.links.map((link, index) => (
+                {formData.Links.map((link, index) => (
                     <input
                         key={index}
                         type="text"
                         value={link}
                         onChange={(e) => {
-                            const updatedLinks = [...formData.links];
+                            const updatedLinks = [...formData.Links];
                             updatedLinks[index] = e.target.value;
-                            setFormData({ ...formData, links: updatedLinks });
+                            setFormData({ ...formData, Links: updatedLinks });
                         }}
                         required
                     />
@@ -233,7 +231,7 @@ const Forms = () => {
                 <label>Remediation Effect:</label>
                 <select
                     name="remediationEffect"
-                    value={formData.remediationEffect}
+                    value={formData.Remediation_effort}
                     onChange={handleChange}
                     required
                 >

@@ -37,7 +37,7 @@ const submitBug = async (req, res, next) => {
         const bugReport = new BugReport(bugReportData);
         await bugReport.save();
         console.log(req.files);
-        res.json({ message: 'Bug report submitted successfully.' });
+        res.json({ message: 'Bug report submitted successfully.'});
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
