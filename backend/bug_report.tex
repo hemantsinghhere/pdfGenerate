@@ -34,7 +34,7 @@
             \usepackage{siunitx}
             \usetikzlibrary{shapes.geometric, positioning}
             \definecolor{darkgray}{RGB}{64,64,64}
-            \definecolor{tablecol}{RGB}{9,62,82}
+            \definecolor{tablecol}{RGB}{54,127,140}
             \definecolor{tableco2}{RGB}{140,207,183}
             \definecolor{textbold}{RGB}{9,62,82}
             \definecolor{lightgray}{RGB}{245, 245, 245}
@@ -165,9 +165,9 @@
                 \large It is recommended to fix all critical, high and medium vulnerabilities before releasing the application to
                     customer.
                 \subsection{\large Scope of Work}
-                \normalsize The scope of this penetration test was limited to the URL mentioned below: \\
-                    \begin{center}
-                        \begin{longtable} {|p{4em}|p{7em}|p{10em}|p{18em}|}
+                \normalsize The scope of this penetration test was limited to the URL mentioned below: 
+
+                        \begin{longtable}[l] {|p{4em}|p{7em}|p{10em}|p{18em}|}
                         \hline 
                         \multicolumn{4}{|p{42.7em}|}{\large \cellcolor{tablecol} \textcolor{white}{\textbf{Scope Details}}} \\
                         \hline
@@ -176,8 +176,7 @@
                         \normalsize 1. & \normalsize XYZ & \normalsize http://65.21.6.24/ & \normalsize XYZ web Application Manually \& using Burpsuite \\
                         \hline
                         \end{longtable}   
-                    \end{center}
-
+                    
                 \subsection{\large Summary of Findings}
                 \begin{itemize}[noitemsep]
                     \item \large Graphical Summary
@@ -249,11 +248,11 @@
                  \hline
                  \normalsize Medium & \normalsize \cellcolor{medium} 4 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low} 2 \\
+                 \normalsize Low & \normalsize \cellcolor{low} 4 \\
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} 14 \\
+                 \normalsize Total & \normalsize \cellcolor{total} 16 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -393,6 +392,10 @@
 
                     \normalsize \center \textbf{3} & \normalsize \textbf{Missing Content Security Policy Header} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  4.2 \\
                     \hline
+                    
+
+                    \normalsize \center \textbf{4} & \normalsize \textbf{Application Does Not Implement HSTS Best Practices} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.0 \\
+                    \hline
                      
                 \end{longtable}   
             \end{center}
@@ -424,6 +427,8 @@
                     Inadequate, Inconsistent or Missing Cookie Attributes & Planned \\
                     \hline
                     Missing Content Security Policy Header & Planned \\
+                    \hline
+                    Application Does Not Implement HSTS Best Practices & Planned \\
                     \hline\end{longtable}
             \end{center}  
             
@@ -631,6 +636,73 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
                             \begin{enumerate}[leftmargin=0.5cm, ]
                                 
                             \item \large \underline{\href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}}
+                            \end{enumerate}
+                    
+                \end{description}
+
+                \newpage
+                \subsection{\large Application Does Not Implement HSTS Best Practices}
+                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                    \item \large \textbf{Status:} New
+                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
+                    \item \large \textbf{OWASP Category: Security Misconfiguration}
+                    \item \large \textbf{CVSS Score:} 2.0 
+                    \item \large \textbf{Affected Hosts/URLs:}
+                           \begin{itemize} 
+                           \item \large \href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}
+                           \end{itemize}
+                    \item \large \textbf{Summary:} \\  HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
+ The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
+
+HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
+ The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
+HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
+ The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
+
+                    \item \large \textbf{Steps of Reproduce:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                             \item \large Log in to the Aurm Anfroid/IOS application.
+
+                             \item \large Go to Profile and click on Nominee Tab.
+
+                             \item \large Click on Add Nominee.
+
+                             \item \large Now Capture the vulnerable HTTP request and replace the account id in the API request witth your Authtoken. Here Account id belongs to the victim's account.
+
+                             \item \large And place any random number in the RequestBody.
+                             \end{enumerate}
+
+                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png}} 
+
+
+                    
+
+                    \item \large \textbf{Impact:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
+\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse 
+                            \end{enumerate}  
+                            
+                            
+                    \item \large \textbf{Remediation:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm]
+                             
+                                \item \large  Introduce a strong password policy that ensures password length, complexity, reuse and aging.
+
+                                \item \large Additionally implement two factor authentication methods for more authentication controls.
+                            \end{enumerate}
+
+                    \item \large \textbf{Reference:}
+                            \linespread{1.0}
+                            \begin{enumerate}[leftmargin=0.5cm, ]
+                                
+                            \item \large \underline{\href{https://www.techtarget.com/searchsecurity/definition/email-spoofing.} {https://www.techtarget.com/searchsecurity/definition/email-spoofing.}}
+
+                            \item \large \underline{\href{https://www.appsecmonkey.com/blog/session-fixation} {https://www.appsecmonkey.com/blog/session-fixation}}
                             \end{enumerate}
                     
                 \end{description}

@@ -143,7 +143,7 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{siunitx}
             \\usetikzlibrary{shapes.geometric, positioning}
             \\definecolor{darkgray}{RGB}{64,64,64}
-            \\definecolor{tablecol}{RGB}{9,62,82}
+            \\definecolor{tablecol}{RGB}{54,127,140}
             \\definecolor{tableco2}{RGB}{140,207,183}
             \\definecolor{textbold}{RGB}{9,62,82}
             \\definecolor{lightgray}{RGB}{245, 245, 245}
@@ -274,9 +274,9 @@ const generatePdf = async (req, res, next) => {
                 \\large It is recommended to fix all critical, high and medium vulnerabilities before releasing the application to
                     customer.
                 \\subsection{\\large Scope of Work}
-                \\normalsize The scope of this penetration test was limited to the URL mentioned below: \\\\
-                    \\begin{center}
-                        \\begin{longtable} {|p{4em}|p{7em}|p{10em}|p{18em}|}
+                \\normalsize The scope of this penetration test was limited to the URL mentioned below: 
+
+                        \\begin{longtable}[l] {|p{4em}|p{7em}|p{10em}|p{18em}|}
                         \\hline 
                         \\multicolumn{4}{|p{42.7em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Scope Details}}} \\\\
                         \\hline
@@ -285,8 +285,7 @@ const generatePdf = async (req, res, next) => {
                         \\normalsize 1. & \\normalsize XYZ & \\normalsize http://65.21.6.24/ & \\normalsize XYZ web Application Manually \\& using Burpsuite \\\\
                         \\hline
                         \\end{longtable}   
-                    \\end{center}
-
+                    
                 \\subsection{\\large Summary of Findings}
                 \\begin{itemize}[noitemsep]
                     \\item \\large Graphical Summary

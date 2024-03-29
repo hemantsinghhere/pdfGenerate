@@ -25,16 +25,12 @@ const Forms = () => {
     const [cvssWarning, setCvssWarning] = useState('');
 
 
-    // Function to handle form submission
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        // Perform any validation before submitting
-
-        try {
-            const response = await axios.post("https://pdfgenerate-0339.onrender.com/api/getReport/submitReport", formData);
+    const sendRequest = async () => {
+        
+            const response = await axios.post('http://localhost:5000/api/getReport/submitReport', formData);
             console.log('Form submitted successfully:', response.data);
             // Reset the form after successful submission
-            setFormData({ // Reset form data
+            setFormData({
                 Title: '',
                 Status: '',
                 Severity: 'info',
@@ -47,19 +43,23 @@ const Forms = () => {
                 Impact: [''],
                 Remediation_effort: 'Planned',
                 Remediation: [''],
-                Links: ['']
+                Links: [''],
             });
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            // Handle error
-        }
+
+            return response.data;
+        
     };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        sendRequest();
+      };
 
     // Function to handle form field changes
     const handleChange = (event) => {
         const { name, value } = event.target;
         // Special handling for CVSS score
-        if (name === 'cvssScore' && (value < 0 || value > 10)) {
+        if (name === 'CVSS_Score' && (value < 0 || value > 10)) {
             setCvssWarning('CVSS score must be between 0.0 and 10.0');
         } else {
             setCvssWarning('');
@@ -70,14 +70,14 @@ const Forms = () => {
         }
     };
 
-     // Function to handle file upload
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    setFormData({
-      ...formData,
-      images: file,
-    });
-  };
+    // Function to handle file upload
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        setFormData({
+            ...formData,
+            images: file,
+        });
+    };
 
     // Function to add a new empty string to the array fields
     const addField = (field) => {
@@ -86,7 +86,7 @@ const Forms = () => {
             [field]: [...formData[field], '']
         });
     };
- 
+
 
 
     return (
