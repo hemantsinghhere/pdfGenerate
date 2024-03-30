@@ -22,7 +22,9 @@ const bugReport = async (req, res, next) => {
 const submitBug = async (req, res, next) => {
     const bugReportData = req.body;
     try {
-
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded.' });
+        }
         // Extract image data and content type
         const images = {
             data: req.file.buffer,

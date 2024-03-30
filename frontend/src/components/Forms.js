@@ -26,8 +26,14 @@ const Forms = () => {
 
 
     const sendRequest = async () => {
-        
-            const response = await axios.post('http://localhost:5000/api/getReport/submitReport', formData);
+            console.log(formData)
+            const response = await axios.post('https://pdfgenerate-0339.onrender.com/api/getReport/submitReport', formData,{
+                headers: {
+                    'Content-Type': "multipart/form-data",
+                  },
+            });
+
+
             console.log('Form submitted successfully:', response.data);
             // Reset the form after successful submission
             setFormData({
@@ -52,7 +58,7 @@ const Forms = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        sendRequest();
+        sendRequest().then((data) => console.log(data));
       };
 
     // Function to handle form field changes
@@ -92,7 +98,7 @@ const Forms = () => {
     return (
         <div className="form-container">
             <h2>Submit Form</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <label>Title:</label>
                 <input
                     type="text"
@@ -174,7 +180,7 @@ const Forms = () => {
                         required
                     />
                 ))}
-                <button type="button" onClick={() => addField('Steps Steps_of_Reproduce')}>
+                <button type="button" onClick={() => addField('Steps_of_Reproduce')}>
                     Add Step
                 </button>
                 <label>Impact:</label>
@@ -225,12 +231,12 @@ const Forms = () => {
                         required
                     />
                 ))}
-                <button type="button" onClick={() => addField('links')}>
+                <button type="button" onClick={() => addField('Links')}>
                     Add Link
                 </button>
                 <label>Remediation Effect:</label>
                 <select
-                    name="remediationEffect"
+                    name="Remediation_effort"
                     value={formData.Remediation_effort}
                     onChange={handleChange}
                     required
@@ -238,6 +244,7 @@ const Forms = () => {
                     <option value="Planned">Planned</option>
                     <option value="Quick">Quick</option>
                 </select>
+                
                 <button type="submit">Submit</button>
             </form>
         </div>
