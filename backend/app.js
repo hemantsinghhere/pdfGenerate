@@ -12,7 +12,6 @@ mongoose.connect("mongodb+srv://admin:9zNBhxNG56ua13sg@cluster0.oj7avns.mongodb.
     .then(() => app.listen(5000))
     .then(() => console.log("Connected to database"))
     .catch((err) => console.log(err));
-
     
 app.use("/api/getReport", router);
 app.use("/api", (req, res, next) => {

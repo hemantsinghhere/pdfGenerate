@@ -23,7 +23,7 @@ const bugReportSchema = new schema({
     Affected_Hosts : String,
     Summary : String,
     Steps_of_Reproduce: [String],
-    Proof_of_concept: imageSchema,
+    Proof_of_concept: [imageSchema],
     Impact: [String],
     Remediation : [String],
     Links: [String],

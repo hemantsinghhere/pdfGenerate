@@ -13,7 +13,7 @@ const Forms = () => {
         CVSS_Score: '',
         Affected_Hosts: '',
         Summary: '',
-        images: null,
+        images: [],
         Steps_of_Reproduce: [''],
         Impact: [''],
         Remediation_effort: 'Planned',
@@ -24,18 +24,75 @@ const Forms = () => {
     // State to manage CVSS score warning
     const [cvssWarning, setCvssWarning] = useState('');
 
-
+    // http://localhost:5000/api/getReport/submitReport
+    // https://pdfgenerate-0339.onrender.com/api/getReport/submitReport
     const sendRequest = async () => {
-            console.log(formData)
-            const response = await axios.post('https://pdfgenerate-0339.onrender.com/api/getReport/submitReport', formData,{
-                headers: {
-                    'Content-Type': "multipart/form-data",
-                  },
+        console.log(formData)
+        const response = await axios.post('http://localhost:5000/api/getReport/submitReport', formData, {
+            headers: {
+                'Content-Type': "multipart/form-data",
+            },
+        });
+
+
+        console.log('Form submitted successfully:', response.data);
+        // Reset the form after successful submission
+        setFormData({
+            Title: '',
+            Status: '',
+            Severity: 'info',
+            OWASP_Category: '',
+            CVSS_Score: '',
+            Affected_Hosts: '',
+            Summary: '',
+            images: [],
+            Steps_of_Reproduce: [''],
+            Impact: [''],
+            Remediation_effort: 'Planned',
+            Remediation: [''],
+            Links: [''],
+        });
+
+        return response.data;
+
+    };
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+
+
+    //     const formDataToSubmit = new FormData();
+    //     Object.entries(formData).forEach(([key, value]) => {
+    //         if (key === 'images') {
+    //             for (let i = 0; i < value.length; i++) {
+    //                 formDataToSubmit.append('images', value[i]);
+    //             }
+    //         } else {
+    //             formDataToSubmit.append(key, value);
+    //         }
+    //     });
+
+    //     sendRequest().then((data) => console.log(data));
+    // };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const formDataToSubmit = new FormData();
+        for (const [key, value] of Object.entries(formData)) {
+            if (key === 'images') {
+                for (let i = 0; i < value.length; i++) {
+                    formDataToSubmit.append('images', value[i]);
+                }
+            } else {
+                formDataToSubmit.append(key, value);
+            }
+        }
+
+        try {
+            await axios.post('http://localhost:5000/api/getReport/submitReport', formDataToSubmit, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
-
-
-            console.log('Form submitted successfully:', response.data);
-            // Reset the form after successful submission
+            console.log('Form submitted successfully');
             setFormData({
                 Title: '',
                 Status: '',
@@ -44,22 +101,17 @@ const Forms = () => {
                 CVSS_Score: '',
                 Affected_Hosts: '',
                 Summary: '',
-                images: null,
+                images: [],
                 Steps_of_Reproduce: [''],
                 Impact: [''],
                 Remediation_effort: 'Planned',
                 Remediation: [''],
-                Links: [''],
+                Links: ['']
             });
-
-            return response.data;
-        
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        sendRequest().then((data) => console.log(data));
-      };
 
     // Function to handle form field changes
     const handleChange = (event) => {
@@ -78,10 +130,10 @@ const Forms = () => {
 
     // Function to handle file upload
     const handleFileUpload = (event) => {
-        const file = event.target.files[0];
+        const files = Array.from(event.target.files);
         setFormData({
             ...formData,
-            images: file,
+            images: files,
         });
     };
 
@@ -164,6 +216,7 @@ const Forms = () => {
                     type="file"
                     accept="image/*"
                     onChange={handleFileUpload}
+                    multiple
                     required
                 />
                 <label>Step of Reproduce:</label>
@@ -217,7 +270,7 @@ const Forms = () => {
                 <button type="button" onClick={() => addField('Remediation')}>
                     Add Remediation
                 </button>
-                <label>Links:</label>
+                <label>Reference:</label>
                 {formData.Links.map((link, index) => (
                     <input
                         key={index}
@@ -244,7 +297,7 @@ const Forms = () => {
                     <option value="Planned">Planned</option>
                     <option value="Quick">Quick</option>
                 </select>
-                
+
                 <button type="submit">Submit</button>
             </form>
         </div>

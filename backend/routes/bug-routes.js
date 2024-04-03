@@ -14,7 +14,7 @@ const router = express.Router();
 router.get("/", bugReport );
 
 
-router.post("/submitReport",upload.single('images'), submitBug);
+router.post("/submitReport",upload.array("images"), submitBug);
 router.get("/generatedPdf", generatePdf)
 router.put("/update/:id", updateBug);
 router.get("/:id", getBugById);

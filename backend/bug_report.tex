@@ -32,6 +32,7 @@
             \usepackage{wheelchart}
             \usetikzlibrary{decorations.markings}
             \usepackage{siunitx}
+            \usepackage{eso-pic}
             \usetikzlibrary{shapes.geometric, positioning}
             \definecolor{darkgray}{RGB}{64,64,64}
             \definecolor{tablecol}{RGB}{54,127,140}
@@ -86,6 +87,8 @@
                 bottom=3cm,
             }
 
+            
+
             \backgroundsetup{
                 scale=1,
                 angle=0,
@@ -98,7 +101,13 @@
                     }
                 }
 
-            
+            \newcommand{\PageBorder}{
+                \begin{tikzpicture}[remember picture, overlay]
+                    \draw[line width=1pt] ($(current page.north west)+(0.3in, -0.3in)$) rectangle ($(current page.south east)+(-0.3in, 0.3in)$);
+                \end{tikzpicture}
+            }
+
+            \AddToShipoutPictureBG{\PageBorder}
 
             \makeatletter
             \renewcommand{\section}{\@startsection{section}{1}{\z@}%
@@ -121,6 +130,8 @@
             {\contentslabel{2em}}
             {} % numberless format
             {\titlerule*[0.5pc]{.}\contentspage}
+
+            \renewcommand{\@}{\space\ignorespaces}
 
             \begin{document}
 
@@ -196,10 +207,10 @@
                 \centering
                 \pie[color={critical, high, medium, low, info}, text=inside]{
                     0/Critical,
-                    57/High,
-                    29/Medium,
-                    14/Low,
-                    0/Info
+                    0/High,
+                    0/Medium,
+                    66.66666666666666/Low,
+                    33.33333333333333/Info
                 }
                 \end{tikzpicture}
 
@@ -244,15 +255,15 @@
                  \hline
                  \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{high} 8 \\
+                 \normalsize High & \normalsize \cellcolor{high} 0 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{medium} 4 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium} 0 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low} 4 \\
+                 \normalsize Low & \normalsize \cellcolor{low} 2 \\
                  \hline
-                 \normalsize Informational & \normalsize \cellcolor{info} 0 \\
+                 \normalsize Informational & \normalsize \cellcolor{info} 1 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} 16 \\
+                 \normalsize Total & \normalsize \cellcolor{total} 3 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -382,19 +393,15 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center \textbf{1} & \normalsize \textbf{Application Does Not Implement HSTS Best Practices} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.0 \\
+                    \normalsize \center \textbf{1} & \normalsize \textbf{title} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  0 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{2} & \normalsize \textbf{Inadequate, Inconsistent or Missing Cookie Attributes} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  8.0 \\
+                    \normalsize \center \textbf{2} & \normalsize \textbf{bigReport} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  2.5 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{3} & \normalsize \textbf{Missing Content Security Policy Header} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  4.2 \\
-                    \hline
-                    
-
-                    \normalsize \center \textbf{4} & \normalsize \textbf{Application Does Not Implement HSTS Best Practices} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.0 \\
+                    \normalsize \center \textbf{3} & \normalsize \textbf{form} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  2.6 \\
                     \hline
                      
                 \end{longtable}   
@@ -422,292 +429,159 @@
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
             \hline
             
-                    Application Does Not Implement HSTS Best Practices & Planned \\
+                    title & Planned \\
                     \hline
-                    Inadequate, Inconsistent or Missing Cookie Attributes & Planned \\
+                    bigReport & Planned \\
                     \hline
-                    Missing Content Security Policy Header & Planned \\
-                    \hline
-                    Application Does Not Implement HSTS Best Practices & Planned \\
+                    form & Planned \\
                     \hline\end{longtable}
-            \end{center}  
+            \end{center}
             
-                \newpage
-                \subsection{\large Application Does Not Implement HSTS Best Practices}
-                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                    \item \large \textbf{Status:} New
-                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
-                    \item \large \textbf{OWASP Category: Security Misconfiguration}
-                    \item \large \textbf{CVSS Score:} 2.0 
-                    \item \large \textbf{Affected Hosts/URLs:}
-                           \begin{itemize} 
-                           \item \large \href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}
-                           \end{itemize}
-                    \item \large \textbf{Summary:} \\  HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
+                    \newpage
+                    \subsection{\large title}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} new
+                        \item \large \textbf{Severity: \textcolor{infotext} {info}}
+                        \item \large \textbf{OWASP Category: severity}
+                        \item \large \textbf{CVSS Score:} 0 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \href{affected} {affected}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  summary
 
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
+                        \item \large \textbf{Screenshot:} \\ \\
+                            \includegraphics[width=1.0\textwidth]{temp-image-0-0.png}
+\includegraphics[width=1.0\textwidth]{temp-image-0-1.png}
+\includegraphics[width=1.0\textwidth]{temp-image-0-2.png}
 
-                    \item \large \textbf{Steps of Reproduce:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                             \item \large Log in to the Aurm Anfroid/IOS application.
-
-                             \item \large Go to Profile and click on Nominee Tab.
-
-                             \item \large Click on Add Nominee.
-
-                             \item \large Now Capture the vulnerable HTTP request and replace the account id in the API request witth your Authtoken. Here Account id belongs to the victim's account.
-
-                             \item \large And place any random number in the RequestBody.
-                             \end{enumerate}
-
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png}} 
-
-
-                    
-
-                    \item \large \textbf{Impact:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
-\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse 
-                            \end{enumerate}  
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
+                        \item \large step
+                        \end{enumerate}
+                        
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large impact 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
-                    \item \large \textbf{Remediation:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                                \item \large  Introduce a strong password policy that ensures password length, complexity, reuse and aging.
+                        \item \large remediation
+                        \end{enumerate}
 
-                                \item \large Additionally implement two factor authentication methods for more authentication controls.
-                            \end{enumerate}
-
-                    \item \large \textbf{Reference:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm, ]
-                                
-                            \item \large \underline{\href{https://www.techtarget.com/searchsecurity/definition/email-spoofing.} {https://www.techtarget.com/searchsecurity/definition/email-spoofing.}}
-
-                            \item \large \underline{\href{https://www.appsecmonkey.com/blog/session-fixation} {https://www.appsecmonkey.com/blog/session-fixation}}
-                            \end{enumerate}
-                    
-                \end{description}
-
-                \newpage
-                \subsection{\large Inadequate, Inconsistent or Missing Cookie Attributes}
-                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                    \item \large \textbf{Status:} New
-                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
-                    \item \large \textbf{OWASP Category: Security Misconfiguration}
-                    \item \large \textbf{CVSS Score:} 8.0 
-                    \item \large \textbf{Affected Hosts/URLs:}
-                           \begin{itemize} 
-                           \item \large \href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}
-                           \end{itemize}
-                    \item \large \textbf{Summary:} \\  HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-                    \item \large \textbf{Steps of Reproduce:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                             \item \large Open any Browser.
-
-                             \item \large Type the Ip in browser url box. IP is 3.109.225.159:80
-
-                             \item \large You will see that browser is showing Not Secure for this IP and asking for visit this IP with own your risk.
-
-                             \item \large You will see that browser is showing `Not Secure` for this IP and asking for visit this IP with own your risk.
-
-                             \item \large And when You visit it will take you to another site. Which does not come under the aurn network.
-                             \end{enumerate}
-
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png}} 
-
-
-                    
-
-                    \item \large \textbf{Impact:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
-\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse. 
-                            \end{enumerate}  
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm, ]
                             
-                            
-                    \item \large \textbf{Remediation:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                                \item \large Efficient algorithms should be used by the session management controls to ensure the random generation of session identifiers.
+                        \item \large \underline{\href{links} {links}}
+                        \end{enumerate}
 
-
-                                \item \large  Ensure that the logging out functionality terminates the associated connection/session entirely.
-
-                                \item \large Generate a new session identifier when a user re-authenticates or opens a new browser session.
-
-                                \item \large Appropriate access controls should be implemented to protect all server-side session data from unauthorized access by other users.
-                            \end{enumerate}
-
-                    \item \large \textbf{Reference:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm, ]
-                                
-                            \item \large \underline{\href{https://hstspreload.org} {https://hstspreload.org}}
-
-                            \item \large \underline{\href{https://capec.mitre.org/data/definitions/593.html} {https://capec.mitre.org/data/definitions/593.html}}
-
-                            \item \large \underline{\href{https://www.contrastsecurity.com/glossary/session-hijacking} {https://www.contrastsecurity.com/glossary/session-hijacking}}
-                            \end{enumerate}
+                    \end{description}
                     
-                \end{description}
-
-                \newpage
-                \subsection{\large Missing Content Security Policy Header}
-                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                    \item \large \textbf{Status:} New
-                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
-                    \item \large \textbf{OWASP Category: Security Misconfiguration}
-                    \item \large \textbf{CVSS Score:} 4.2 
-                    \item \large \textbf{Affected Hosts/URLs:}
-                           \begin{itemize} 
-                           \item \large \href{https://65.21.6.24/dashBoard} {https://65.21.6.24/dashBoard}
-                           \end{itemize}
-                    \item \large \textbf{Summary:} \\  HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-                    \item \large \textbf{Steps of Reproduce:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                             \item \large Log in to the Aurm Anfroid/IOS application
-
-                             \item \large Open in any Browser.
-
-                             \item \large You will see that browser is showing Not Secure for this IP and asking for visit this IP with own your risk.
-                             \end{enumerate}
-
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png}} 
-
-
                     
+                    \newpage
+                    \subsection{\large bigReport}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} new
+                        \item \large \textbf{Severity: \textcolor{infotext} {info}}
+                        \item \large \textbf{OWASP Category: severity}
+                        \item \large \textbf{CVSS Score:} 2.5 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \href{affected} {affected}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  summary
 
-                    \item \large \textbf{Impact:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             \item \large Publicly Opened Ports can be used to leverage vulnerability.
-\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse. 
-                            \end{enumerate}  
+                        \item \large \textbf{Screenshot:} \\ \\
+                            \includegraphics[width=1.0\textwidth]{temp-image-1-0.png}
+\includegraphics[width=1.0\textwidth]{temp-image-1-1.png}
+
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
+                        \item \large step
+                        \end{enumerate}
+                        
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large impact 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
-                    \item \large \textbf{Remediation:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                                \item \large  Use cookies marked as HttpOnly and Secure to set and store session identifiers.
+                        \item \large remediation
+                        \end{enumerate}
 
-                                \item \large  Never use GET or POST variables to transmit session IDs.
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm, ]
+                            
+                        \item \large \underline{\href{links} {links}}
+                        \end{enumerate}
 
-                                \item \large  Change the Session ID after login. The server should generate a new Session ID and set it as a cookie after the user has signed in.
-
-                                \item \large Provide a logout feature and expire old sessions.
-
-                                \item \large  Set a time limit for old session IDs.
-                            \end{enumerate}
-
-                    \item \large \textbf{Reference:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm, ]
-                                
-                            \item \large \underline{\href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}}
-                            \end{enumerate}
+                    \end{description}
                     
-                \end{description}
-
-                \newpage
-                \subsection{\large Application Does Not Implement HSTS Best Practices}
-                \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                    \item \large \textbf{Status:} New
-                    \item \large \textbf{Severity: \textcolor{infotext} {Informational}}
-                    \item \large \textbf{OWASP Category: Security Misconfiguration}
-                    \item \large \textbf{CVSS Score:} 2.0 
-                    \item \large \textbf{Affected Hosts/URLs:}
-                           \begin{itemize} 
-                           \item \large \href{http://65.21.6.24/dashBoard} {http://65.21.6.24/dashBoard}
-                           \end{itemize}
-                    \item \large \textbf{Summary:} \\  HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to a web site using HTTPS. It was detected that your web application's HTTP StrictTransport Security (HSTS) implementation is not as strict as is typically advisable.
- The browser will expire the HSTS header after the number of seconds configured in the max-age attribute. HSTS can be used to prevent and/or mitigate some types of man-in-the-middle (MitM) attacks 
-
-                    \item \large \textbf{Steps of Reproduce:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                             \item \large Log in to the Aurm Anfroid/IOS application.
-
-                             \item \large Go to Profile and click on Nominee Tab.
-
-                             \item \large Click on Add Nominee.
-
-                             \item \large Now Capture the vulnerable HTTP request and replace the account id in the API request witth your Authtoken. Here Account id belongs to the victim's account.
-
-                             \item \large And place any random number in the RequestBody.
-                             \end{enumerate}
-
-                    \item \large \textbf{proof of concept: \\ \includegraphics[width=1.0\textwidth]{2.png}} 
-
-
                     
+                    \newpage
+                    \subsection{\large form}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} new
+                        \item \large \textbf{Severity: \textcolor{infotext} {info}}
+                        \item \large \textbf{OWASP Category: severity}
+                        \item \large \textbf{CVSS Score:} 2.6 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \href{host} {host}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  summary
 
-                    \item \large \textbf{Impact:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             \item \large Publicly Opened Ports can be used to leverage any vulnerability.
-\item \large Expired SSL certificate means data might not be encrypted, making it vulnerable to interception and misuse 
-                            \end{enumerate}  
+                        \item \large \textbf{Screenshot:} \\ \\
+                            \includegraphics[width=1.0\textwidth]{temp-image-2-0.png}
+\includegraphics[width=1.0\textwidth]{temp-image-2-1.png}
+
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
+                        \item \large step
+                        \end{enumerate}
+                        
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large impact 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
                             
-                    \item \large \textbf{Remediation:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm]
-                             
-                                \item \large  Introduce a strong password policy that ensures password length, complexity, reuse and aging.
+                        \item \large remediation
+                        \end{enumerate}
 
-                                \item \large Additionally implement two factor authentication methods for more authentication controls.
-                            \end{enumerate}
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm, ]
+                            
+                        \item \large \underline{\href{links} {links}}
+                        \end{enumerate}
 
-                    \item \large \textbf{Reference:}
-                            \linespread{1.0}
-                            \begin{enumerate}[leftmargin=0.5cm, ]
-                                
-                            \item \large \underline{\href{https://www.techtarget.com/searchsecurity/definition/email-spoofing.} {https://www.techtarget.com/searchsecurity/definition/email-spoofing.}}
-
-                            \item \large \underline{\href{https://www.appsecmonkey.com/blog/session-fixation} {https://www.appsecmonkey.com/blog/session-fixation}}
-                            \end{enumerate}
+                    \end{description}
                     
-                \end{description}
-
-
+                    
             \newpage
             \section{\large Annexures}
                 \subsection{\large OWASP TOP 10:2021}
@@ -724,7 +598,7 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
                 permissions. Failures typically lead to unauthorized information disclosure, modification,
                 or destruction of all data or performing a business function outside the user's limits. \\
                 \hline
-                \normalsize \textbf{A02:2021 - Cryptographic Failures} & 
+                \normalsize \textbf{A02:2021-Cryptographic Failures} & 
                 \normalsize Previously known as Sensitive Data Exposure, Cryptographic Failures involve protecting
                 data in transit and at rest. This includes passwords, credit card numbers, health records,
                 personal information, and business secrets that require extra protection, especially if that
@@ -756,13 +630,13 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
                 vulnerabilities may undermine application defences and enable a range of possible attacks
                 and impacts. \\
                 \hline
-                \normalsize \textbf{A07:2021- Identification and Authentication Failures} & 
+                \normalsize \textbf{A07:2021-Identification and Authentication Failures} & 
                 \normalsize Application functions related to authentication and session management are often
                 implemented incorrectly, allowing attackers to compromise passwords, keys, or session
                 tokens, or to exploit other implementation flaws to assume other users' identities
                 (temporarily or permanently). \\
                 \hline
-                \normalsize \textbf{A08:2021 - Software and Data Integrity Failures (Currently out of scope)} & 
+                \normalsize \textbf{A08:2021-Software and Data Integrity Failures (Currently out of scope)} & 
                 \normalsize Software and data integrity failures relate to code and infrastructure that does not protect
                 against integrity violations. This new category is making assumptions related to software
                 updates, critical data, and CI/CD pipelines without verifying integrity. \\
@@ -798,9 +672,5 @@ HTTP Strict Transport Security (HSTS) instructs a web browser to only connect to
                 \normalsize \textbf{Nmap} & \normalsize \textbf{Nmap is a network mapper tool to scan for SSL related vulnerabilities} \large https://nmap.org \\
                 \hline
                 \end{longtable}
-                \end{center}
-
-
-                
+                \end{center}   
             \end{document}
-        

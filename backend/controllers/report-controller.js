@@ -1,7 +1,19 @@
 const BugReport = require("../model/index.js");
 const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { exec } = require('child_process');
+
+const imagesDirectory = 'C:/Users/rahur/OneDrive/Desktop/pdfGenerate/backend';
+
+if (!fs.existsSync(imagesDirectory)) {
+    fs.mkdirSync(imagesDirectory, { recursive: true });
+}
+
+
 
 const { spawnSync } = require('child_process');
+const { default: latex } = require("node-latex");
 
 const bugReport = async (req, res, next) => {
     try {
@@ -22,14 +34,16 @@ const bugReport = async (req, res, next) => {
 const submitBug = async (req, res, next) => {
     const bugReportData = req.body;
     try {
-        if (!req.file) {
+        if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
-        // Extract image data and content type
-        const images = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype
-        };
+
+
+        // Extract image data and content type for each uploaded image
+        const images = req.files.map(file => ({
+            data: file.buffer,
+            contentType: file.mimetype
+        }));
 
 
         // Add images to the bug report data
@@ -38,8 +52,7 @@ const submitBug = async (req, res, next) => {
         // Create a new BugReport document and save it to the database
         const bugReport = new BugReport(bugReportData);
         await bugReport.save();
-        console.log(req.files);
-        res.json({ message: 'Bug report submitted successfully.'});
+        res.json({ message: 'Bug report submitted successfully.' });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -52,33 +65,37 @@ const generatePdf = async (req, res, next) => {
 
     const bugReports = await BugReport.find({});
 
-   
+
 
     let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
     for (const report of bugReports) {
         const cvssScore = parseFloat(report.CVSS_Score.toString());
-        if (cvssScore >= 0.0 && cvssScore < 4.0) {
-            low += cvssScore;
+        if (cvssScore > 0.0 && cvssScore < 4.0) {
+            low++;
         }
         else if (cvssScore >= 4.0 && cvssScore < 7.0) {
-            medium += cvssScore;
+            medium++;
         }
         else if (cvssScore >= 7.0 && cvssScore < 9.0) {
-            high += cvssScore;
+            high++;
+        }
+        else if(cvssScore == 0.0 || cvssScore == 0){
+            info++;
         }
         else {
-            critical += cvssScore;
+            critical++;
         }
     }
-    const lo = Math.floor(low);
-    const med = Math.floor(medium);
-    const hi = Math.floor(high);
-    const cri = Math.floor(critical);
-    total = lo + med + hi + cri + info;
-    const low_per = (lo / total) * 100;
-    const medium_per = (med / total) * 100;
-    const high_per = (hi / total) * 100;
-    const critical_per = (cri / total) * 100;
+    // const lo = Math.floor(low_per);
+    // const med = Math.floor(medium_per);
+    // const hi = Math.floor(high_per);
+    // const cri = Math.floor(critical_per);
+    // const inf = Math.floor(info_per);
+    total = low + medium + high + critical + info;
+    const low_per = (low / total) * 100;
+    const medium_per = (medium / total) * 100;
+    const high_per = (high / total) * 100;
+    const critical_per = (critical / total) * 100;
     const info_per = (info / total) * 100;
 
 
@@ -108,8 +125,10 @@ const generatePdf = async (req, res, next) => {
 
     table4 += `\\end{longtable}`;
 
+
+
     // LaTeX template
-    const latexContent = `
+    let latexContent = `
             \\documentclass{article}
             \\usepackage{enumitem}
             \\usepackage{roboto}
@@ -143,6 +162,7 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{wheelchart}
             \\usetikzlibrary{decorations.markings}
             \\usepackage{siunitx}
+            \\usepackage{eso-pic}
             \\usetikzlibrary{shapes.geometric, positioning}
             \\definecolor{darkgray}{RGB}{64,64,64}
             \\definecolor{tablecol}{RGB}{54,127,140}
@@ -197,6 +217,8 @@ const generatePdf = async (req, res, next) => {
                 bottom=3cm,
             }
 
+            
+
             \\backgroundsetup{
                 scale=1,
                 angle=0,
@@ -209,7 +231,13 @@ const generatePdf = async (req, res, next) => {
                     }
                 }
 
-            
+            \\newcommand{\\PageBorder}{
+                \\begin{tikzpicture}[remember picture, overlay]
+                    \\draw[line width=1pt] ($(current page.north west)+(0.3in, -0.3in)$) rectangle ($(current page.south east)+(-0.3in, 0.3in)$);
+                \\end{tikzpicture}
+            }
+
+            \\AddToShipoutPictureBG{\\PageBorder}
 
             \\makeatletter
             \\renewcommand{\\section}{\\@startsection{section}{1}{\\z@}%
@@ -232,6 +260,8 @@ const generatePdf = async (req, res, next) => {
             {\\contentslabel{2em}}
             {} % numberless format
             {\\titlerule*[0.5pc]{.}\\contentspage}
+
+            \\renewcommand{\\@}{\\space\\ignorespaces}
 
             \\begin{document}
 
@@ -306,11 +336,11 @@ const generatePdf = async (req, res, next) => {
                 \\begin{tikzpicture}
                 \\centering
                 \\pie[color={critical, high, medium, low, info}, text=inside]{
-                    0/Critical,
-                    57/High,
-                    29/Medium,
-                    14/Low,
-                    0/Info
+                    ${critical_per}/Critical,
+                    ${high_per}/High,
+                    ${medium_per}/Medium,
+                    ${low_per}/Low,
+                    ${info_per}/Info
                 }
                 \\end{tikzpicture}
 
@@ -353,13 +383,13 @@ const generatePdf = async (req, res, next) => {
                 \\hline
                 \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\textbf{Count} \\\\
                  \\hline
-                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} ${cri}  \\\\
+                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} ${critical}  \\\\
                  \\hline
-                 \\normalsize High & \\normalsize \\cellcolor{high} ${hi} \\\\
+                 \\normalsize High & \\normalsize \\cellcolor{high} ${high} \\\\
                  \\hline
-                 \\normalsize Medium & \\normalsize \\cellcolor{medium} ${med} \\\\
+                 \\normalsize Medium & \\normalsize \\cellcolor{medium} ${medium} \\\\
                  \\hline
-                 \\normalsize Low & \\normalsize \\cellcolor{low} ${lo} \\\\
+                 \\normalsize Low & \\normalsize \\cellcolor{low} ${low} \\\\
                  \\hline
                  \\normalsize Informational & \\normalsize \\cellcolor{info} ${info} \\\\
                  \\hline
@@ -505,58 +535,76 @@ const generatePdf = async (req, res, next) => {
             \\ \\ \\ The following findings were made during the assessment.    
             \\begin{center}
                 ${table4}
-            \\end{center}  
-            ${bugReports.map((report, index) => `
-                \\newpage
-                \\subsection{\\large ${report.Title}}
-                \\begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                    \\item \\large \\textbf{Status:} ${report.Status}
-                    \\item \\large \\textbf{Severity: \\textcolor{infotext} {${report.Severity}}}
-                    \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
-                    \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score} 
-                    \\item \\large \\textbf{Affected Hosts/URLs:}
-                           \\begin{itemize} 
-                           \\item \\large \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
-                           \\end{itemize}
-                    \\item \\large \\textbf{Summary:} \\\\  ${report.Summary}
-
-                    \\item \\large \\textbf{Steps of Reproduce:}
-                            \\linespread{1.0}
-                            \\begin{enumerate}[leftmargin=0.5cm]
-                             ${report.Steps_of_Reproduce.map((step) => `
-                             \\item \\large ${step}`).join('\n')}
-                             \\end{enumerate}
-
-                    \\item \\large \\textbf{proof of concept: \\\\ \\includegraphics[width=1.0\\textwidth]{2.png}} 
+            \\end{center}
+            `;
 
 
+
+
+    
+
+            for(let i = 0; i < bugReports.length; i++) {
+                const report = bugReports[i];
+                
+                    latexContent += `
+                    \\newpage
+                    \\subsection{\\large ${report.Title}}
+                    \\begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \\item \\large \\textbf{Status:} ${report.Status}
+                        \\item \\large \\textbf{Severity: \\textcolor{infotext} {${report.Severity}}}
+                        \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
+                        \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score} 
+                        \\item \\large \\textbf{Affected Hosts/URLs:}
+                            \\begin{itemize} 
+                            \\item \\large \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
+                            \\end{itemize}
+                        \\item \\large \\textbf{Summary:} \\\\  ${report.Summary}
+
+                        \\item \\large \\textbf{Screenshot:} \\\\ \\\\
+                            ${report.Proof_of_concept.map((image, imageIndex) => {
+                            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.${getExtensionFromContentType(image.contentType)}`);
+                            const imageFileName = path.basename(imageFilePath);
+                            fs.writeFileSync(imageFilePath, image.data);
+                            return `\\includegraphics[width=1.0\\textwidth]{${imageFileName}}`;
+                        }).join('\n')}
+
+                        \\item \\large \\textbf{Steps of Reproduce:}
+                        \\linespread{1.0}
+                        \\begin{enumerate}[leftmargin=0.5cm]
+                            ${report.Steps_of_Reproduce.map((step) => `
+                        \\item \\large ${step}`).join('\n')}
+                        \\end{enumerate}
+                        
+                        \\item \\large \\textbf{Impact:}
+                        \\linespread{1.0}
+                        \\begin{enumerate}[leftmargin=0.5cm]
+                        ${report.Impact.map((impactItem) =>
+                        `\\item \\large ${impactItem.toString()}`).join('\n')} 
+                        \\end{enumerate}  
+                
+                
+                        \\item \\large \\textbf{Remediation:}
+                        \\linespread{1.0}
+                        \\begin{enumerate}[leftmargin=0.5cm]
+                            ${report.Remediation.map((remediation, index) => `
+                        \\item \\large ${remediation.toString()}`).join('\n')}
+                        \\end{enumerate}
+
+                        \\item \\large \\textbf{Reference:}
+                        \\linespread{1.0}
+                        \\begin{enumerate}[leftmargin=0.5cm, ]
+                            ${report.Links.map((link, index) => `
+                        \\item \\large \\underline{\\href{${link}} {${link.toString()}}}`).join('\n')}
+                        \\end{enumerate}
+
+                    \\end{description}
                     
-
-                    \\item \\large \\textbf{Impact:}
-                            \\linespread{1.0}
-                            \\begin{enumerate}[leftmargin=0.5cm]
-                             ${report.Impact.map((impactItem) =>
-        `\\item \\large ${impactItem.toString()}`).join('\n')} 
-                            \\end{enumerate}  
-                            
-                            
-                    \\item \\large \\textbf{Remediation:}
-                            \\linespread{1.0}
-                            \\begin{enumerate}[leftmargin=0.5cm]
-                             ${report.Remediation.map((remediation, index) => `
-                                \\item \\large ${remediation.toString()}`).join('\n')}
-                            \\end{enumerate}
-
-                    \\item \\large \\textbf{Reference:}
-                            \\linespread{1.0}
-                            \\begin{enumerate}[leftmargin=0.5cm, ]
-                                ${report.Links.map((link, index) => `
-                            \\item \\large \\underline{\\href{${link}} {${link.toString()}}}`).join('\n')}
-                            \\end{enumerate}
-                    
-                \\end{description}`).join('\n')}
+                    `;
+                
+            }
 
 
+    latexContent += `
             \\newpage
             \\section{\\large Annexures}
                 \\subsection{\\large OWASP TOP 10:2021}
@@ -573,7 +621,7 @@ const generatePdf = async (req, res, next) => {
                 permissions. Failures typically lead to unauthorized information disclosure, modification,
                 or destruction of all data or performing a business function outside the user's limits. \\\\
                 \\hline
-                \\normalsize \\textbf{A02:2021 - Cryptographic Failures} & 
+                \\normalsize \\textbf{A02:2021-Cryptographic Failures} & 
                 \\normalsize Previously known as Sensitive Data Exposure, Cryptographic Failures involve protecting
                 data in transit and at rest. This includes passwords, credit card numbers, health records,
                 personal information, and business secrets that require extra protection, especially if that
@@ -605,13 +653,13 @@ const generatePdf = async (req, res, next) => {
                 vulnerabilities may undermine application defences and enable a range of possible attacks
                 and impacts. \\\\
                 \\hline
-                \\normalsize \\textbf{A07:2021- Identification and Authentication Failures} & 
+                \\normalsize \\textbf{A07:2021-Identification and Authentication Failures} & 
                 \\normalsize Application functions related to authentication and session management are often
                 implemented incorrectly, allowing attackers to compromise passwords, keys, or session
                 tokens, or to exploit other implementation flaws to assume other users' identities
                 (temporarily or permanently). \\\\
                 \\hline
-                \\normalsize \\textbf{A08:2021 - Software and Data Integrity Failures (Currently out of scope)} & 
+                \\normalsize \\textbf{A08:2021-Software and Data Integrity Failures (Currently out of scope)} & 
                 \\normalsize Software and data integrity failures relate to code and infrastructure that does not protect
                 against integrity violations. This new category is making assumptions related to software
                 updates, critical data, and CI/CD pipelines without verifying integrity. \\\\
@@ -647,12 +695,11 @@ const generatePdf = async (req, res, next) => {
                 \\normalsize \\textbf{Nmap} & \\normalsize \\textbf{Nmap is a network mapper tool to scan for SSL related vulnerabilities} \\large https://nmap.org \\\\
                 \\hline
                 \\end{longtable}
-                \\end{center}
+                \\end{center}`;
 
+    latexContent += `   
+            \\end{document}`;
 
-                
-            \\end{document}
-        `;
 
 
     // Write LaTeX content to .tex file
@@ -661,12 +708,6 @@ const generatePdf = async (req, res, next) => {
     // Compile LaTeX to PDF
     const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
 
-    // if (pdflatex.status === 0) {
-    //     console.log('PDF report generated successfully.');
-    // } else {
-    //     console.error('Error generating PDF report:', pdflatex.stderr.toString());
-    //     throw new Error('Failed to generate PDF report.');
-    // }
 
     // Send the generated PDF as a response
     const pdfBuffer = fs.readFileSync('bug_report.pdf');
@@ -676,7 +717,30 @@ const generatePdf = async (req, res, next) => {
 
     console.log("Bug report generated");
 
+    // Delete the temporary image files
+    for (let index = 0; index < bugReports.length; index++) {
+        const report = bugReports[index];
+        for (let i = 0; i < report.Proof_of_concept.length; i++) {
+            const imageFilePath = path.join(imagesDirectory, `temp-image-${index}-${i}.${getExtensionFromContentType(report.Proof_of_concept[i].contentType)}`);
+            await fs.promises.unlink(imageFilePath);
+        }
+    }
 
+
+}
+
+function getExtensionFromContentType(contentType) {
+    switch (contentType) {
+        case "image/png":
+            return "png";
+        case "image/jpeg":
+            return "jpg";
+        case "image/gif":
+            return "gif";
+        // Add more cases for other content types as needed
+        default:
+            return "bin";
+    }
 }
 
 const updateBug = async (req, res, next) => {
@@ -702,5 +766,3 @@ const getBugById = async (req, res, next) => {
     }
 }
 module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById };
-
-
