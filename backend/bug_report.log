@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.5)  3 APR 2024 16:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.5)  3 APR 2024 20:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1656,17 +1656,17 @@ Package rerunfilecheck Info: File `bug_report.out' has not changed.
 (rerunfilecheck)             Checksum: BE363B1A465F0144148B98F04C029A83;1842.
  ) 
 Here is how much of TeX's memory you used:
- 34205 strings out of 474457
- 745580 string characters out of 5742755
+ 34206 strings out of 474457
+ 745598 string characters out of 5742755
  1946190 words of memory out of 5000000
- 55923 multiletter control sequences out of 15000+600000
+ 55924 multiletter control sequences out of 15000+600000
  576324 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  117i,15n,121p,1024b,1126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a
 .pfb><C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhv
 r8a.pfb>
-Output written on bug_report.pdf (16 pages, 475475 bytes).
+Output written on bug_report.pdf (16 pages, 475457 bytes).
 PDF statistics:
  242 PDF objects out of 1000 (max. 8388607)
  52 named destinations out of 1000 (max. 500000)

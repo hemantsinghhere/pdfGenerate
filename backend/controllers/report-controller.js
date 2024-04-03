@@ -86,17 +86,25 @@ const generatePdf = async (req, res, next) => {
             critical++;
         }
     }
-    // const lo = Math.floor(low_per);
-    // const med = Math.floor(medium_per);
-    // const hi = Math.floor(high_per);
-    // const cri = Math.floor(critical_per);
-    // const inf = Math.floor(info_per);
+   
+    
     total = low + medium + high + critical + info;
     const low_per = (low / total) * 100;
     const medium_per = (medium / total) * 100;
     const high_per = (high / total) * 100;
     const critical_per = (critical / total) * 100;
     const info_per = (info / total) * 100;
+
+    const lo = parseFloat(low_per).toFixed(1);
+    console.log(lo);
+    const med = parseFloat(medium_per).toFixed(1);
+    console.log(med);
+    const hi = parseFloat(high_per).toFixed(1);
+    console.log(hi);
+    const cri = parseFloat(critical_per).toFixed(1);
+    console.log(cri);
+    const inf = parseFloat(info_per).toFixed(1);
+    console.log(inf);
 
 
     let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
@@ -336,11 +344,11 @@ const generatePdf = async (req, res, next) => {
                 \\begin{tikzpicture}
                 \\centering
                 \\pie[color={critical, high, medium, low, info}, text=inside]{
-                    ${critical_per}/Critical,
-                    ${high_per}/High,
-                    ${medium_per}/Medium,
-                    ${low_per}/Low,
-                    ${info_per}/Info
+                    ${cri}/Critical,
+                    ${hi}/High,
+                    ${med}/Medium,
+                    ${lo}/Low,
+                    ${inf}/Info
                 }
                 \\end{tikzpicture}
 

@@ -26,36 +26,36 @@ const Forms = () => {
 
     // http://localhost:5000/api/getReport/submitReport
     // https://pdfgenerate-0339.onrender.com/api/getReport/submitReport
-    const sendRequest = async () => {
-        console.log(formData)
-        const response = await axios.post('http://localhost:5000/api/getReport/submitReport', formData, {
-            headers: {
-                'Content-Type': "multipart/form-data",
-            },
-        });
+    // const sendRequest = async () => {
+    //     console.log(formData)
+    //     const response = await axios.post('https://pdfgenerate-0339.onrender.com/api/getReport/submitReport', formData, {
+    //         headers: {
+    //             'Content-Type': "multipart/form-data",
+    //         },
+    //     });
 
 
-        console.log('Form submitted successfully:', response.data);
-        // Reset the form after successful submission
-        setFormData({
-            Title: '',
-            Status: '',
-            Severity: 'info',
-            OWASP_Category: '',
-            CVSS_Score: '',
-            Affected_Hosts: '',
-            Summary: '',
-            images: [],
-            Steps_of_Reproduce: [''],
-            Impact: [''],
-            Remediation_effort: 'Planned',
-            Remediation: [''],
-            Links: [''],
-        });
+    //     console.log('Form submitted successfully:', response.data);
+    //     // Reset the form after successful submission
+    //     setFormData({
+    //         Title: '',
+    //         Status: '',
+    //         Severity: 'info',
+    //         OWASP_Category: '',
+    //         CVSS_Score: '',
+    //         Affected_Hosts: '',
+    //         Summary: '',
+    //         images: [],
+    //         Steps_of_Reproduce: [''],
+    //         Impact: [''],
+    //         Remediation_effort: 'Planned',
+    //         Remediation: [''],
+    //         Links: [''],
+    //     });
 
-        return response.data;
+    //     return response.data;
 
-    };
+    // };
 
     // const handleSubmit = (event) => {
     //     event.preventDefault();
@@ -89,7 +89,7 @@ const Forms = () => {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/getReport/submitReport', formDataToSubmit, {
+            await axios.post('https://pdfgenerate-0339.onrender.com/api/getReport/submitReport', formDataToSubmit, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             console.log('Form submitted successfully');
