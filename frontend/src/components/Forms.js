@@ -87,9 +87,9 @@ const Forms = () => {
                 formDataToSubmit.append(key, value);
             }
         }
-
+       
         try {
-            await axios.post('https://pdfgenerate-0339.onrender.com/api/getReport/submitReport', formDataToSubmit, {
+            await axios.post('https://vaptlabs.kalyanofficial.top/api/getReport/submitReport', formDataToSubmit, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             console.log('Form submitted successfully');

@@ -4,10 +4,10 @@ import axios from "axios";
 
 const Buttons = () => {
     const [pdfData, setPdfData] = useState(null);
-
+    // https://vaptlabs.kalyanofficial.top/api/getReport/generatedPdf
     const handleDownloadPdf = async () => {
         try {
-            const response = await axios.get("https://pdfgenerate-0339.onrender.com/api/getReport/generatedPdf", {
+            const response = await axios.get("https://vaptlabs.kalyanofficial.top/api/getReport/generatedPdf", {
                 responseType: 'arraybuffer', // This is important for binary data like PDFs
             });
             setPdfData(new Blob([response.data], { type: 'application/pdf' }));

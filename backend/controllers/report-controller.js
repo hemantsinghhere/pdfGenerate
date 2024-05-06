@@ -4,7 +4,8 @@ const os = require("os");
 const path = require("path");
 const { exec } = require('child_process');
 
-const imagesDirectory = 'C:/Users/rahur/OneDrive/Desktop/pdfGenerate/backend';
+// const imagesDirectory = 'C:/Users/rahur/OneDrive/Desktop/pdfGenerate/backend';
+const imagesDirectory = './Images';
 
 if (!fs.existsSync(imagesDirectory)) {
     fs.mkdirSync(imagesDirectory, { recursive: true });
@@ -546,9 +547,6 @@ const generatePdf = async (req, res, next) => {
             \\end{center}
             `;
 
-
-
-
     
 
             for(let i = 0; i < bugReports.length; i++) {
@@ -573,7 +571,9 @@ const generatePdf = async (req, res, next) => {
                             const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.${getExtensionFromContentType(image.contentType)}`);
                             const imageFileName = path.basename(imageFilePath);
                             fs.writeFileSync(imageFilePath, image.data);
-                            return `\\includegraphics[width=1.0\\textwidth]{${imageFileName}}`;
+                            return `\\includegraphics[width=1.0\\textwidth]{Images/${imageFileName}}`;
+                            // return `hello`;
+                            
                         }).join('\n')}
 
                         \\item \\large \\textbf{Steps of Reproduce:}
@@ -733,8 +733,6 @@ const generatePdf = async (req, res, next) => {
             await fs.promises.unlink(imageFilePath);
         }
     }
-
-
 }
 
 function getExtensionFromContentType(contentType) {
