@@ -15,6 +15,7 @@ if (!fs.existsSync(imagesDirectory)) {
 
 const { spawnSync } = require('child_process');
 const { default: latex } = require("node-latex");
+const { log } = require("console");
 
 const bugReport = async (req, res, next) => {
     try {
@@ -709,18 +710,22 @@ const generatePdf = async (req, res, next) => {
             \\end{document}`;
 
 
-
+    console.log("Generating bug report")
     // Write LaTeX content to .tex file
     fs.writeFileSync('bug_report.tex', latexContent);
 
     // Compile LaTeX to PDF
     const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
 
-
+    console.log("bug report generating");
+    
     // Send the generated PDF as a response
     const pdfBuffer = fs.readFileSync('bug_report.pdf');
+    console.log(pdfBuffer)
     res.setHeader('Content-Type', 'application/pdf');
+    console.log("set header");
     res.setHeader('Content-Disposition', 'inline; filename=BugReport.pdf');
+    console.log("inline filename");
     res.send(pdfBuffer);
 
     console.log("Bug report generated");
