@@ -7,7 +7,7 @@ const Buttons = () => {
     // https://vaptlabs.kalyanofficial.top/api/getReport/generatedPdf
     const handleDownloadPdf = async () => {
         try {
-            const response = await axios.get("https://vaptlabs.kalyanofficial.top/api/getReport/generatedPdf", {
+            const response = await axios.get("http://localhost:5000/api/getReport/generatedPdf", {
                 responseType: 'arraybuffer', // This is important for binary data like PDFs
             });
             setPdfData(new Blob([response.data], { type: 'application/pdf' }));

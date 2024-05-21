@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.5)  13 APR 2024 00:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.5)  8 MAY 2024 22:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1349,21 +1349,21 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [8]
-<Images/temp-image-0-0.png, id=150, 919.0335pt x 389.0535pt>
+<Images/temp-image-0-0.png, id=150, 1157.82562pt x 646.66594pt>
 File: Images/temp-image-0-0.png Graphic file (type png)
 <use Images/temp-image-0-0.png>
 Package pdftex.def Info: Images/temp-image-0-0.png  used on input line 454.
-(pdftex.def)             Requested size: 500.484pt x 211.86668pt.
-<Images/temp-image-0-1.png, id=152, 919.0335pt x 389.0535pt>
+(pdftex.def)             Requested size: 500.484pt x 279.53116pt.
+<Images/temp-image-0-1.png, id=152, 722.7pt x 552.56438pt>
 File: Images/temp-image-0-1.png Graphic file (type png)
 <use Images/temp-image-0-1.png>
 Package pdftex.def Info: Images/temp-image-0-1.png  used on input line 455.
-(pdftex.def)             Requested size: 500.484pt x 211.86668pt.
-<Images/temp-image-0-2.png, id=153, 689.57625pt x 266.79675pt>
+(pdftex.def)             Requested size: 500.484pt x 382.66101pt.
+<Images/temp-image-0-2.png, id=153, 683.55376pt x 575.90157pt>
 File: Images/temp-image-0-2.png Graphic file (type png)
 <use Images/temp-image-0-2.png>
 Package pdftex.def Info: Images/temp-image-0-2.png  used on input line 456.
-(pdftex.def)             Requested size: 500.484pt x 193.6364pt.
+(pdftex.def)             Requested size: 500.484pt x 421.67006pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 453--457
 
@@ -1404,6 +1404,25 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [9 <./Images/temp-image-0-0.png>]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 458.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[10 <./Images/temp-image-0-1.png>]
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
 Package pdftex.def Info: vapt.jpeg  used on input line 489.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
@@ -1420,35 +1439,55 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[10 <./Images/temp-image-0-1.png> <./Images/temp-image-0-2.png>]
-<Images/temp-image-1-0.png, id=171, 823.27576pt x 407.121pt>
+[11 <./Images/temp-image-0-2.png>]
+<Images/temp-image-1-0.png, id=175, 455.301pt x 446.26724pt>
 File: Images/temp-image-1-0.png Graphic file (type png)
 <use Images/temp-image-1-0.png>
 Package pdftex.def Info: Images/temp-image-1-0.png  used on input line 503.
-(pdftex.def)             Requested size: 500.484pt x 247.4986pt.
-<Images/temp-image-1-1.png, id=172, 627.5445pt x 347.49825pt>
+(pdftex.def)             Requested size: 500.484pt x 490.56862pt.
+<Images/temp-image-1-1.png, id=176, 783.52725pt x 450.483pt>
 File: Images/temp-image-1-1.png Graphic file (type png)
 <use Images/temp-image-1-1.png>
 Package pdftex.def Info: Images/temp-image-1-1.png  used on input line 504.
-(pdftex.def)             Requested size: 500.484pt x 277.13997pt.
+(pdftex.def)             Requested size: 500.484pt x 287.75822pt.
+<Images/temp-image-1-2.png, id=177, 578.16pt x 441.44925pt>
+File: Images/temp-image-1-2.png Graphic file (type png)
+<use Images/temp-image-1-2.png>
+Package pdftex.def Info: Images/temp-image-1-2.png  used on input line 505.
+(pdftex.def)             Requested size: 500.484pt x 382.13799pt.
+<Images/temp-image-1-3.png, id=178, 823.27576pt x 407.121pt>
+File: Images/temp-image-1-3.png Graphic file (type png)
+<use Images/temp-image-1-3.png>
+Package pdftex.def Info: Images/temp-image-1-3.png  used on input line 506.
+(pdftex.def)             Requested size: 500.484pt x 247.4986pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 502--505
+Underfull \hbox (badness 10000) in paragraph at lines 502--507
 
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--505
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
 []
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--505
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
+[]
+ []
+
+
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
+[]
+ []
+
+
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
 [] 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 506.
+Package pdftex.def Info: vapt.jpeg  used on input line 507.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1463,10 +1502,10 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[11 <./Images/temp-image-1-0.png>]
+[12]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 537.
+Package pdftex.def Info: vapt.jpeg  used on input line 507.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 
@@ -1482,35 +1521,102 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[12 <./Images/temp-image-1-1.png>]
-<Images/temp-image-2-0.png, id=189, 627.5445pt x 433.62pt>
+[13 <./Images/temp-image-1-0.png>]
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 507.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[14 <./Images/temp-image-1-1.png>]
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 508.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[15 <./Images/temp-image-1-2.png>]
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 539.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[16 <./Images/temp-image-1-3.png>]
+<Images/temp-image-2-0.png, id=210, 787.743pt x 404.712pt>
 File: Images/temp-image-2-0.png Graphic file (type png)
 <use Images/temp-image-2-0.png>
-Package pdftex.def Info: Images/temp-image-2-0.png  used on input line 551.
-(pdftex.def)             Requested size: 500.484pt x 345.8246pt.
-<Images/temp-image-2-1.png, id=190, 620.3175pt x 368.577pt>
+Package pdftex.def Info: Images/temp-image-2-0.png  used on input line 553.
+(pdftex.def)             Requested size: 500.484pt x 257.1313pt.
+<Images/temp-image-2-1.png, id=211, 455.301pt x 446.26724pt>
 File: Images/temp-image-2-1.png Graphic file (type png)
 <use Images/temp-image-2-1.png>
-Package pdftex.def Info: Images/temp-image-2-1.png  used on input line 552.
-(pdftex.def)             Requested size: 500.484pt x 297.37592pt.
+Package pdftex.def Info: Images/temp-image-2-1.png  used on input line 554.
+(pdftex.def)             Requested size: 500.484pt x 490.56862pt.
+<Images/temp-image-2-2.png, id=212, 783.52725pt x 450.483pt>
+File: Images/temp-image-2-2.png Graphic file (type png)
+<use Images/temp-image-2-2.png>
+Package pdftex.def Info: Images/temp-image-2-2.png  used on input line 555.
+(pdftex.def)             Requested size: 500.484pt x 287.75822pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 550--553
+Underfull \hbox (badness 10000) in paragraph at lines 552--556
 
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 550--553
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
 []
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 550--553
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
+[]
+ []
+
+
+Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
 [] 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 554.
+Package pdftex.def Info: vapt.jpeg  used on input line 556.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1525,10 +1631,10 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[13 <./Images/temp-image-2-0.png>]
+[17 <./Images/temp-image-2-0.png>]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 585.
+Package pdftex.def Info: vapt.jpeg  used on input line 557.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 
@@ -1544,74 +1650,93 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[14 <./Images/temp-image-2-1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 596--596
+[18 <./Images/temp-image-2-1.png>]
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 588.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[19 <./Images/temp-image-2-2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 599--599
 []|\T1/phv/b/n/10 A01:2021-Broken
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 601--601
+Underfull \hbox (badness 10000) in paragraph at lines 604--604
 []|\T1/phv/b/n/10 A02:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 601--601
+Underfull \hbox (badness 10000) in paragraph at lines 604--604
 \T1/phv/b/n/10 Cryptographic Fail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 619--619
+Underfull \hbox (badness 10000) in paragraph at lines 622--622
 []|\T1/phv/b/n/10 A05:2021-Security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 626--626
+Underfull \hbox (badness 10000) in paragraph at lines 629--629
 []|\T1/phv/b/n/10 A06:2021-Vulnerable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 633--633
+Underfull \hbox (badness 10000) in paragraph at lines 636--636
 []|\T1/phv/b/n/10 A07:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 633--633
+Underfull \hbox (badness 10000) in paragraph at lines 636--636
 \T1/phv/b/n/10 Identification and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 633--633
+Underfull \hbox (badness 10000) in paragraph at lines 636--636
 \T1/phv/b/n/10 Au-then-ti-ca-tion Fail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 639--639
+Underfull \hbox (badness 10000) in paragraph at lines 642--642
 []|\T1/phv/b/n/10 A08:2021-Software
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 639--639
+Underfull \hbox (badness 10000) in paragraph at lines 642--642
 \T1/phv/b/n/10 and Data In-tegrity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--644
+Underfull \hbox (badness 10000) in paragraph at lines 647--647
 []|\T1/phv/b/n/10 A09:2021-Security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 651--651
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
 []|\T1/phv/b/n/10 A10:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 651--651
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
 \T1/phv/b/n/10 ServerSide Re-quest
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 657.
+Package pdftex.def Info: vapt.jpeg  used on input line 660.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1626,10 +1751,10 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[15]
+[20]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 676.
+Package pdftex.def Info: vapt.jpeg  used on input line 679.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 
@@ -1645,7 +1770,7 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[16] 
+[21] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (bug_report.aux)
  ***********
@@ -1653,22 +1778,22 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `bug_report.out' has not changed.
-(rerunfilecheck)             Checksum: BE363B1A465F0144148B98F04C029A83;1842.
+(rerunfilecheck)             Checksum: C16DAD95301BF491CB809E8350A65CC7;1873.
  ) 
 Here is how much of TeX's memory you used:
- 34206 strings out of 474457
- 745941 string characters out of 5742755
+ 34249 strings out of 474457
+ 747001 string characters out of 5742755
  1946190 words of memory out of 5000000
- 55924 multiletter control sequences out of 15000+600000
+ 55962 multiletter control sequences out of 15000+600000
  576324 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  117i,15n,121p,1024b,1126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a
 .pfb><C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhv
 r8a.pfb>
-Output written on bug_report.pdf (16 pages, 475459 bytes).
+Output written on bug_report.pdf (21 pages, 532671 bytes).
 PDF statistics:
- 242 PDF objects out of 1000 (max. 8388607)
- 52 named destinations out of 1000 (max. 500000)
- 261 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 270 PDF objects out of 1000 (max. 8388607)
+ 57 named destinations out of 1000 (max. 500000)
+ 276 words of extra memory for PDF output out of 10000 (max. 10000000)
 
