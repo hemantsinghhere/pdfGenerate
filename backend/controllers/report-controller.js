@@ -3,9 +3,10 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { exec } = require('child_process');
+const { execSync } = require('child_process');
 
-// const imagesDirectory = 'C:/Users/rahur/OneDrive/Desktop/pdfGenerate/backend';
-const imagesDirectory = './Images';
+
+const imagesDirectory = './Images'; 
 
 if (!fs.existsSync(imagesDirectory)) {
     fs.mkdirSync(imagesDirectory, { recursive: true });
@@ -23,7 +24,7 @@ const bugReport = async (req, res, next) => {
         const bugReports = await BugReport.find({});
 
         // const image = bugReports.map(report)
-        console.log(bugReports)
+        // console.log(bugReports)
         res.json(bugReports);
 
     } catch (err) {
@@ -50,6 +51,14 @@ const submitBug = async (req, res, next) => {
 
         // Add images to the bug report data
         bugReportData.Proof_of_concept = images;
+
+      // Parse comma-separated strings back into arrays
+        const arrayFields = ['Steps_of_Reproduce', 'Impact', 'Remediation', 'Links'];
+        arrayFields.forEach(field => {
+            if (typeof bugReportData[field] === 'string') {
+                bugReportData[field] = bugReportData[field].split(',').map(item => item.trim());
+            }
+        });
 
         // Create a new BugReport document and save it to the database
         const bugReport = new BugReport(bugReportData);
@@ -81,15 +90,15 @@ const generatePdf = async (req, res, next) => {
         else if (cvssScore >= 7.0 && cvssScore < 9.0) {
             high++;
         }
-        else if(cvssScore == 0.0 || cvssScore == 0){
+        else if (cvssScore == 0.0 || cvssScore == 0) {
             info++;
         }
         else {
             critical++;
         }
     }
-   
-    
+
+
     total = low + medium + high + critical + info;
     const low_per = (low / total) * 100;
     const medium_per = (medium / total) * 100;
@@ -107,6 +116,15 @@ const generatePdf = async (req, res, next) => {
     console.log(cri);
     const inf = parseFloat(info_per).toFixed(1);
     console.log(inf);
+
+
+    const data = [
+        { value: parseFloat(cri), label: 'Critical', color: 'critical' },
+        { value: parseFloat(hi), label: 'High', color: 'high' },
+        { value: parseFloat(med), label: 'Medium', color: 'medium' },
+        { value: parseFloat(lo), label: 'Low', color: 'low' },
+        { value: parseFloat(inf), label: 'Info', color: 'info' }
+    ].filter(item => item.value !== 0);
 
 
     let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
@@ -136,8 +154,6 @@ const generatePdf = async (req, res, next) => {
     table4 += `\\end{longtable}`;
 
 
-
-    // LaTeX template
     let latexContent = `
             \\documentclass{article}
             \\usepackage{enumitem}
@@ -190,12 +206,14 @@ const generatePdf = async (req, res, next) => {
             \\definecolor{total}{RGB}{218,238,243}
             \\definecolor{shadow}{RGB}{227,227,227}
             \\definecolor{infotext}{RGB}{0,176,240}
+            \\usepackage{helvet}
+            \\renewcommand{\\rmdefault}{phv}
+            \\renewcommand{\\sfdefault}{phv}
             
 
             
             \\color{textcolor}
-            \\renewcommand{\\rmdefault}{phv}
-            \\renewcommand{\\sfdefault}{phv}
+            
             \\pagecolor{white}
             \\pagestyle{fancy}
             \\fancyhf{}
@@ -206,7 +224,7 @@ const generatePdf = async (req, res, next) => {
             \\fancyfoot[l]{ \\textbf{VAPTLabs Report}} 
             \\renewcommand{\\headrulewidth}{0pt}
             \\renewcommand{\\footrule}{\\hspace{-2cm}\\makebox[\\dimexpr\\paperwidth\\relax]{\\rule{\\dimexpr\\paperwidth-1.5cm}{1.0pt}} }
-            
+           
 
             
             \\fancypagestyle{plain}{
@@ -345,19 +363,15 @@ const generatePdf = async (req, res, next) => {
                 \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\\textwidth]
                 \\begin{tikzpicture}
                 \\centering
-                \\pie[color={critical, high, medium, low, info}, text=inside]{
-                    ${cri}/Critical,
-                    ${hi}/High,
-                    ${med}/Medium,
-                    ${lo}/Low,
-                    ${inf}/Info
+                \\pie[color={${data.map(item => item.color).join(',')}}, text=inside]{
+                    ${data.map(item => `${item.value}/${item.label}`).join(',')}
                 }
                 \\end{tikzpicture}
 
                 \\begin{minipage} {.025\\textwidth}
                 \\colorbox{critical}{}
                 \\end{minipage}
-                \\begin{minipage} {.165\\textwidth}
+                \\begin{minipage} {.17\\textwidth}
                 Critical
                 \\end{minipage}
                 \\begin{minipage} {.025\\textwidth}
@@ -369,7 +383,7 @@ const generatePdf = async (req, res, next) => {
                 \\begin{minipage} {.025\\textwidth}
                 \\colorbox{medium}{}
                 \\end{minipage}
-                \\begin{minipage} {.19\\textwidth}
+                \\begin{minipage} {.20\\textwidth}
                 Medium
                 \\end{minipage}
                 \\begin{minipage} {.03\\textwidth}
@@ -391,19 +405,19 @@ const generatePdf = async (req, res, next) => {
                 \\renewcommand{\\arraystretch}{1.63}
                 \\begin{tabular}{|p{11em}|>{\\centering\\arraybackslash}p{6em}|}
                 \\hline
-                \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\textbf{Count} \\\\
+                \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\rule{0pt}{5ex} \\textbf{Count} \\\\
                  \\hline
-                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} ${critical}  \\\\
+                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} \\rule{0pt}{4ex} ${critical}  \\\\
                  \\hline
-                 \\normalsize High & \\normalsize \\cellcolor{high} ${high} \\\\
+                 \\normalsize High & \\normalsize \\cellcolor{high} \\rule{0pt}{4ex} ${high} \\\\
                  \\hline
-                 \\normalsize Medium & \\normalsize \\cellcolor{medium} ${medium} \\\\
+                 \\normalsize Medium & \\normalsize \\cellcolor{medium} \\rule{0pt}{4ex} ${medium} \\\\
                  \\hline
-                 \\normalsize Low & \\normalsize \\cellcolor{low} ${low} \\\\
+                 \\normalsize Low & \\normalsize \\cellcolor{low} \\rule{0pt}{4ex} ${low} \\\\
                  \\hline
-                 \\normalsize Informational & \\normalsize \\cellcolor{info} ${info} \\\\
+                 \\normalsize Informational & \\normalsize \\cellcolor{info} \\rule{0pt}{4ex} ${info} \\\\
                  \\hline
-                 \\normalsize Total & \\normalsize \\cellcolor{total} ${total} \\\\
+                 \\normalsize Total & \\normalsize \\cellcolor{total} \\rule{0pt}{5ex} ${total} \\\\
                  \\hline    
                 \\end{tabular}
                 \\end{minipage}
@@ -548,12 +562,12 @@ const generatePdf = async (req, res, next) => {
             \\end{center}
             `;
 
-    
 
-            for(let i = 0; i < bugReports.length; i++) {
-                const report = bugReports[i];
-                
-                    latexContent += `
+
+    for (let i = 0; i < bugReports.length; i++) {
+        const report = bugReports[i];
+
+        latexContent += `
                     \\newpage
                     \\subsection{\\large ${report.Title}}
                     \\begin{description}[itemsep=2pt, leftmargin=0.2cm]
@@ -569,13 +583,13 @@ const generatePdf = async (req, res, next) => {
 
                         \\item \\large \\textbf{Screenshot:} \\\\ \\\\
                             ${report.Proof_of_concept.map((image, imageIndex) => {
-                            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.${getExtensionFromContentType(image.contentType)}`);
-                            const imageFileName = path.basename(imageFilePath);
-                            fs.writeFileSync(imageFilePath, image.data);
-                            return `\\includegraphics[width=1.0\\textwidth]{Images/${imageFileName}}`;
-                            // return `hello`;
-                            
-                        }).join('\n')}
+            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.${getExtensionFromContentType(image.contentType)}`);
+            const imageFileName = path.basename(imageFilePath);
+            fs.writeFileSync(imageFilePath, image.data);
+            return `\\includegraphics[width=1.0\\textwidth,height=0.5\\textheight,keepaspectratio]{Images/${imageFileName}} \\\\`;
+         
+            // width=0.9\\textwidth,height=0.4\\textheight,keepaspectratio
+        }).join('\n')}
 
                         \\item \\large \\textbf{Steps of Reproduce:}
                         \\linespread{1.0}
@@ -588,7 +602,7 @@ const generatePdf = async (req, res, next) => {
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm]
                         ${report.Impact.map((impactItem) =>
-                        `\\item \\large ${impactItem.toString()}`).join('\n')} 
+            `\\item \\large ${impactItem.toString()}`).join('\n')} 
                         \\end{enumerate}  
                 
                 
@@ -603,14 +617,16 @@ const generatePdf = async (req, res, next) => {
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm, ]
                             ${report.Links.map((link, index) => `
-                        \\item \\large \\underline{\\href{${link}} {${link.toString()}}}`).join('\n')}
+                        \\item \\large \\underline{}{${link.toString()}}`).join('\n')}
+                        
                         \\end{enumerate}
+
 
                     \\end{description}
                     
                     `;
-                
-            }
+
+    }
 
 
     latexContent += `
@@ -715,10 +731,20 @@ const generatePdf = async (req, res, next) => {
     fs.writeFileSync('bug_report.tex', latexContent);
 
     // Compile LaTeX to PDF
-    const pdflatex = spawnSync('pdflatex', ['bug_report.tex']);
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+
+        // let pdflatex1 = spawnSync('pdflatex', ['bug_report.tex']);
+        // const pdflatex = execSync('pdflatex bug_report.tex', { stdio: 'inherit' });
+        const pdflatex = execSync('pdflatex bug_report.tex');
+
+        count++;
+        console.log("count", count);
+
+    }
 
     console.log("bug report generating");
-    
+
     // Send the generated PDF as a response
     const pdfBuffer = fs.readFileSync('bug_report.pdf');
     console.log(pdfBuffer)
@@ -756,10 +782,39 @@ function getExtensionFromContentType(contentType) {
 
 const updateBug = async (req, res, next) => {
     const updateValues = req.body;
+    console.log("request data:", req.body)
+    console.log("data received:", updateValues)
     const bugId = req.params.id;
     try {
-        const bug = await bugReport.findByIdAndUpdate(bugId, updateValues);
-        res.json({ bug });
+
+        console.log("update value receive:", updateValues)
+        // Handle image uploads if any
+        if (req.files && req.files.length > 0) {
+            const images = req.files.map(file => ({
+                data: file.buffer,
+                contentType: file.mimetype
+            }));
+            updateValues.Proof_of_concept = images;
+        }
+
+        // Parse comma-separated strings back into arrays for specific fields
+        const arrayFields = ['Steps_of_Reproduce', 'Impact', 'Remediation', 'Links'];
+        arrayFields.forEach(field => {
+            if (typeof updateValues[field] === 'string') {
+                updateValues[field] = updateValues[field].split(',').map(item => item.trim());
+            }
+        });
+
+        console.log('Parsed update values:', updateValues);
+
+        // Find the bug report by ID and update it with the new values
+        const bug = await BugReport.findByIdAndUpdate(bugId, updateValues, { new: true });
+
+        if (!bug) {
+            return res.status(404).json({ error: 'Bug report not found' });
+        }
+
+        res.json({ message: 'Bug report updated successfully', bug });
     } catch (err) {
         console.log("Error:", err);
         res.status(500).json({ err: "Internal Servre Error" });
@@ -769,11 +824,23 @@ const updateBug = async (req, res, next) => {
 const getBugById = async (req, res, next) => {
     const id = req.params.id;
     try {
-        const bug = await bugReport.findById(id);
+        const bug = await BugReport.findById(id);
         res.json({ bug });
     } catch (err) {
         console.log("Error:", err);
         res.status(500).json({ err: "Internal Servre Error" });
     }
 }
-module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById };
+
+const deleteById = async(req, res, next) => {
+    const id = req.params.id;
+    try{
+        const bug = await BugReport.findByIdAndDelete(id);
+        res.json({ message: 'Bug Report Delete Successfully', bug})
+
+    }catch (err){
+        console.log("Error :", err);
+        res.status(500).json({err: "Internal Server Error"})
+    }
+}
+module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById};

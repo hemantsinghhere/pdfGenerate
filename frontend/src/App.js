@@ -1,12 +1,12 @@
 
 import './App.css';
 import Buttons from './components/Buttons';
-import Forms from './components/Forms';
+import Applications from './components/Applications';
 
 function App() {
   return (
     <>
-    <Forms />
+    <Applications />
     <Buttons />
     </>
   );

@@ -1,24 +1,24 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.5)  21 MAY 2024 15:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.8)  17 JUN 2024 15:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./bug_report.tex
 (bug_report.tex
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-02-20>
+L3 programming layer <2024-01-04>
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count188
-\c@section=\count189
-\c@subsection=\count190
-\c@subsubsection=\count191
-\c@paragraph=\count192
-\c@subparagraph=\count193
-\c@figure=\count194
-\c@table=\count195
+\c@part=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
@@ -30,8 +30,8 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@outerparindent=\dimen141
 \enit@toks=\toks18
 \enit@inbox=\box51
-\enit@count@id=\count196
-\enitdp@description=\count197
+\enit@count@id=\count195
+\enitdp@description=\count196
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/roboto\roboto.sty
 Package: roboto 2022/09/10 (Bob Tennent) Supports Roboto fonts for all LaTeX en
@@ -55,7 +55,7 @@ Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
 \XKV@tempa@toks=\toks20
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\keyval.tex))
-\XKV@depth=\count198
+\XKV@depth=\count197
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )) (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/base\textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
@@ -102,17 +102,17 @@ Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
 \LTright=\skip52
 \LTpre=\skip53
 \LTpost=\skip54
-\LTchunksize=\count199
+\LTchunksize=\count198
 \LTcapwidth=\dimen142
 \LT@head=\box52
 \LT@firsthead=\box53
 \LT@foot=\box54
 \LT@lastfoot=\box55
 \LT@gbox=\box56
-\LT@cols=\count266
-\LT@rows=\count267
-\c@LT@tables=\count268
-\c@LT@chunks=\count269
+\LT@cols=\count199
+\LT@rows=\count266
+\c@LT@tables=\count267
+\c@LT@chunks=\count268
 \LT@p@ftn=\toks21
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/pgf-pie\pgf-pie.sty
@@ -188,14 +188,14 @@ libraryfiltered.code.tex
 \pgf@yd=\dimen156
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count270
-\c@pgf@countb=\count271
-\c@pgf@countc=\count272
-\c@pgf@countd=\count273
+\c@pgf@counta=\count269
+\c@pgf@countb=\count270
+\c@pgf@countc=\count271
+\c@pgf@countd=\count272
 \t@pgf@toka=\toks26
 \t@pgf@tokb=\toks27
 \t@pgf@tokc=\toks28
-\pgf@sys@id@count=\count274
+\pgf@sys@id@count=\count273
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
 fg
@@ -214,8 +214,8 @@ File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 ssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count275
-\pgfsyssoftpath@bigbuffer@items=\count276
+\pgfsyssoftpath@smallbuffer@items=\count274
+\pgfsyssoftpath@bigbuffer@items=\count275
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 sprotocol.code.tex
@@ -232,7 +232,7 @@ code.tex)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathparse
 r.code.tex
 \pgfmath@dimen=\dimen157
-\pgfmath@count=\count277
+\pgfmath@count=\count276
 \pgfmath@box=\box58
 \pgfmath@toks=\toks29
 \pgfmath@stack@operand=\toks30
@@ -260,7 +260,7 @@ ions.integerarithmetics.code.tex)
 code.tex)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfmathfloat
 .code.tex
-\c@pgfmathroundto@lastzeros=\count278
+\c@pgfmathroundto@lastzeros=\count277
 ))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
 tex)
@@ -300,7 +300,7 @@ File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgfpic=\box59
 \pgf@hbox=\box60
 \pgf@layerbox@main=\box61
-\pgf@picture@serial@count=\count279
+\pgf@picture@serial@count=\count278
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 egraphicstate.code.tex
@@ -335,8 +335,8 @@ File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 eshade.code.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgf@max=\dimen181
-\pgf@sys@shading@range@num=\count280
-\pgf@shadingcount=\count281
+\pgf@sys@shading@range@num=\count279
+\pgf@shadingcount=\count280
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 eimage.code.tex
@@ -406,7 +406,7 @@ Package: tikz 2023-01-15 v3.1.10 (3.1.10)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
 aryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count282
+\pgf@plot@mark@count=\count281
 \pgfplotmarksize=\dimen186
 )
 \tikz@lastx=\dimen187
@@ -421,19 +421,19 @@ File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \tikz@figbox@bg=\box65
 \tikz@tempbox=\box66
 \tikz@tempbox@bg=\box67
-\tikztreelevel=\count283
-\tikznumberofchildren=\count284
-\tikznumberofcurrentchild=\count285
-\tikz@fig@count=\count286
+\tikztreelevel=\count282
+\tikznumberofchildren=\count283
+\tikznumberofcurrentchild=\count284
+\tikz@fig@count=\count285
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
 matrix.code.tex
 File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count287
-\pgfmatrixcurrentcolumn=\count288
-\pgf@matrix@numberofcolumns=\count289
+\pgfmatrixcurrentrow=\count286
+\pgfmatrixcurrentcolumn=\count287
+\pgf@matrix@numberofcolumns=\count288
 )
-\tikz@expandcount=\count290
+\tikz@expandcount=\count289
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
 z/libraries\tikzlibrarytopaths.code.tex
@@ -443,12 +443,12 @@ File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 code.tex
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/carlisle\scalefnt.sty)
 \pgfpie@angleEnd=\dimen195
-\pgfpie@explodeLength=\count291
-\pgfpie@colorLength=\count292
-\pgfpie@sliceLength=\count293
+\pgfpie@explodeLength=\count290
+\pgfpie@colorLength=\count291
+\pgfpie@sliceLength=\count292
 )) (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/colortbl\colortbl.st
 y
-Package: colortbl 2024/02/20 v1.0g Color table columns (DPC)
+Package: colortbl 2024/05/26 v1.0h Color table columns (DPC)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
 Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen196
@@ -461,7 +461,7 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 )
 \everycr=\toks35
 \minrowclearance=\skip57
-\rownum=\count294
+\rownum=\count293
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
@@ -469,9 +469,9 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count295
-\Gm@cntv=\count296
-\c@Gm@tempcnt=\count297
+\Gm@cnth=\count294
+\Gm@cntv=\count295
+\c@Gm@tempcnt=\count296
 \Gm@bindingoffset=\dimen198
 \Gm@wd@mp=\dimen199
 \Gm@odd@mp=\dimen256
@@ -484,8 +484,12 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
-Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
+Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
 
+(C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )
@@ -504,17 +508,16 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 .sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
-
-(C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
-ty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 ))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro
+.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
@@ -532,45 +535,45 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count298
+\c@section@level=\count297
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count299
+\etb@tempcnta=\count298
 )
 \@linkdim=\dimen262
-\Hy@linkcounter=\count300
-\Hy@pagecounter=\count301
+\Hy@linkcounter=\count299
+\Hy@pagecounter=\count300
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
-File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count302
+\Hy@SavedSpaceFactor=\count301
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
-File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Hyper figures OFF on input line 4179.
-Package hyperref Info: Link nesting OFF on input line 4184.
-Package hyperref Info: Hyper index ON on input line 4187.
-Package hyperref Info: Plain pages OFF on input line 4194.
-Package hyperref Info: Backreferencing OFF on input line 4199.
+Package hyperref Info: Hyper figures OFF on input line 4181.
+Package hyperref Info: Link nesting OFF on input line 4186.
+Package hyperref Info: Hyper index ON on input line 4189.
+Package hyperref Info: Plain pages OFF on input line 4196.
+Package hyperref Info: Backreferencing OFF on input line 4201.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4446.
-\c@Hy@tempcnt=\count303
+Package hyperref Info: Bookmarks ON on input line 4448.
+\c@Hy@tempcnt=\count302
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4784.
+LaTeX Info: Redefining \url on input line 4786.
 \XeTeXLinkMargin=\dimen263
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
@@ -581,36 +584,36 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count304
+\Fld@menulength=\count303
 \Field@Width=\dimen264
 \Fld@charsize=\dimen265
-Package hyperref Info: Hyper figures OFF on input line 6063.
-Package hyperref Info: Link nesting OFF on input line 6068.
-Package hyperref Info: Hyper index ON on input line 6071.
-Package hyperref Info: backreferencing OFF on input line 6078.
-Package hyperref Info: Link coloring OFF on input line 6083.
-Package hyperref Info: Link coloring with OCG OFF on input line 6088.
-Package hyperref Info: PDF/A mode OFF on input line 6093.
+Package hyperref Info: Hyper figures OFF on input line 6065.
+Package hyperref Info: Link nesting OFF on input line 6070.
+Package hyperref Info: Hyper index ON on input line 6073.
+Package hyperref Info: backreferencing OFF on input line 6080.
+Package hyperref Info: Link coloring OFF on input line 6085.
+Package hyperref Info: Link coloring with OCG OFF on input line 6090.
+Package hyperref Info: PDF/A mode OFF on input line 6095.
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count305
-\c@Item=\count306
-\c@Hfootnote=\count307
+\Hy@abspage=\count304
+\c@Item=\count305
+\c@Hfootnote=\count306
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2024-01-20 v7.01h Hyperref driver for pdfTeX
+File: hpdftex.def 2023-11-26 v7.01g Hyperref driver for pdfTeX
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count308
-\c@bookmark@seq@number=\count309
+\Fld@listcount=\count307
+\c@bookmark@seq@number=\count308
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
 echeck.sty
@@ -626,7 +629,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip58
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
-Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
+Package: fancyhdr 2024/04/23 v4.2 Extensive control of page headers and footers
 
 \f@nch@headwidth=\skip59
 \f@nch@O@elh=\skip60
@@ -639,16 +642,16 @@ Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
 \f@nch@O@orf=\skip67
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpage.sty
-Package: lastpage 2023/10/14 v2.0e lastpage: 2.09 or 2e? (HMM)
+Package: lastpage 2024/04/27 v2.1a lastpage: 2.09 or 2e? (HMM)
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpage2e.sty
-Package: lastpage2e 2023/10/14 v2.0e Decide which 2e lastpage version to use (H
+Package: lastpage2e 2024/04/27 v2.1a Decide which 2e lastpage version to use (H
 MM)
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/lastpage\lastpagemodern
 .sty
-Package: lastpagemodern 2023-10-14 v2.0e Refers to last page's name (HMM; JPG)
-\c@lastpagecount=\count310
+Package: lastpagemodern 2024-04-27 v2.1a Refers to last page's name (HMM; JPG)
+\c@lastpagecount=\count309
 ) 
 ))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/tcolorbox\tcolorbox.sty
@@ -672,9 +675,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \tcb@upperbox=\box71
 \tcb@lowerbox=\box72
 \tcb@phantombox=\box73
-\c@tcbbreakpart=\count311
-\c@tcblayer=\count312
-\c@tcolorbox@number=\count313
+\c@tcbbreakpart=\count310
+\c@tcblayer=\count311
+\c@tcolorbox@number=\count312
 \l__tcobox_tmpa_box=\box74
 \l__tcobox_tmpa_dim=\dimen266
 \tcb@temp=\box75
@@ -759,11 +762,11 @@ File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
 Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
-\c@checkoddpage=\count314
+\c@checkoddpage=\count313
 ) (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/varwidth\varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box82
-\sift@deathcycles=\count315
+\sift@deathcycles=\count314
 \@vwid@loff=\dimen280
 \@vwid@roff=\dimen281
 ))
@@ -775,10 +778,10 @@ Package: subfigure 2002/07/30 v2.1.4 subfigure package
 \subfigbottomskip=\skip70
 \subfigcapmargin=\dimen283
 \subfiglabelskip=\skip71
-\c@subfigure=\count316
-\c@lofdepth=\count317
-\c@subtable=\count318
-\c@lotdepth=\count319
+\c@subfigure=\count315
+\c@lofdepth=\count316
+\c@subtable=\count317
+\c@lotdepth=\count318
 ****************************************
 * Local config file subfigure.cfg used *
 ****************************************
@@ -817,19 +820,19 @@ ar.sty
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfcale
 ndar.code.tex
 File: pgfcalendar.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfcalendarcurrentjulian=\count320
-\pgf@cal@easter@Y=\count321
-\pgf@cal@easter@G=\count322
-\pgf@cal@easter@C=\count323
-\pgf@cal@easter@X=\count324
-\pgf@cal@easter@Z=\count325
-\pgf@cal@easter@D=\count326
-\pgf@cal@easter@E=\count327
-\pgf@cal@easter@N=\count328
-\pgf@cal@easter@M=\count329
-\pgf@cal@easter@julianday=\count330
+\pgfcalendarcurrentjulian=\count319
+\pgf@cal@easter@Y=\count320
+\pgf@cal@easter@G=\count321
+\pgf@cal@easter@C=\count322
+\pgf@cal@easter@X=\count323
+\pgf@cal@easter@Z=\count324
+\pgf@cal@easter@D=\count325
+\pgf@cal@easter@E=\count326
+\pgf@cal@easter@N=\count327
+\pgf@cal@easter@M=\count328
+\pgf@cal@easter@julianday=\count329
 ))
-\@dtm@julianday=\count331
+\@dtm@julianday=\count330
 ))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/datetime\datetime.sty
 Package: datetime 2015/03/20 v2.60 Date Time Package
@@ -846,43 +849,43 @@ Package: fcprefix 2012/09/28
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/fmtcount\fcnumparser.st
 y
 Package: fcnumparser 2017/06/15
-\fc@digit@counter=\count332
+\fc@digit@counter=\count331
 )) (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks41
 \ex@=\dimen284
 )
-\c@padzeroesN=\count333
-\fc@tmpcatcode=\count334
-\@DT@modctr=\count335
-\@ordinalctr=\count336
-\@orgargctr=\count337
-\@strctr=\count338
-\@tmpstrctr=\count339
-\@DT@loopN=\count340
-\@DT@X=\count341
+\c@padzeroesN=\count332
+\fc@tmpcatcode=\count333
+\@DT@modctr=\count334
+\@ordinalctr=\count335
+\@orgargctr=\count336
+\@strctr=\count337
+\@tmpstrctr=\count338
+\@DT@loopN=\count339
+\@DT@X=\count340
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/datetime\datetime-defau
 lts.sty
 Package: datetime-defaults 2013/09/10
 )
-\@day=\count342
-\@month=\count343
-\@year=\count344
-\c@HOUR=\count345
-\c@HOURXII=\count346
-\c@MINUTE=\count347
-\c@TOHOUR=\count348
-\c@TOMINUTE=\count349
-\c@SECOND=\count350
-\currenthour=\count351
-\currentminute=\count352
-\currentsecond=\count353
+\@day=\count341
+\@month=\count342
+\@year=\count343
+\c@HOUR=\count344
+\c@HOURXII=\count345
+\c@MINUTE=\count346
+\c@TOHOUR=\count347
+\c@TOMINUTE=\count348
+\c@SECOND=\count349
+\currenthour=\count350
+\currentminute=\count351
+\currentsecond=\count352
 Package datetime Info: No datetime.cfg file found, using default settings on in
 put line 308.
-\@dtctr=\count354
-\dayofyear=\count355
-\dayofweek=\count356
+\@dtctr=\count353
+\dayofyear=\count354
+\dayofweek=\count355
 LaTeX Info: Redefining \today on input line 736.
 \dt@a=\toks42
 \dt@b=\toks43
@@ -891,24 +894,24 @@ LaTeX Info: Redefining \today on input line 736.
 ty
 Package: wheelchart 2024/03/08 v3.0 Diagrams with circular or other shapes usin
 g TikZ and LaTeX3
-\c@g__wheelchart_WCcount_counter=\count357
+\c@g__wheelchart_WCcount_counter=\count356
 \l__wheelchart_arc_data_box=\box83
 \g__wheelchart_if_text_box=\box84
-\g__wheelchart_discrete_count_int=\count358
-\l__wheelchart_discrete_levels_int=\count359
-\l__wheelchart_discrete_partitioning_first_index_int=\count360
-\l__wheelchart_discrete_partitioning_second_index_int=\count361
-\l__wheelchart_discrete_sort_int=\count362
-\l__wheelchart_discrete_space_at_borders_int=\count363
-\l__wheelchart_discrete_sublevels_int=\count364
-\l__wheelchart_etoc_count_total_pages_int=\count365
-\l__wheelchart_legend_columns_int=\count366
-\l__wheelchart_legend_rows_int=\count367
-\l__wheelchart_lines_ext_bottom_dir_int=\count368
-\l__wheelchart_lines_ext_dir_int=\count369
-\c__wheelchart_lines_ext_dir_left_int=\count370
-\l__wheelchart_lines_ext_top_dir_int=\count371
-\l__wheelchart_max_list_items_int=\count372
+\g__wheelchart_discrete_count_int=\count357
+\l__wheelchart_discrete_levels_int=\count358
+\l__wheelchart_discrete_partitioning_first_index_int=\count359
+\l__wheelchart_discrete_partitioning_second_index_int=\count360
+\l__wheelchart_discrete_sort_int=\count361
+\l__wheelchart_discrete_space_at_borders_int=\count362
+\l__wheelchart_discrete_sublevels_int=\count363
+\l__wheelchart_etoc_count_total_pages_int=\count364
+\l__wheelchart_legend_columns_int=\count365
+\l__wheelchart_legend_rows_int=\count366
+\l__wheelchart_lines_ext_bottom_dir_int=\count367
+\l__wheelchart_lines_ext_dir_int=\count368
+\c__wheelchart_lines_ext_dir_left_int=\count369
+\l__wheelchart_lines_ext_top_dir_int=\count370
+\l__wheelchart_max_list_items_int=\count371
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
 z/libraries\tikzlibrarydecorations.markings.code.tex
@@ -921,7 +924,7 @@ decorations.code.tex
 \pgfdecoratedinputsegmentcompleteddistance=\dimen287
 \pgfdecoratedinputsegmentremainingdistance=\dimen288
 \pgf@decorate@distancetomove=\dimen289
-\pgf@decorate@repeatstate=\count373
+\pgf@decorate@repeatstate=\count372
 \pgfdecorationsegmentamplitude=\dimen290
 \pgfdecorationsegmentlength=\dimen291
 )
@@ -930,21 +933,21 @@ decorations.code.tex
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries/decorat
 ions\pgflibrarydecorations.markings.code.tex))
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
-Package: siunitx 2024-02-15 v3.3.12 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count374
-\l__siunitx_number_exponent_fixed_int=\count375
-\l__siunitx_number_min_decimal_int=\count376
-\l__siunitx_number_min_integer_int=\count377
-\l__siunitx_number_round_precision_int=\count378
-\l__siunitx_number_lower_threshold_int=\count379
-\l__siunitx_number_upper_threshold_int=\count380
-\l__siunitx_number_group_first_int=\count381
-\l__siunitx_number_group_size_int=\count382
-\l__siunitx_number_group_minimum_int=\count383
+Package: siunitx 2024-05-06 v3.3.17 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count373
+\l__siunitx_number_exponent_fixed_int=\count374
+\l__siunitx_number_min_decimal_int=\count375
+\l__siunitx_number_min_integer_int=\count376
+\l__siunitx_number_round_precision_int=\count377
+\l__siunitx_number_lower_threshold_int=\count378
+\l__siunitx_number_upper_threshold_int=\count379
+\l__siunitx_number_group_first_int=\count380
+\l__siunitx_number_group_size_int=\count381
+\l__siunitx_number_group_minimum_int=\count382
 \l__siunitx_angle_tmp_dim=\dimen292
 \l__siunitx_angle_marker_box=\box86
 \l__siunitx_angle_unit_box=\box87
-\l__siunitx_compound_count_int=\count384
+\l__siunitx_compound_count_int=\count383
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/translations\translatio
 ns.sty
@@ -964,9 +967,9 @@ Package: amstext 2021/08/26 v2.01 AMS text
 \l__siunitx_table_after_box=\box93
 \l__siunitx_table_before_dim=\dimen295
 \l__siunitx_table_carry_dim=\dimen296
-\l__siunitx_unit_tmp_int=\count385
-\l__siunitx_unit_position_int=\count386
-\l__siunitx_unit_total_int=\count387
+\l__siunitx_unit_tmp_int=\count384
+\l__siunitx_unit_position_int=\count385
+\l__siunitx_unit_total_int=\count386
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/eso-pic\eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
@@ -985,57 +988,59 @@ File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 z/libraries\tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
+(C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 136.
+h' as default language. on input line 138.
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 13
-6.
+8.
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
-File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count388
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count387
 \l__pdf_internal_box=\box94
-)
-No file bug_report.aux.
+) (bug_report.aux)
 \openout1 = `bug_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 136.
-LaTeX Font Info:    ... okay on input line 136.
-\c@mv@tabular=\count389
-\c@mv@boldtabular=\count390
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+\c@mv@tabular=\count388
+\c@mv@boldtabular=\count389
 
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count391
+\scratchcounter=\count390
 \scratchdimen=\dimen299
 \scratchbox=\box95
-\nofMPsegments=\count392
-\nofMParguments=\count393
+\nofMPsegments=\count391
+\nofMParguments=\count392
 \everyMPshowfont=\toks44
-\MPscratchCnt=\count394
+\MPscratchCnt=\count393
 \MPscratchDim=\dimen300
-\MPnumerator=\count395
-\makeMPintoPDFobject=\count396
+\MPnumerator=\count394
+\makeMPintoPDFobject=\count395
 \everyMPtoPDFconversion=\toks45
 )
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
@@ -1082,7 +1087,8 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 136.
+Package hyperref Info: Link coloring OFF on input line 138.
+(bug_report.out) (bug_report.out)
 \@outlinefile=\write4
 \openout4 = `bug_report.out'.
 
@@ -1096,24 +1102,24 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 136.
-<vapt.jpeg, id=30, 420.57124pt x 90.3375pt>
+or `english'. on input line 138.
+<vapt.jpeg, id=82, 420.57124pt x 90.3375pt>
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 141.
+Package pdftex.def Info: vapt.jpeg  used on input line 143.
 (pdftex.def)             Requested size: 120.11783pt x 25.8002pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 143.
+(Font)              <7> on input line 145.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 143.
+(Font)              <5> on input line 145.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 156.
+(Font)              <12> on input line 158.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 156.
+(Font)              <8> on input line 158.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 156.
+(Font)              <6> on input line 158.
 
-Overfull \hbox (17.54398pt too wide) in paragraph at lines 154--166
+Overfull \hbox (17.54398pt too wide) in paragraph at lines 156--168
 []$[]$ $[]$ 
  []
 
@@ -1126,14 +1132,15 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 
 {C:/Users/rahur/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/rahu
 r/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./vapt.jpeg>]
-No file bug_report.toc.
+(bug_report.toc)
 \tf@toc=\write5
 \openout5 = `bug_report.toc'.
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 173.
+Package pdftex.def Info: vapt.jpeg  used on input line 175.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 22.94916pt, for example:
@@ -1150,52 +1157,42 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [2
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 185--185
+Underfull \hbox (badness 10000) in paragraph at lines 187--187
 []|\T1/phv/b/n/10 Application
  []
 
 LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
-93.
+95.
 (C:\Users\rahur\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1phv.fd
 File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
 )
-Overfull \hbox (1.46588pt too wide) in paragraph at lines 218--219
+Overfull \hbox (1.46588pt too wide) in paragraph at lines 216--217
 [][][][][][][] 
  []
 
 
-Overfull \hbox (0.76825pt too wide) in paragraph at lines 221--222
-[]\T1/phv/m/n/10 Critical 
- []
-
-
-Overfull \hbox (1.46588pt too wide) in paragraph at lines 224--225
+Overfull \hbox (1.46588pt too wide) in paragraph at lines 222--223
 [][][][][][][] 
  []
 
 
-Overfull \hbox (1.46588pt too wide) in paragraph at lines 230--231
+Overfull \hbox (1.46588pt too wide) in paragraph at lines 228--229
 [][][][][][][] 
  []
 
 
-Overfull \hbox (1.09149pt too wide) in paragraph at lines 233--234
-[]\T1/phv/m/n/10 Medium 
- []
-
-
-Overfull \hbox (0.55795pt too wide) in paragraph at lines 236--237
+Overfull \hbox (0.55795pt too wide) in paragraph at lines 234--235
 [][][][][][][] 
  []
 
 
-Overfull \hbox (2.37105pt too wide) in paragraph at lines 242--243
+Overfull \hbox (2.37105pt too wide) in paragraph at lines 240--241
 [][][][][][][] 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 273.
+Package pdftex.def Info: vapt.jpeg  used on input line 271.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1211,13 +1208,13 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 308--310
+Underfull \hbox (badness 10000) in paragraph at lines 306--308
 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 310.
+Package pdftex.def Info: vapt.jpeg  used on input line 308.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1233,13 +1230,13 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [4]
-Overfull \hbox (5.11598pt too wide) in alignment at lines 312--333
+Overfull \hbox (5.11598pt too wide) in alignment at lines 310--331
  [] [] [] 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 373.
+Package pdftex.def Info: vapt.jpeg  used on input line 371.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1257,7 +1254,7 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [5]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 385.
+Package pdftex.def Info: vapt.jpeg  used on input line 383.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 
@@ -1274,43 +1271,33 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 393--393
+Underfull \hbox (badness 10000) in paragraph at lines 391--391
 []|\T1/phv/b/n/10 OWASP Cat-e-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 396--396
+Underfull \hbox (badness 10000) in paragraph at lines 394--394
 []|\T1/phv/b/n/10 A05-security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 396--396
+Underfull \hbox (badness 10000) in paragraph at lines 394--394
 \T1/phv/b/n/10 Mis-con-fig-u-ra-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 400--400
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
 []|\T1/phv/b/n/10 A05-security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 400--400
-\T1/phv/b/n/10 Mis-con-fig-u-ra-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 404--404
-[]|\T1/phv/b/n/10 A05-security
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 404--404
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
 \T1/phv/b/n/10 Mis-con-fig-u-ra-
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 411.
+Package pdftex.def Info: vapt.jpeg  used on input line 405.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1326,13 +1313,13 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [7]
-Overfull \hbox (4.71599pt too wide) in alignment at lines 415--437
+Overfull \hbox (4.71599pt too wide) in alignment at lines 409--429
  [] [] 
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 440.
+Package pdftex.def Info: vapt.jpeg  used on input line 432.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1348,44 +1335,29 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [8]
-<Images/temp-image-0-0.png, id=83, 1157.82562pt x 646.66594pt>
+<Images/temp-image-0-0.png, id=145, 1247.66125pt x 568.1225pt>
 File: Images/temp-image-0-0.png Graphic file (type png)
 <use Images/temp-image-0-0.png>
-Package pdftex.def Info: Images/temp-image-0-0.png  used on input line 454.
-(pdftex.def)             Requested size: 500.484pt x 279.53116pt.
-<Images/temp-image-0-1.png, id=85, 722.7pt x 552.56438pt>
-File: Images/temp-image-0-1.png Graphic file (type png)
-<use Images/temp-image-0-1.png>
-Package pdftex.def Info: Images/temp-image-0-1.png  used on input line 455.
-(pdftex.def)             Requested size: 500.484pt x 382.66101pt.
-<Images/temp-image-0-2.png, id=86, 683.55376pt x 575.90157pt>
-File: Images/temp-image-0-2.png Graphic file (type png)
-<use Images/temp-image-0-2.png>
-Package pdftex.def Info: Images/temp-image-0-2.png  used on input line 456.
-(pdftex.def)             Requested size: 500.484pt x 421.67006pt.
+Package pdftex.def Info: Images/temp-image-0-0.png  used on input line 446.
+(pdftex.def)             Requested size: 500.48349pt x 227.89513pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 453--457
+Underfull \hbox (badness 10000) in paragraph at lines 445--447
 
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 453--457
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 453--457
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 453--457
+Overfull \hbox (5.68996pt too wide) in paragraph at lines 445--447
 [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 445--447
+
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 457.
+Package pdftex.def Info: vapt.jpeg  used on input line 458.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1401,11 +1373,21 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [9 <./Images/temp-image-0-0.png>]
+Overfull \hbox (22.61046pt too wide) in paragraph at lines 473--474
+[]$[]$\T1/phv/m/n/12 https://hackerone.com/reports/485748,https://thakurguman.m
+edium.com/how-to-host-a-nodejs-
+ []
+
+
+Overfull \hbox (1.28711pt too wide) in paragraph at lines 473--474
+\T1/phv/m/n/12 app-on-cloudways-120daa55e7fa,https://community.wappler.io/t/fin
+ally-got-node-js-hosting-
+ []
+
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 458.
+Package pdftex.def Info: vapt.jpeg  used on input line 481.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 22.94916pt, for example:
@@ -1419,74 +1401,53 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[10 <./Images/temp-image-0-1.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 489.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[11 <./Images/temp-image-0-2.png>]
-<Images/temp-image-1-0.png, id=109, 455.301pt x 446.26724pt>
+[10]
+<Images/temp-image-1-0.png, id=161, 1260.71pt x 566.115pt>
 File: Images/temp-image-1-0.png Graphic file (type png)
 <use Images/temp-image-1-0.png>
-Package pdftex.def Info: Images/temp-image-1-0.png  used on input line 503.
-(pdftex.def)             Requested size: 500.484pt x 490.56862pt.
-<Images/temp-image-1-1.png, id=110, 783.52725pt x 450.483pt>
-File: Images/temp-image-1-1.png Graphic file (type png)
-<use Images/temp-image-1-1.png>
-Package pdftex.def Info: Images/temp-image-1-1.png  used on input line 504.
-(pdftex.def)             Requested size: 500.484pt x 287.75822pt.
-<Images/temp-image-1-2.png, id=111, 578.16pt x 441.44925pt>
-File: Images/temp-image-1-2.png Graphic file (type png)
-<use Images/temp-image-1-2.png>
-Package pdftex.def Info: Images/temp-image-1-2.png  used on input line 505.
-(pdftex.def)             Requested size: 500.484pt x 382.13799pt.
-<Images/temp-image-1-3.png, id=112, 823.27576pt x 407.121pt>
-File: Images/temp-image-1-3.png Graphic file (type png)
-<use Images/temp-image-1-3.png>
-Package pdftex.def Info: Images/temp-image-1-3.png  used on input line 506.
-(pdftex.def)             Requested size: 500.484pt x 247.4986pt.
+Package pdftex.def Info: Images/temp-image-1-0.png  used on input line 495.
+(pdftex.def)             Requested size: 500.48541pt x 224.74025pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 502--507
+Underfull \hbox (badness 10000) in paragraph at lines 494--496
 
  []
 
 
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 502--507
+Overfull \hbox (5.69188pt too wide) in paragraph at lines 494--496
 [] 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--496
+
+ []
+
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 507.
+Package pdftex.def Info: vapt.jpeg  used on input line 509.
+(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 22.94916pt, for example:
+(fancyhdr)                \setlength{\headheight}{22.94916pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
+
+
+Overfull \hbox (127.38487pt too wide) has occurred while \output is active
+[] [] 
+ []
+
+[11 <./Images/temp-image-1-0.png>]
+Overfull \hbox (25.80276pt too wide) in paragraph at lines 540--541
+[]$[]$\T1/phv/m/n/12 https://community.wappler.io/t/finally-got-node-js-hosting
+-up-and-running-on-cloudways-hosting-
+ []
+
+File: vapt.jpeg Graphic file (type jpg)
+<use vapt.jpeg>
+Package pdftex.def Info: vapt.jpeg  used on input line 548.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1502,240 +1463,73 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [12]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 507.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[13 <./Images/temp-image-1-0.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 507.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[14 <./Images/temp-image-1-1.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 508.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[15 <./Images/temp-image-1-2.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 539.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[16 <./Images/temp-image-1-3.png>]
-<Images/temp-image-2-0.png, id=145, 787.743pt x 404.712pt>
-File: Images/temp-image-2-0.png Graphic file (type png)
-<use Images/temp-image-2-0.png>
-Package pdftex.def Info: Images/temp-image-2-0.png  used on input line 553.
-(pdftex.def)             Requested size: 500.484pt x 257.1313pt.
-<Images/temp-image-2-1.png, id=146, 455.301pt x 446.26724pt>
-File: Images/temp-image-2-1.png Graphic file (type png)
-<use Images/temp-image-2-1.png>
-Package pdftex.def Info: Images/temp-image-2-1.png  used on input line 554.
-(pdftex.def)             Requested size: 500.484pt x 490.56862pt.
-<Images/temp-image-2-2.png, id=147, 783.52725pt x 450.483pt>
-File: Images/temp-image-2-2.png Graphic file (type png)
-<use Images/temp-image-2-2.png>
-Package pdftex.def Info: Images/temp-image-2-2.png  used on input line 555.
-(pdftex.def)             Requested size: 500.484pt x 287.75822pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 552--556
-
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
-[]
- []
-
-
-Overfull \hbox (5.69046pt too wide) in paragraph at lines 552--556
-[] 
- []
-
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 556.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[17 <./Images/temp-image-2-0.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 557.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[18 <./Images/temp-image-2-1.png>]
-File: vapt.jpeg Graphic file (type jpg)
-<use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 588.
-(pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 22.94916pt, for example:
-(fancyhdr)                \setlength{\headheight}{22.94916pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-10.94916pt}.
-
-
-Overfull \hbox (127.38487pt too wide) has occurred while \output is active
-[] [] 
- []
-
-[19 <./Images/temp-image-2-2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 599--599
+Underfull \hbox (badness 10000) in paragraph at lines 559--559
 []|\T1/phv/b/n/10 A01:2021-Broken
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
 []|\T1/phv/b/n/10 A02:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
 \T1/phv/b/n/10 Cryptographic Fail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 622--622
+Underfull \hbox (badness 10000) in paragraph at lines 582--582
 []|\T1/phv/b/n/10 A05:2021-Security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--629
+Underfull \hbox (badness 10000) in paragraph at lines 589--589
 []|\T1/phv/b/n/10 A06:2021-Vulnerable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--636
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
 []|\T1/phv/b/n/10 A07:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--636
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
 \T1/phv/b/n/10 Identification and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 636--636
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
 \T1/phv/b/n/10 Au-then-ti-ca-tion Fail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 642--642
+Underfull \hbox (badness 10000) in paragraph at lines 602--602
 []|\T1/phv/b/n/10 A08:2021-Software
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 642--642
+Underfull \hbox (badness 10000) in paragraph at lines 602--602
 \T1/phv/b/n/10 and Data In-tegrity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 647--647
+Underfull \hbox (badness 10000) in paragraph at lines 607--607
 []|\T1/phv/b/n/10 A09:2021-Security
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 654--654
+Underfull \hbox (badness 10000) in paragraph at lines 614--614
 []|\T1/phv/b/n/10 A10:2021-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 654--654
+Underfull \hbox (badness 10000) in paragraph at lines 614--614
 \T1/phv/b/n/10 ServerSide Re-quest
  []
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 660.
+Package pdftex.def Info: vapt.jpeg  used on input line 620.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1750,10 +1544,10 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[20]
+[13]
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 679.
+Package pdftex.def Info: vapt.jpeg  used on input line 639.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 
@@ -1769,43 +1563,30 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
 [] [] 
  []
 
-[21] 
+[14] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (bug_report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-02-20>
+L3 programming layer <2024-01-04>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `bug_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `bug_report.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  C16DAD95301BF491CB809E8350A65CC7;1873.
-
-Package lastpage Warning: Rerun to get the references right on input line 679.
-
+Package rerunfilecheck Info: File `bug_report.out' has not changed.
+(rerunfilecheck)             Checksum: A2240AE2FF54D9F8D9A9B843FCDB6AAA;2077.
  ) 
 Here is how much of TeX's memory you used:
- 34223 strings out of 474457
- 746399 string characters out of 5742755
- 1946190 words of memory out of 5000000
- 55944 multiletter control sequences out of 15000+600000
+ 34180 strings out of 474486
+ 745389 string characters out of 5743756
+ 1944542 words of memory out of 5000000
+ 55859 multiletter control sequences out of 15000+600000
  576324 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,15n,121p,1024b,1127s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,15n,121p,1024b,1263s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a
 .pfb><C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhv
 r8a.pfb>
-Output written on bug_report.pdf (21 pages, 523670 bytes).
+Output written on bug_report.pdf (14 pages, 884091 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
- 164 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 55 named destinations out of 1000 (max. 500000)
+ 228 words of extra memory for PDF output out of 10000 (max. 10000000)
 

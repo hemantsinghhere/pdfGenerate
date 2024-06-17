@@ -50,12 +50,14 @@
             \definecolor{total}{RGB}{218,238,243}
             \definecolor{shadow}{RGB}{227,227,227}
             \definecolor{infotext}{RGB}{0,176,240}
+            \usepackage{helvet}
+            \renewcommand{\rmdefault}{phv}
+            \renewcommand{\sfdefault}{phv}
             
 
             
             \color{textcolor}
-            \renewcommand{\rmdefault}{phv}
-            \renewcommand{\sfdefault}{phv}
+            
             \pagecolor{white}
             \pagestyle{fancy}
             \fancyhf{}
@@ -66,7 +68,7 @@
             \fancyfoot[l]{ \textbf{VAPTLabs Report}} 
             \renewcommand{\headrulewidth}{0pt}
             \renewcommand{\footrule}{\hspace{-2cm}\makebox[\dimexpr\paperwidth\relax]{\rule{\dimexpr\paperwidth-1.5cm}{1.0pt}} }
-            
+           
 
             
             \fancypagestyle{plain}{
@@ -205,19 +207,15 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={critical, high, medium, low, info}, text=inside]{
-                    0.0/Critical,
-                    0.0/High,
-                    0.0/Medium,
-                    100.0/Low,
-                    0.0/Info
+                \pie[color={high}, text=inside]{
+                    100/High
                 }
                 \end{tikzpicture}
 
                 \begin{minipage} {.025\textwidth}
                 \colorbox{critical}{}
                 \end{minipage}
-                \begin{minipage} {.165\textwidth}
+                \begin{minipage} {.17\textwidth}
                 Critical
                 \end{minipage}
                 \begin{minipage} {.025\textwidth}
@@ -229,7 +227,7 @@
                 \begin{minipage} {.025\textwidth}
                 \colorbox{medium}{}
                 \end{minipage}
-                \begin{minipage} {.19\textwidth}
+                \begin{minipage} {.20\textwidth}
                 Medium
                 \end{minipage}
                 \begin{minipage} {.03\textwidth}
@@ -251,19 +249,19 @@
                 \renewcommand{\arraystretch}{1.63}
                 \begin{tabular}{|p{11em}|>{\centering\arraybackslash}p{6em}|}
                 \hline
-                \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \textbf{Count} \\
+                \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \rule{0pt}{5ex} \textbf{Count} \\
                  \hline
-                 \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
+                 \normalsize Critical &   \normalsize \cellcolor{critical} \rule{0pt}{4ex} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{high} 0 \\
+                 \normalsize High & \normalsize \cellcolor{high} \rule{0pt}{4ex} 2 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{medium} 0 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium} \rule{0pt}{4ex} 0 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low} 3 \\
+                 \normalsize Low & \normalsize \cellcolor{low} \rule{0pt}{4ex} 0 \\
                  \hline
-                 \normalsize Informational & \normalsize \cellcolor{info} 0 \\
+                 \normalsize Informational & \normalsize \cellcolor{info} \rule{0pt}{4ex} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} 3 \\
+                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{5ex} 2 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -393,15 +391,11 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center \textbf{1} & \normalsize \textbf{mumbai} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  2.8 \\
+                    \normalsize \center \textbf{1} & \normalsize \textbf{Stored XSS in Password field of profile section	} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{critical}{Critical}} &  8.1 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{2} & \normalsize \textbf{submit form } & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  2.5 \\
-                    \hline
-                    
-
-                    \normalsize \center \textbf{3} & \normalsize \textbf{title} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  2.8 \\
+                    \normalsize \center \textbf{2} & \normalsize \textbf{Stored XSS on reports.} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  8.2 \\
                     \hline
                      
                 \end{longtable}   
@@ -429,43 +423,98 @@
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
             \hline
             
-                    mumbai & Planned \\
+                    Stored XSS in Password field of profile section	 & Planned \\
                     \hline
-                    submit form  & Quick \\
-                    \hline
-                    title & Planned \\
+                    Stored XSS on reports. & Planned \\
                     \hline\end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large mumbai}
+                    \subsection{\large Stored XSS in Password field of profile section	}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} new
+                        \item \large \textbf{Status:} Not Fixed
+                        \item \large \textbf{Severity: \textcolor{infotext} {Critical}}
+                        \item \large \textbf{OWASP Category: P0}
+                        \item \large \textbf{CVSS Score:} 8.1 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \href{https://app.mopub.com} {https://app.mopub.com}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
+
+                        \item \large \textbf{Screenshot:} \\ \\
+                            \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
+
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Go to https://app.mopub.com/reports/custom/,Click New network report.,On the name, enter payload: "><img src=x onerror=alert(document.domain)>,Click Run and save then XSS will trigger.
+                        \end{enumerate}
+                        
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large The attacker can steal data from whoever checks the report.,The attacker can hack your system.,The attacker can hijack your session. 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Sanitize HTML characters.,Use dompurify.
+                        \end{enumerate}
+
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm, ]
+                            
+                        \item \large \underline{}{https://hackerone.com/reports/485748,https://thakurguman.medium.com/how-to-host-a-nodejs-app-on-cloudways-120daa55e7fa,https://community.wappler.io/t/finally-got-node-js-hosting-up-and-running-on-cloudways-hosting-well-sort-of/37519/9}
+                        
+                        \end{enumerate}
+
+
+                    \end{description}
+                    
+                    
+                    \newpage
+                    \subsection{\large Stored XSS on reports.}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} Not Fixed
                         \item \large \textbf{Severity: \textcolor{infotext} {medium}}
-                        \item \large \textbf{OWASP Category: severity}
-                        \item \large \textbf{CVSS Score:} 2.8 
+                        \item \large \textbf{OWASP Category: P0}
+                        \item \large \textbf{CVSS Score:} 8.2 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \href{host} {host}
+                            \item \large \href{https://app.mopub.com} {https://app.mopub.com}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  as
+                        \item \large \textbf{Summary:} \\  Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
 
                         \item \large \textbf{Screenshot:} \\ \\
-                            \includegraphics[width=1.0\textwidth]{Images/temp-image-0-0.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-0-1.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-0-2.png}
+                            \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
 
                         \item \large \textbf{Steps of Reproduce:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large of
+                        \item \large Go to https://app.mopub.com/reports/custom/
+
+                        \item \large Click New network report.
+
+                        \item \large On the name
+
+                        \item \large enter payload: "><img src=x onerror=alert(document.domain)>
+
+                        \item \large Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large impact 
+                        \item \large The attacker can steal data from whoever checks the report.
+\item \large The attacker can hijack session.
+\item \large The attacker can Hack into your system. 
                         \end{enumerate}  
                 
                 
@@ -473,114 +522,25 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large remediation
+                        \item \large React’s dangerouslySetInnerHTML without sanitising the HTML
+
+                        \item \large Angular’s bypassSecurityTrustAs* functions
+
+                        \item \large Polymer's inner-h-t-m-l attribute and htmlLiteral function
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm, ]
                             
-                        \item \large \underline{\href{add reference} {add reference}}
-                        \end{enumerate}
+                        \item \large \underline{}{https://hackerone.com/reports/485748}
 
-                    \end{description}
-                    
-                    
-                    \newpage
-                    \subsection{\large submit form }
-                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} new
-                        \item \large \textbf{Severity: \textcolor{infotext} {low}}
-                        \item \large \textbf{OWASP Category: severity}
-                        \item \large \textbf{CVSS Score:} 2.5 
-                        \item \large \textbf{Affected Hosts/URLs:}
-                            \begin{itemize} 
-                            \item \large \href{affected} {affected}
-                            \end{itemize}
-                        \item \large \textbf{Summary:} \\  summary
+                        \item \large \underline{}{https://thakurguman.medium.com/how-to-host-a-nodejs-app-on-cloudways-120daa55e7fa}
 
-                        \item \large \textbf{Screenshot:} \\ \\
-                            \includegraphics[width=1.0\textwidth]{Images/temp-image-1-0.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-1-1.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-1-2.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-1-3.png}
-
-                        \item \large \textbf{Steps of Reproduce:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large steo,tekf
-                        \end{enumerate}
+                        \item \large \underline{}{https://community.wappler.io/t/finally-got-node-js-hosting-up-and-running-on-cloudways-hosting-well-sort-of/37519/9}
                         
-                        \item \large \textbf{Impact:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large impact,impact 
-                        \end{enumerate}  
-                
-                
-                        \item \large \textbf{Remediation:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large remediation
                         \end{enumerate}
 
-                        \item \large \textbf{Reference:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm, ]
-                            
-                        \item \large \underline{\href{reference} {reference}}
-                        \end{enumerate}
-
-                    \end{description}
-                    
-                    
-                    \newpage
-                    \subsection{\large title}
-                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} new
-                        \item \large \textbf{Severity: \textcolor{infotext} {low}}
-                        \item \large \textbf{OWASP Category: severity}
-                        \item \large \textbf{CVSS Score:} 2.8 
-                        \item \large \textbf{Affected Hosts/URLs:}
-                            \begin{itemize} 
-                            \item \large \href{affected} {affected}
-                            \end{itemize}
-                        \item \large \textbf{Summary:} \\  summary
-
-                        \item \large \textbf{Screenshot:} \\ \\
-                            \includegraphics[width=1.0\textwidth]{Images/temp-image-2-0.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-2-1.png}
-\includegraphics[width=1.0\textwidth]{Images/temp-image-2-2.png}
-
-                        \item \large \textbf{Steps of Reproduce:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large step
-                        \end{enumerate}
-                        
-                        \item \large \textbf{Impact:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large impact 
-                        \end{enumerate}  
-                
-                
-                        \item \large \textbf{Remediation:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large remediation
-                        \end{enumerate}
-
-                        \item \large \textbf{Reference:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm, ]
-                            
-                        \item \large \underline{\href{reference} {reference}}
-                        \end{enumerate}
 
                     \end{description}
                     

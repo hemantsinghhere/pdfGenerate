@@ -3,6 +3,10 @@ const express = require('express');
 const mongoose = require("mongoose");
 const { router } = require('./routes/bug-routes');
 const cors = require("cors");
+const fs = require("fs");
+const { spawn } = require('child_process');
+const { spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 
 
 const app = express();
@@ -17,5 +21,6 @@ app.use("/api/getReport", router);
 app.use("/api", (req, res, next) => {
     res.send("Hello world");
 });
+
 
 console.log("Hello");
