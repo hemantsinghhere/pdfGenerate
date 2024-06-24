@@ -2,29 +2,36 @@ const BugReport = require("../model/index.js");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { exec } = require('child_process');
 const { execSync } = require('child_process');
+const lescape = require('escape-latex');
+const ImageKit = require("imagekit");
+const https = require('https');
+const { spawnSync } = require('child_process');
+const { default: latex } = require("node-latex");
+const { log } = require("console");
+const { response } = require("express");
+const { default: mongoose } = require("mongoose");
+const Company = require("../model/company.js");
 
 
-const imagesDirectory = './Images'; 
+const imagesDirectory = './Images';
 
 if (!fs.existsSync(imagesDirectory)) {
     fs.mkdirSync(imagesDirectory, { recursive: true });
 }
 
+const imagekit = new ImageKit({
+    publicKey : "public_PxFSEdLkJHrQEvnT1ZOk8gS74WA=",
+    privateKey : "private_C5di7uripkauX4iczpv6kXrnG4s=",
+    urlEndpoint : "https://ik.imagekit.io/lwmj8ey7f"
+  });
 
 
-const { spawnSync } = require('child_process');
-const { default: latex } = require("node-latex");
-const { log } = require("console");
 
 const bugReport = async (req, res, next) => {
     try {
         // Retrieve all BugReport documents from the database
         const bugReports = await BugReport.find({});
-
-        // const image = bugReports.map(report)
-        // console.log(bugReports)
         res.json(bugReports);
 
     } catch (err) {
@@ -36,47 +43,107 @@ const bugReport = async (req, res, next) => {
 
 const submitBug = async (req, res, next) => {
     const bugReportData = req.body;
+    const session = await mongoose.startSession();
+    session.startTransaction();
     try {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
 
+        // Parse JSON strings back into arrays
+        for (const key in bugReportData) {
+            if (typeof bugReportData[key] === 'string' && (bugReportData[key].startsWith('[') || bugReportData[key].startsWith('{'))) {
+                bugReportData[key] = JSON.parse(bugReportData[key]);
+            }
+        }
 
-        // Extract image data and content type for each uploaded image
-        const images = req.files.map(file => ({
-            data: file.buffer,
-            contentType: file.mimetype
-        }));
+        // Function to upload a single file to ImageKit
+        const uploadToImageKit = (file) => {
+            return new Promise((resolve, reject) => {
+                imagekit.upload({
+                    file: file.buffer, // Use buffer instead of file stream
+                    fileName: `${file.originalname}`, // Keep original name
+                }, (error, result) => {
+                    if (error) {
+                        console.error('ImageKit upload error:', error);
+                        return reject(error);
+                    }
+                    resolve(result.url); // Store the URL in the local array once uploaded
+                    console.log("image url are:", result.url)
+                });
+            });
+        };
 
+        // Upload all files concurrently and wait for all to complete
+        const images = await Promise.all(req.files.map(file => uploadToImageKit(file)));
+        console.log("images are:", images)
 
         // Add images to the bug report data
         bugReportData.Proof_of_concept = images;
 
-      // Parse comma-separated strings back into arrays
-        const arrayFields = ['Steps_of_Reproduce', 'Impact', 'Remediation', 'Links'];
-        arrayFields.forEach(field => {
-            if (typeof bugReportData[field] === 'string') {
-                bugReportData[field] = bugReportData[field].split(',').map(item => item.trim());
-            }
-        });
-
         // Create a new BugReport document and save it to the database
         const bugReport = new BugReport(bugReportData);
-        await bugReport.save();
+        await bugReport.save({ session});
+
+        // Find the company and update its projects
+        const company = await Company.findById(bugReportData.company).session(session);
+
+        if (!company) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(404).json({ error: 'Company not found.' });
+        }
+
+        company.bugs.push(bugReport._id);
+        await company.save({ session });
+
+        // Commit the transaction
+        await session.commitTransaction();
+        session.endSession();
+
         res.json({ message: 'Bug report submitted successfully.' });
     } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
+async function downloadImage(imageUrl, filePath) {
+    return new Promise((resolve, reject) => {
+        const localPath = fs.createWriteStream(filePath);
+        https.get(imageUrl, (response) => {
+            response.pipe(localPath);
+            localPath.on('finish', () => {
+                localPath.close(resolve);  // resolve the promise after file is closed
+            });
+        }).on('error', (err) => {
+            fs.unlink(filePath, () => reject(err)); // Delete the file and reject the promise if there's an error
+        });
+    });
+}
 
+async function downloadAllImages(bugReports) {
+    const downloadPromises = [];
+    for (let index = 0; index < bugReports.length; index++) {
+        const report = bugReports[index];
+        for (let i = 0; i < report.Proof_of_concept.length; i++) {
+            const imageFilePath = path.join(imagesDirectory, `temp-image-${index}-${i}.png`);
+            console.log("imagefilepath", imageFilePath);
+            downloadPromises.push(downloadImage(report.Proof_of_concept[i], imageFilePath));
+        }
+    }
+    await Promise.all(downloadPromises);
+}
 
 const generatePdf = async (req, res, next) => {
 
     const bugReports = await BugReport.find({});
+    await downloadAllImages(bugReports);
+    console.log("downloded all the images")
 
-
+    
 
     let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
     for (const report of bugReports) {
@@ -126,18 +193,18 @@ const generatePdf = async (req, res, next) => {
         { value: parseFloat(inf), label: 'Info', color: 'info' }
     ].filter(item => item.value !== 0);
 
+    
+
 
     let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
             \\hline
             \\textbf{Finding Name} & \\textbf{Remediation Effort}  \\\\
             \\hline
-            \\normalsize \\textcolor{critical}{\\textbf{Critical Severity Findings}} & \\\\
+            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{critical}{\\textbf{Critical Severity Findings}}} \\\\
             \\hline
             \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{high}{\\textbf{High Severity Findings}}} \\\\
             \\hline
             \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{medium}{\\textbf{Medium Severity Findings}}} \\\\
-            \\hline
-            \\normalsize \\textbf{Reflected Cross Site Scripting (XSS) } & {Quick}\\\\
             \\hline
             \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{low}{\\textbf{Low Severity Findings}}} \\\\
             \\hline
@@ -150,6 +217,12 @@ const generatePdf = async (req, res, next) => {
                     ${report.Title} & ${report.Remediation_effort} \\\\
                     \\hline`;
     });
+
+    // bugReports.filter(report => report.Severity === 'Medium').forEach(report => {
+    //     table4 += `
+    //  ${report.Title} &  ${report.Remediation_effort} \\\\
+    // \\hline`;
+    // });
 
     table4 += `\\end{longtable}`;
 
@@ -209,6 +282,12 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{helvet}
             \\renewcommand{\\rmdefault}{phv}
             \\renewcommand{\\sfdefault}{phv}
+            \\usepackage{xurl}
+            \\usepackage{hyphenat}
+            \\urlstyle{same}
+
+
+            \\newcommand{\\urlstring}[1]{\begin{quote}\\url{#1}\\end{quote}}
             
 
             
@@ -237,6 +316,7 @@ const generatePdf = async (req, res, next) => {
             }
 
             \\thispagestyle{plain}
+            \\newcommand{\\piechartRadius}{3}
       
             \\geometry{
                 left=2.0cm,
@@ -335,16 +415,17 @@ const generatePdf = async (req, res, next) => {
                     customer.
                 \\subsection{\\large Scope of Work}
                 \\normalsize The scope of this penetration test was limited to the URL mentioned below: 
-
-                        \\begin{longtable}[l] {|p{4em}|p{7em}|p{10em}|p{18em}|}
+                    \\begin{center}
+                        \\begin{longtable}[l] {|p{4em}|p{10em}|p{10em}|p{18em}|}
                         \\hline 
-                        \\multicolumn{4}{|p{42.7em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Scope Details}}} \\\\
+                        \\multicolumn{4}{|p{45.7em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Scope Details}}} \\\\
                         \\hline
                         \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Application Name} & \\normalsize \\cellcolor{tableco2} \\textbf{Application URL} & \\normalsize \\cellcolor{tableco2} \\textbf{Scope}  \\\\    
                         \\hline
-                        \\normalsize 1. & \\normalsize XYZ & \\normalsize http://65.21.6.24/ & \\normalsize XYZ web Application Manually \\& using Burpsuite \\\\
+                        \\normalsize 1. & \\normalsize XYZ & \\normalsize \\url{http://65.21.6.24} & \\normalsize XYZ web Application Manually \\& using Burpsuite \\\\
                         \\hline
-                        \\end{longtable}   
+                        \\end{longtable} 
+                    \\end{center}  
                     
                 \\subsection{\\large Summary of Findings}
                 \\begin{itemize}[noitemsep]
@@ -363,7 +444,7 @@ const generatePdf = async (req, res, next) => {
                 \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\\textwidth]
                 \\begin{tikzpicture}
                 \\centering
-                \\pie[color={${data.map(item => item.color).join(',')}}, text=inside]{
+                \\pie[color={${data.map(item => item.color).join(',')}}, text=inside, radius=\\piechartRadius]{
                     ${data.map(item => `${item.value}/${item.label}`).join(',')}
                 }
                 \\end{tikzpicture}
@@ -407,15 +488,15 @@ const generatePdf = async (req, res, next) => {
                 \\hline
                 \\normalsize \\cellcolor{black!10} \\textbf{Severity} & \\normalsize \\cellcolor{black!10} \\rule{0pt}{5ex} \\textbf{Count} \\\\
                  \\hline
-                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} \\rule{0pt}{4ex} ${critical}  \\\\
+                 \\normalsize Critical &   \\normalsize \\cellcolor{critical} ${critical}  \\\\
                  \\hline
-                 \\normalsize High & \\normalsize \\cellcolor{high} \\rule{0pt}{4ex} ${high} \\\\
+                 \\normalsize High & \\normalsize \\cellcolor{high}  ${high} \\\\
                  \\hline
-                 \\normalsize Medium & \\normalsize \\cellcolor{medium} \\rule{0pt}{4ex} ${medium} \\\\
+                 \\normalsize Medium & \\normalsize \\cellcolor{medium}  ${medium} \\\\
                  \\hline
-                 \\normalsize Low & \\normalsize \\cellcolor{low} \\rule{0pt}{4ex} ${low} \\\\
+                 \\normalsize Low & \\normalsize \\cellcolor{low}  ${low} \\\\
                  \\hline
-                 \\normalsize Informational & \\normalsize \\cellcolor{info} \\rule{0pt}{4ex} ${info} \\\\
+                 \\normalsize Informational & \\normalsize \\cellcolor{info} ${info} \\\\
                  \\hline
                  \\normalsize Total & \\normalsize \\cellcolor{total} \\rule{0pt}{5ex} ${total} \\\\
                  \\hline    
@@ -428,7 +509,7 @@ const generatePdf = async (req, res, next) => {
             \\section{\\large CVSS: Score Vulnerabilities}
             \\large there are three types of scores that can be calculated: a base score, a temporal score and an environmental score. For purposes of reporting in this document, the CVSS base score will be provided. The base score assesses the following characteristics:
             \\begin{center}
-                \\begin{longtable} {|p{8em}|p{30em}|}
+                \\begin{longtable} {|p{9em}|p{31em}|}
                 \\hline 
                 \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Characteristics}} & \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Description}}   \\\\    
                 \\hline
@@ -459,7 +540,7 @@ const generatePdf = async (req, res, next) => {
                 \\end{longtable}   
             \\end{center} 
 
-            \\large As indicated above, the assessment of these characteristics results in a severity score which ranges
+            \\noindent \\large As indicated above, the assessment of these characteristics results in a severity score which ranges
             from 1-10. This score can be further broken down into the following rating levels: \\\\
             \\newpage
             \\begin{center}
@@ -498,12 +579,12 @@ const generatePdf = async (req, res, next) => {
             cannot address future changes to the target of evaluation, changes in the systems that support the target of evaluation and emerging, publicly disclosed exploits that could have an impact on the target
             of evaluation.
 
-            \\large The goal of this document is to provide input to help identify and prioritize the vulnerabilities that were
+            \\noindent \\large The goal of this document is to provide input to help identify and prioritize the vulnerabilities that were
             detected at the time of testing and to provide some guidance as to how the vulnerabilities might be
             mitigated.
             
             \\begin{center}
-                \\begin{longtable} {|p{8em}|p{30em}|}
+                \\begin{longtable} {|p{9em}|p{31em}|}
                 \\hline 
                 \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Characteristics}} & \\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Description}}   \\\\    
                 \\hline
@@ -527,12 +608,12 @@ const generatePdf = async (req, res, next) => {
                 \\end{longtable}   
             \\end{center}
             
-            \\large The report is broken up into three major sections: an executive summary, a technical detail report and an appendix. The executive summary will provide a high-level overview of the vulnerabilities detected
+            \\noindent \\large The report is broken up into three major sections: an executive summary, a technical detail report and an appendix. The executive summary will provide a high-level overview of the vulnerabilities detected
             during the penetration test.
 
-            \\large The technical detail report will provide the details of the vulnerabilities identified during the penetration test. Each vulnerability will include the following descriptors.
+            \\noindent \\large The technical detail report will provide the details of the vulnerabilities identified during the penetration test. Each vulnerability will include the following descriptors.
             
-            \\large The appendix will contain information about the testing environment and further details gathered during testing that do not fit within the first three chapters. 
+            \\noindent \\large The appendix will contain information about the testing environment and further details gathered during testing that do not fit within the first three chapters. 
             This information is necessary to have a complete picture of the penetration test, but it is in the appendix to make accessing the testing results more userfriendly.
 
 
@@ -540,14 +621,14 @@ const generatePdf = async (req, res, next) => {
             \\section{\\large Findings Overview}
             \\ \\  \\ The following table summarizes the list of findings discovered during the security assessment
             \\begin{center}
-                \\begin{longtable} {|p{3em}|p{15em}|p{6em}|c|c|}
+                \\begin{longtable} {|p{2em}|p{20em}|>{\\raggedright\\arraybackslash}p{7em}|>{\\centering\\arraybackslash}p{4em}|>{\\centering\\arraybackslash}p{3em}|}
                     \\hline 
-                    \\multicolumn{5}{|p{40em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Summary Table}}} \\\\
+                    \\multicolumn{5}{|p{40.2em}|}{\\large \\cellcolor{tablecol} \\textcolor{white}{\\textbf{Summary Table}}} \\\\
                     \\hline
                     \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Vulnerability Name} & \\normalsize \\cellcolor{tableco2} \\textbf{OWASP Category} & \\normalsize \\cellcolor{tableco2} \\textbf{Severity} & \\normalsize \\cellcolor{tableco2} \\textbf{CVSS Score++} \\\\    
                     \\hline
                     ${bugReports.map((report, index) => `
-                    \\normalsize \\center \\textbf{${index + 1}} & \\normalsize \\textbf{${report.Title}} & \\normalsize \\textbf{A05-security Misconfiguration} & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}` : report.Severity === 'High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}`}} &  ${report.CVSS_Score} \\\\
+                    \\normalsize \\center ${index + 1} & \\normalsize ${report.Title} & \\normalsize ${report.OWASP_Category}  & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}` : report.Severity === 'High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}`}} &  ${report.CVSS_Score} \\\\
                     \\hline
                     `).join('\n')} 
                 \\end{longtable}   
@@ -566,43 +647,43 @@ const generatePdf = async (req, res, next) => {
 
     for (let i = 0; i < bugReports.length; i++) {
         const report = bugReports[i];
+        
 
         latexContent += `
                     \\newpage
-                    \\subsection{\\large ${report.Title}}
+                    \\subsection{\\large ${preprocessVariable(report.Title)}}
                     \\begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \\item \\large \\textbf{Status:} ${report.Status}
-                        \\item \\large \\textbf{Severity: \\textcolor{infotext} {${report.Severity}}}
-                        \\item \\large \\textbf{OWASP Category: ${report.OWASP_Category}}
+                        \\item \\large \\textbf{Status:} ${preprocessVariable(report.Status)}
+                        \\item \\large \\textbf{Severity: \\textcolor{infotext} {${preprocessVariable(report.Severity)}}}
+                        \\item \\large \\textbf{OWASP Category: ${preprocessVariable(report.OWASP_Category)}}
                         \\item \\large \\textbf{CVSS Score:} ${report.CVSS_Score} 
                         \\item \\large \\textbf{Affected Hosts/URLs:}
                             \\begin{itemize} 
-                            \\item \\large \\href{${report.Affected_Hosts}} {${report.Affected_Hosts}}
+                            ${report.Affected_Hosts.map((affectedItem) =>
+                                `\\item \\large \\url{${preprocessVariable(affectedItem.toString())}}`).join('\n')}
                             \\end{itemize}
-                        \\item \\large \\textbf{Summary:} \\\\  ${report.Summary}
-
+                        \\item \\large \\textbf{Summary:} \\\\  \\large ${sanitizeSummary(preprocessVariable(report.Summary.toString()))}
+                            
                         \\item \\large \\textbf{Screenshot:} \\\\ \\\\
-                            ${report.Proof_of_concept.map((image, imageIndex) => {
-            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.${getExtensionFromContentType(image.contentType)}`);
-            const imageFileName = path.basename(imageFilePath);
-            fs.writeFileSync(imageFilePath, image.data);
-            return `\\includegraphics[width=1.0\\textwidth,height=0.5\\textheight,keepaspectratio]{Images/${imageFileName}} \\\\`;
-         
-            // width=0.9\\textwidth,height=0.4\\textheight,keepaspectratio
-        }).join('\n')}
+                        ${report.Proof_of_concept.map((image, imageIndex) => {
+                            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.png`);
+                            const imageFileName = path.basename(imageFilePath);
+                            return `\\includegraphics[width=1.0\\textwidth,height=0.5\\textheight,keepaspectratio]{Images/${imageFileName}} \\\\`;
+                        }).join('\n')}
+                       
 
                         \\item \\large \\textbf{Steps of Reproduce:}
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm]
                             ${report.Steps_of_Reproduce.map((step) => `
-                        \\item \\large ${step}`).join('\n')}
+                        \\item \\large ${sanitizeSummary(preprocessVariable(step))}`).join('\n')}
                         \\end{enumerate}
                         
                         \\item \\large \\textbf{Impact:}
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm]
                         ${report.Impact.map((impactItem) =>
-            `\\item \\large ${impactItem.toString()}`).join('\n')} 
+            `\\item \\large ${preprocessVariable(impactItem.toString())}`).join('\n')} 
                         \\end{enumerate}  
                 
                 
@@ -610,18 +691,16 @@ const generatePdf = async (req, res, next) => {
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm]
                             ${report.Remediation.map((remediation, index) => `
-                        \\item \\large ${remediation.toString()}`).join('\n')}
+                        \\item \\large ${preprocessVariable(remediation.toString())}`).join('\n')}
                         \\end{enumerate}
 
                         \\item \\large \\textbf{Reference:}
                         \\linespread{1.0}
-                        \\begin{enumerate}[leftmargin=0.5cm, ]
+                        \\begin{enumerate}[leftmargin=0.5cm ]
                             ${report.Links.map((link, index) => `
-                        \\item \\large \\underline{}{${link.toString()}}`).join('\n')}
-                        
-                        \\end{enumerate}
-
-
+                        \\item \\large \\url{${preprocessVariable(link.toString())}}`).join('\n')}
+                       
+                        \\end{enumerate}   
                     \\end{description}
                     
                     `;
@@ -635,9 +714,9 @@ const generatePdf = async (req, res, next) => {
                 \\subsection{\\large OWASP TOP 10:2021}
 
                 \\begin{center}
-                \\begin{longtable} {|p{9em}|p{30em}|}
+                \\begin{longtable} {|>{\\raggedright\\arraybackslash}p{10em}|p{30em}|}
                 \\hline
-                \\multicolumn{2}{|p{40em}|} {\\cellcolor{tablecol}\\textbf{OWASP TOP 10:2021}} \\\\
+                \\multicolumn{2}{|p{41em}|} {\\cellcolor{tablecol}\\textbf{OWASP TOP 10:2021}} \\\\
                 \\hline
                 \\large \\cellcolor{tableco2} \\textbf{Name} & \\large \\cellcolor{tableco2} \\textbf{Description} \\\\
                 \\hline
@@ -658,7 +737,7 @@ const generatePdf = async (req, res, next) => {
                 can trick the interpreter into executing unintended commands or accessing data without
                 proper authorization. \\\\
                 \\hline
-                \\normalsize \\textbf{A04:2021-Insecure Design (Currently out of scope) } & 
+                \\normalsize \\textbf{A04:2021-Insecure Design(Currently out of scope) } & 
                 \\normalsize Insecure design is a broad category representing different weaknesses, expressed as
                 "missing or ineffective control design." Secure design is a culture and methodology that
                 constantly evaluates threats and ensures that code is robustly designed and tested to
@@ -709,9 +788,9 @@ const generatePdf = async (req, res, next) => {
                 \\subsection{\\large Tools Used}
 
                 \\begin{center}
-                \\begin{longtable} {|p{5em}|p{28em}|}
+                \\begin{longtable} {|p{10em}|>{\\raggedright\\arraybackslash}p{30em}|}
                 \\hline
-                \\multicolumn{2}{|p{34em}|} {\\cellcolor{tablecol} \\textbf{Tools:}} \\\\
+                \\multicolumn{2}{|p{41em}|} {\\cellcolor{tablecol} \\textbf{Tools:}} \\\\
                 \\hline
                 \\large \\cellcolor{tableco2} \\textbf{Name} & \\large \\cellcolor{tableco2} \\textbf{Description} \\\\
                 \\hline
@@ -754,58 +833,68 @@ const generatePdf = async (req, res, next) => {
     console.log("inline filename");
     res.send(pdfBuffer);
 
-    console.log("Bug report generated");
+    console.log("Bug report generated"); 
 
     // Delete the temporary image files
     for (let index = 0; index < bugReports.length; index++) {
         const report = bugReports[index];
         for (let i = 0; i < report.Proof_of_concept.length; i++) {
-            const imageFilePath = path.join(imagesDirectory, `temp-image-${index}-${i}.${getExtensionFromContentType(report.Proof_of_concept[i].contentType)}`);
+            const imageFilePath = path.join(imagesDirectory, `temp-image-${index}-${i}.png`);
             await fs.promises.unlink(imageFilePath);
         }
     }
 }
 
-function getExtensionFromContentType(contentType) {
-    switch (contentType) {
-        case "image/png":
-            return "png";
-        case "image/jpeg":
-            return "jpg";
-        case "image/gif":
-            return "gif";
-        // Add more cases for other content types as needed
-        default:
-            return "bin";
-    }
+
+
+function preprocessVariable(value) {
+    // Assuming you want double backslashes in the output
+    let escapedValue = lescape(value, { doubleBackslashes: true });
+    // Replace single backslashes with double backslashes
+    return escapedValue.replace(/\\/g, '\\');
 }
+
+function sanitizeSummary(content) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return content.replace(urlRegex, (url) => {
+        // Return the URL wrapped in \url command with \urlstyle{same} to match surrounding text
+        return '\\url{' + url + '}';
+    });
+}
+
 
 const updateBug = async (req, res, next) => {
     const updateValues = req.body;
-    console.log("request data:", req.body)
-    console.log("data received:", updateValues)
     const bugId = req.params.id;
     try {
-
-        console.log("update value receive:", updateValues)
-        // Handle image uploads if any
-        if (req.files && req.files.length > 0) {
-            const images = req.files.map(file => ({
-                data: file.buffer,
-                contentType: file.mimetype
-            }));
-            updateValues.Proof_of_concept = images;
+        // Parse JSON strings back into arrays
+        for (const key in updateValues) {
+            if (typeof updateValues[key] === 'string' && (updateValues[key].startsWith('[') || updateValues[key].startsWith('{'))) {
+                updateValues[key] = JSON.parse(updateValues[key]);
+            }
         }
 
-        // Parse comma-separated strings back into arrays for specific fields
-        const arrayFields = ['Steps_of_Reproduce', 'Impact', 'Remediation', 'Links'];
-        arrayFields.forEach(field => {
-            if (typeof updateValues[field] === 'string') {
-                updateValues[field] = updateValues[field].split(',').map(item => item.trim());
-            }
-        });
+        // Function to upload a single file to ImageKit
+        const uploadToImageKit = (file) => {
+            return new Promise((resolve, reject) => {
+                imagekit.upload({
+                    file: file.buffer, // Use buffer instead of file stream
+                    fileName: `${file.originalname}`, // Keep original name
+                }, (error, result) => {
+                    if (error) {
+                        console.error('ImageKit upload error:', error);
+                        return reject(error);
+                    }
+                    resolve(result.url); // Store the URL in the local array once uploaded
+                    console.log("image url are:", result.url)
+                });
+            });
+        };
 
-        console.log('Parsed update values:', updateValues);
+        // Upload all files concurrently and wait for all to complete
+        const images = await Promise.all(req.files.map(file => uploadToImageKit(file)));
+        console.log("images are:", images)
+        updateValues.Proof_of_concept = images;
 
         // Find the bug report by ID and update it with the new values
         const bug = await BugReport.findByIdAndUpdate(bugId, updateValues, { new: true });
@@ -832,15 +921,15 @@ const getBugById = async (req, res, next) => {
     }
 }
 
-const deleteById = async(req, res, next) => {
+const deleteById = async (req, res, next) => {
     const id = req.params.id;
-    try{
+    try {
         const bug = await BugReport.findByIdAndDelete(id);
-        res.json({ message: 'Bug Report Delete Successfully', bug})
+        res.json({ message: 'Bug Report Delete Successfully', bug })
 
-    }catch (err){
+    } catch (err) {
         console.log("Error :", err);
-        res.status(500).json({err: "Internal Server Error"})
+        res.status(500).json({ err: "Internal Server Error" })
     }
 }
-module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById};
+module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById };

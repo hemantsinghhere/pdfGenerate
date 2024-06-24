@@ -1,8 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 
-const { bugReport, generatePdf, updateBug, getBugById, deleteById } = require("../controllers/report-controller");
-const { submitBug } = require("../controllers/report-controller");
+const { bugReport, generatePdf, updateBug, getBugById, deleteById, submitBug } = require("../controllers/report-controller");
 
 // set multer storage
 const storage = multer.memoryStorage();

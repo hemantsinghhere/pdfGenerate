@@ -1,16 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const UpdateBug = ({id, onClose}) => {
+const UpdateBug = ({ id, onClose }) => {
 
-  
+
     const [formData, setFormData] = useState({
         Title: '',
         Status: '',
-        Severity: 'info',
-        OWASP_Category: '',
+        Severity: 'Info',
+        OWASP_Category: 'A05-Security Misconfiguration',
         CVSS_Score: '',
-        Affected_Hosts: '',
+        Affected_Hosts: [''],
         Summary: '',
         images: [],
         Steps_of_Reproduce: [''],
@@ -36,7 +36,7 @@ const UpdateBug = ({id, onClose}) => {
                     Severity: data.Severity,
                     OWASP_Category: data.OWASP_Category,
                     CVSS_Score: data.CVSS_Score,
-                    Affected_Hosts: data.Affected_Hosts,
+                    Affected_Hosts: data.Affected_Hosts || [''],
                     Summary: data.Summary,
                     images: data.images || [],
                     Steps_of_Reproduce: data.Steps_of_Reproduce || [''],
@@ -63,7 +63,7 @@ const UpdateBug = ({id, onClose}) => {
                     formDataToSubmit.append('images', value[i]);
                 }
             } else if (Array.isArray(value)) {
-                formDataToSubmit.append(key, value.join(','));
+                formDataToSubmit.append(key, JSON.stringify(value));
             } else {
                 formDataToSubmit.append(key, value);
             }
@@ -83,7 +83,7 @@ const UpdateBug = ({id, onClose}) => {
                 Severity: formData.Severity,
                 OWASP_Category: formData.OWASP_Category,
                 CVSS_Score: formData.CVSS_Score,
-                Affected_Hosts: formData.Affected_Hosts,
+                Affected_Hosts: formData.Affected_Hosts || [''],
                 Summary: formData.Summary,
                 images: formData.images || [],
                 Steps_of_Reproduce: formData.Steps_of_Reproduce || [''],
@@ -97,6 +97,7 @@ const UpdateBug = ({id, onClose}) => {
             console.error('Error submitting form:', error);
         }
 
+        alert("Bug Update Successfully.")
         onClose()
     };
 
@@ -145,7 +146,7 @@ const UpdateBug = ({id, onClose}) => {
     };
     return (
         <div className="form-container">
-            <h2>Submit Form</h2>
+            <h2>Update Form</h2>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <label>Title:</label>
                 <input
@@ -177,13 +178,23 @@ const UpdateBug = ({id, onClose}) => {
                     <option value="Critical">Critical</option>
                 </select>
                 <label>OWASP Category:</label>
-                <input
-                    type="text"
+                <select
                     name="OWASP_Category"
                     value={formData.OWASP_Category}
                     onChange={handleChange}
                     required
-                />
+                >
+                    <option value="A01-Broken Access Control">A01-Broken Access Control</option>
+                    <option value="A02-Cryptographic Failures">A02-Cryptographic Failures</option>
+                    <option value="A03-Injection ">A03-Injection </option>
+                    <option value="A04-Insecure Design">A04-Insecure Design</option>
+                    <option value="A05-Security Misconfiguration">A05-Security Misconfiguration</option>
+                    <option value="A06-Vulnerable and Outdated Components">A06-Vulnerable and Outdated Components</option>
+                    <option value="A07-Identification and Authentication Failures">A07-Identification and Authentication Failures</option>
+                    <option value="A08-Software and Data Integrity Failures">A08-Software and Data Integrity Failures</option>
+                    <option value="A09-Security Logging and Monitoring Failures">A09-Security Logging and Monitoring Failures</option>
+                    <option value="A10-ServerSide Request Forgery">A10-ServerSide Request Forgery </option>
+                </select>
                 <label>CVSS Score:</label>
                 <input
                     type="number"
@@ -194,13 +205,27 @@ const UpdateBug = ({id, onClose}) => {
                 />
                 {cvssWarning && <span className="warning">{cvssWarning}</span>}
                 <label>Affected Host:</label>
-                <input
-                    type="text"
-                    name="Affected_Hosts"
-                    value={formData.Affected_Hosts}
-                    onChange={handleChange}
-                    required
-                />
+                {formData.Affected_Hosts.map((affected, index) => (
+                    <input
+                        key={index}
+                        type="text"
+                        value={affected}
+                        onChange={(e) => {
+                            const updatedAffect = [...formData.Affected_Hosts];
+                            updatedAffect[index] = e.target.value;
+                            setFormData({ ...formData, Affected_Hosts: updatedAffect });
+                        }}
+                        required
+                    />
+                ))}
+                <button type="button" onClick={() => addField('Affected_Hosts')}>
+                    Add Affected Host
+                </button>
+                {formData.Affected_Hosts.length > 1 && (
+                    <button type="button" onClick={() => removeField('Affected_Hosts')}>
+                        Remove
+                    </button>
+                )}
                 <label>Summary:</label>
                 <textarea
                     name="Summary"

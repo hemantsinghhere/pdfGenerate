@@ -53,6 +53,12 @@
             \usepackage{helvet}
             \renewcommand{\rmdefault}{phv}
             \renewcommand{\sfdefault}{phv}
+            \usepackage{xurl}
+            \usepackage{hyphenat}
+            \urlstyle{same}
+
+
+            \newcommand{\urlstring}[1]{egin{quote}\url{#1}\end{quote}}
             
 
             
@@ -81,6 +87,7 @@
             }
 
             \thispagestyle{plain}
+            \newcommand{\piechartRadius}{3}
       
             \geometry{
                 left=2.0cm,
@@ -179,16 +186,17 @@
                     customer.
                 \subsection{\large Scope of Work}
                 \normalsize The scope of this penetration test was limited to the URL mentioned below: 
-
-                        \begin{longtable}[l] {|p{4em}|p{7em}|p{10em}|p{18em}|}
+                    \begin{center}
+                        \begin{longtable}[l] {|p{4em}|p{10em}|p{10em}|p{18em}|}
                         \hline 
-                        \multicolumn{4}{|p{42.7em}|}{\large \cellcolor{tablecol} \textcolor{white}{\textbf{Scope Details}}} \\
+                        \multicolumn{4}{|p{45.7em}|}{\large \cellcolor{tablecol} \textcolor{white}{\textbf{Scope Details}}} \\
                         \hline
                         \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Application Name} & \normalsize \cellcolor{tableco2} \textbf{Application URL} & \normalsize \cellcolor{tableco2} \textbf{Scope}  \\    
                         \hline
-                        \normalsize 1. & \normalsize XYZ & \normalsize http://65.21.6.24/ & \normalsize XYZ web Application Manually \& using Burpsuite \\
+                        \normalsize 1. & \normalsize XYZ & \normalsize \url{http://65.21.6.24} & \normalsize XYZ web Application Manually \& using Burpsuite \\
                         \hline
-                        \end{longtable}   
+                        \end{longtable} 
+                    \end{center}  
                     
                 \subsection{\large Summary of Findings}
                 \begin{itemize}[noitemsep]
@@ -207,8 +215,8 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={high}, text=inside]{
-                    100/High
+                \pie[color={medium}, text=inside, radius=\piechartRadius]{
+                    100/Medium
                 }
                 \end{tikzpicture}
 
@@ -251,15 +259,15 @@
                 \hline
                 \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \rule{0pt}{5ex} \textbf{Count} \\
                  \hline
-                 \normalsize Critical &   \normalsize \cellcolor{critical} \rule{0pt}{4ex} 0  \\
+                 \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{high} \rule{0pt}{4ex} 2 \\
+                 \normalsize High & \normalsize \cellcolor{high}  0 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{medium} \rule{0pt}{4ex} 0 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium}  2 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low} \rule{0pt}{4ex} 0 \\
+                 \normalsize Low & \normalsize \cellcolor{low}  0 \\
                  \hline
-                 \normalsize Informational & \normalsize \cellcolor{info} \rule{0pt}{4ex} 0 \\
+                 \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
                  \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{5ex} 2 \\
                  \hline    
@@ -272,7 +280,7 @@
             \section{\large CVSS: Score Vulnerabilities}
             \large there are three types of scores that can be calculated: a base score, a temporal score and an environmental score. For purposes of reporting in this document, the CVSS base score will be provided. The base score assesses the following characteristics:
             \begin{center}
-                \begin{longtable} {|p{8em}|p{30em}|}
+                \begin{longtable} {|p{9em}|p{31em}|}
                 \hline 
                 \large \cellcolor{tablecol} \textcolor{white}{\textbf{Characteristics}} & \large \cellcolor{tablecol} \textcolor{white}{\textbf{Description}}   \\    
                 \hline
@@ -303,7 +311,7 @@
                 \end{longtable}   
             \end{center} 
 
-            \large As indicated above, the assessment of these characteristics results in a severity score which ranges
+            \noindent \large As indicated above, the assessment of these characteristics results in a severity score which ranges
             from 1-10. This score can be further broken down into the following rating levels: \\
             \newpage
             \begin{center}
@@ -342,12 +350,12 @@
             cannot address future changes to the target of evaluation, changes in the systems that support the target of evaluation and emerging, publicly disclosed exploits that could have an impact on the target
             of evaluation.
 
-            \large The goal of this document is to provide input to help identify and prioritize the vulnerabilities that were
+            \noindent \large The goal of this document is to provide input to help identify and prioritize the vulnerabilities that were
             detected at the time of testing and to provide some guidance as to how the vulnerabilities might be
             mitigated.
             
             \begin{center}
-                \begin{longtable} {|p{8em}|p{30em}|}
+                \begin{longtable} {|p{9em}|p{31em}|}
                 \hline 
                 \large \cellcolor{tablecol} \textcolor{white}{\textbf{Characteristics}} & \large \cellcolor{tablecol} \textcolor{white}{\textbf{Description}}   \\    
                 \hline
@@ -371,12 +379,12 @@
                 \end{longtable}   
             \end{center}
             
-            \large The report is broken up into three major sections: an executive summary, a technical detail report and an appendix. The executive summary will provide a high-level overview of the vulnerabilities detected
+            \noindent \large The report is broken up into three major sections: an executive summary, a technical detail report and an appendix. The executive summary will provide a high-level overview of the vulnerabilities detected
             during the penetration test.
 
-            \large The technical detail report will provide the details of the vulnerabilities identified during the penetration test. Each vulnerability will include the following descriptors.
+            \noindent \large The technical detail report will provide the details of the vulnerabilities identified during the penetration test. Each vulnerability will include the following descriptors.
             
-            \large The appendix will contain information about the testing environment and further details gathered during testing that do not fit within the first three chapters. 
+            \noindent \large The appendix will contain information about the testing environment and further details gathered during testing that do not fit within the first three chapters. 
             This information is necessary to have a complete picture of the penetration test, but it is in the appendix to make accessing the testing results more userfriendly.
 
 
@@ -384,18 +392,18 @@
             \section{\large Findings Overview}
             \ \  \ The following table summarizes the list of findings discovered during the security assessment
             \begin{center}
-                \begin{longtable} {|p{3em}|p{15em}|p{6em}|c|c|}
+                \begin{longtable} {|p{2em}|p{20em}|>{\raggedright\arraybackslash}p{7em}|>{\centering\arraybackslash}p{4em}|>{\centering\arraybackslash}p{3em}|}
                     \hline 
-                    \multicolumn{5}{|p{40em}|}{\large \cellcolor{tablecol} \textcolor{white}{\textbf{Summary Table}}} \\
+                    \multicolumn{5}{|p{40.2em}|}{\large \cellcolor{tablecol} \textcolor{white}{\textbf{Summary Table}}} \\
                     \hline
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center \textbf{1} & \normalsize \textbf{Stored XSS in Password field of profile section	} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{critical}{Critical}} &  8.1 \\
+                    \normalsize \center 1 & \normalsize Stored XSS on reports & \normalsize A03-Injection   & \normalsize \textbf{\textcolor{medium}{Medium}} &  4.5 \\
                     \hline
                     
 
-                    \normalsize \center \textbf{2} & \normalsize \textbf{Stored XSS on reports.} & \normalsize \textbf{A05-security Misconfiguration} & \normalsize \textbf{\textcolor{low}{Low}} &  8.2 \\
+                    \normalsize \center 2 & \normalsize Unrestricted File Upload on https://app.lemlist.com & \normalsize A04-Insecure Design  & \normalsize \textbf{\textcolor{medium}{Medium}} &  5.3 \\
                     \hline
                      
                 \end{longtable}   
@@ -410,111 +418,59 @@
             \hline
             \textbf{Finding Name} & \textbf{Remediation Effort}  \\
             \hline
-            \normalsize \textcolor{critical}{\textbf{Critical Severity Findings}} & \\
+            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{critical}{\textbf{Critical Severity Findings}}} \\
             \hline
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
             \hline
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
-            \hline
-            \normalsize \textbf{Reflected Cross Site Scripting (XSS) } & {Quick}\\
             \hline
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{low}{\textbf{Low Severity Findings}}} \\
             \hline
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
             \hline
             
-                    Stored XSS in Password field of profile section	 & Planned \\
+                    Stored XSS on reports & Quick \\
                     \hline
-                    Stored XSS on reports. & Planned \\
+                    Unrestricted File Upload on https://app.lemlist.com & Planned \\
                     \hline\end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large Stored XSS in Password field of profile section	}
+                    \subsection{\large Stored XSS on reports}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
                         \item \large \textbf{Status:} Not Fixed
-                        \item \large \textbf{Severity: \textcolor{infotext} {Critical}}
-                        \item \large \textbf{OWASP Category: P0}
-                        \item \large \textbf{CVSS Score:} 8.1 
+                        \item \large \textbf{Severity: \textcolor{infotext} {Medium}}
+                        \item \large \textbf{OWASP Category: A03-Injection }
+                        \item \large \textbf{CVSS Score:} 4.5 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \href{https://app.mopub.com} {https://app.mopub.com}
+                            \item \large \url{https://app.mopub.com}
+\item \large \url{https://app.mopub.com/reports/custom/}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
-
+                        \item \large \textbf{Summary:} \\  \large Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
+                            
                         \item \large \textbf{Screenshot:} \\ \\
-                            \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
+                        \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
+                       
 
                         \item \large \textbf{Steps of Reproduce:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large Go to https://app.mopub.com/reports/custom/,Click New network report.,On the name, enter payload: "><img src=x onerror=alert(document.domain)>,Click Run and save then XSS will trigger.
-                        \end{enumerate}
-                        
-                        \item \large \textbf{Impact:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large The attacker can steal data from whoever checks the report.,The attacker can hack your system.,The attacker can hijack your session. 
-                        \end{enumerate}  
-                
-                
-                        \item \large \textbf{Remediation:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large Sanitize HTML characters.,Use dompurify.
-                        \end{enumerate}
-
-                        \item \large \textbf{Reference:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm, ]
-                            
-                        \item \large \underline{}{https://hackerone.com/reports/485748,https://thakurguman.medium.com/how-to-host-a-nodejs-app-on-cloudways-120daa55e7fa,https://community.wappler.io/t/finally-got-node-js-hosting-up-and-running-on-cloudways-hosting-well-sort-of/37519/9}
-                        
-                        \end{enumerate}
-
-
-                    \end{description}
-                    
-                    
-                    \newpage
-                    \subsection{\large Stored XSS on reports.}
-                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} Not Fixed
-                        \item \large \textbf{Severity: \textcolor{infotext} {medium}}
-                        \item \large \textbf{OWASP Category: P0}
-                        \item \large \textbf{CVSS Score:} 8.2 
-                        \item \large \textbf{Affected Hosts/URLs:}
-                            \begin{itemize} 
-                            \item \large \href{https://app.mopub.com} {https://app.mopub.com}
-                            \end{itemize}
-                        \item \large \textbf{Summary:} \\  Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
-
-                        \item \large \textbf{Screenshot:} \\ \\
-                            \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
-
-                        \item \large \textbf{Steps of Reproduce:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large Go to https://app.mopub.com/reports/custom/
+                        \item \large Go to \url{https://app.mopub.com/reports/custom/}
 
                         \item \large Click New network report.
 
-                        \item \large On the name
+                        \item \large On the name, enter payload: "><img src=x onerror=alert(document.domain)>
 
-                        \item \large enter payload: "><img src=x onerror=alert(document.domain)>
-
-                        \item \large Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.Click Run and save then XSS will trigger.
+                        \item \large Click Run and save then XSS will trigger.
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                         \item \large The attacker can steal data from whoever checks the report.
-\item \large The attacker can hijack session.
-\item \large The attacker can Hack into your system. 
+\item \large The attacker can steal data from whoever checks the report. 
                         \end{enumerate}  
                 
                 
@@ -522,26 +478,83 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large React’s dangerouslySetInnerHTML without sanitising the HTML
+                        \item \large The attacker can steal data from whoever checks the report.
 
-                        \item \large Angular’s bypassSecurityTrustAs* functions
+                        \item \large The attacker can steal data from whoever checks the report.
 
-                        \item \large Polymer's inner-h-t-m-l attribute and htmlLiteral function
+                        \item \large The attacker can steal data from whoever checks the report.
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm, ]
+                        \begin{enumerate}[leftmargin=0.5cm ]
                             
-                        \item \large \underline{}{https://hackerone.com/reports/485748}
+                        \item \large \url{https://hackerone.com/reports/485748}
 
-                        \item \large \underline{}{https://thakurguman.medium.com/how-to-host-a-nodejs-app-on-cloudways-120daa55e7fa}
+                        \item \large \url{https://hackerone.com/reports/485741}
+                       
+                        \end{enumerate}   
+                    \end{description}
+                    
+                    
+                    \newpage
+                    \subsection{\large Unrestricted File Upload on https://app.lemlist.com}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} New
+                        \item \large \textbf{Severity: \textcolor{infotext} {Medium}}
+                        \item \large \textbf{OWASP Category: A04-Insecure Design}
+                        \item \large \textbf{CVSS Score:} 5.3 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \url{https://app.lemlist.com}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  \large Hi! i found an Unrestricted File Upload on \url{https://app.lemlist.com} which let me upload anything.
+File Extensions Such as .html and others should not be executed on the server side.
+                            
+                        \item \large \textbf{Screenshot:} \\ \\
+                        \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
+                       
 
-                        \item \large \underline{}{https://community.wappler.io/t/finally-got-node-js-hosting-up-and-running-on-cloudways-hosting-well-sort-of/37519/9}
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Login to \url{https://app.lemlist.com}
+
+                        \item \large Go to Settings > Email Signature > Click the 3 Dots > Upload File
+
+                        \item \large Download page.html (F617851) and Upload it
+
+                        \item \large Right Click and Get the Link of the Uploaded File, Visit the Link.
+                        \end{enumerate}
                         
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large An attacker can bypass upload restrictions and deface the page. 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Stop Unrestricted File Upload to the server
+
+                        \item \large Validate the extensions of Files.
                         \end{enumerate}
 
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm ]
+                            
+                        \item \large \url{https://hackerone.com/reports/722919}
 
+                        \item \large \url{https://docs.imagekit.io/api-reference/api-introduction/api-keys?\_gl=1*1fefd2z*\_gcl\_au*MTc4MDg1NzY3MS4xNzE4OTUzODA4*\_ga*NzUyNzE1NDg3LjE3MTg5NTM4MDg.*\_ga\_WQGX7PLP73*MTcxODk1OTk1Ny4yLjEuMTcxODk2MDEzMi42MC4wLjA.}
+
+                        \item \large \url{https://imagekit.io/dashboard/developer/api-keys}
+                       
+                        \end{enumerate}   
                     \end{description}
                     
                     
@@ -550,9 +563,9 @@
                 \subsection{\large OWASP TOP 10:2021}
 
                 \begin{center}
-                \begin{longtable} {|p{9em}|p{30em}|}
+                \begin{longtable} {|>{\raggedright\arraybackslash}p{10em}|p{30em}|}
                 \hline
-                \multicolumn{2}{|p{40em}|} {\cellcolor{tablecol}\textbf{OWASP TOP 10:2021}} \\
+                \multicolumn{2}{|p{41em}|} {\cellcolor{tablecol}\textbf{OWASP TOP 10:2021}} \\
                 \hline
                 \large \cellcolor{tableco2} \textbf{Name} & \large \cellcolor{tableco2} \textbf{Description} \\
                 \hline
@@ -573,7 +586,7 @@
                 can trick the interpreter into executing unintended commands or accessing data without
                 proper authorization. \\
                 \hline
-                \normalsize \textbf{A04:2021-Insecure Design (Currently out of scope) } & 
+                \normalsize \textbf{A04:2021-Insecure Design(Currently out of scope) } & 
                 \normalsize Insecure design is a broad category representing different weaknesses, expressed as
                 "missing or ineffective control design." Secure design is a culture and methodology that
                 constantly evaluates threats and ensures that code is robustly designed and tested to
@@ -624,9 +637,9 @@
                 \subsection{\large Tools Used}
 
                 \begin{center}
-                \begin{longtable} {|p{5em}|p{28em}|}
+                \begin{longtable} {|p{10em}|>{\raggedright\arraybackslash}p{30em}|}
                 \hline
-                \multicolumn{2}{|p{34em}|} {\cellcolor{tablecol} \textbf{Tools:}} \\
+                \multicolumn{2}{|p{41em}|} {\cellcolor{tablecol} \textbf{Tools:}} \\
                 \hline
                 \large \cellcolor{tableco2} \textbf{Name} & \large \cellcolor{tableco2} \textbf{Description} \\
                 \hline

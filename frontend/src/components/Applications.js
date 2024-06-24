@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import Forms from './Forms';
 import Modal from 'react-modal';
@@ -18,43 +18,51 @@ const Applications = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [modalType, setModalType] = useState(''); // 'add' or 'edit'
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   const handleEdit = (id) => {
     setId(id);
+    setModalType('edit');
+    toggleModal();
+  };
+
+  const handleAdd = () => {
+    setModalType('add');
     toggleModal();
   };
 
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      const res = await axios.get('http://localhost:5000/api/getReport').catch(err => console.log(err));
 
-      const data = await res.data;
-      setBugData(data)
-    }
+  const fetchDetails = async () => {
+    const res = await axios.get('http://localhost:5000/api/getReport').catch(err => console.log(err));
 
-    fetchDetails()
-  }, [bugData])
-
- 
-
-  const deleteRequest = useCallback(async () => {
-    const res = await axios
-      .delete(`http://localhost:5000/api/getReport/delete/${Id}`)
-      .catch((err) => console.log(err));
     const data = await res.data;
-    return data;
-  },[Id]);
+    setBugData(data)
+  }
 
-  const handleDelete = (id) => {
-    setId(id);
-    deleteRequest()
-    .then(() => window.location.reload());
+  useEffect(() => {
+    fetchDetails()
+  }, [])
 
-      alert("Bug Deleted Successfully")
+
+
+
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/getReport/delete/${id}`);
+      if (res.status === 200) {
+        alert("Bug Deleted Successfully");
+        setBugData(prevData => prevData.filter(bug => bug._id !== id));
+      }
+    } catch (err) {
+      console.log(err);
+      alert("Failed to delete the bug report");
+    }
   };
 
 
@@ -82,10 +90,10 @@ const Applications = () => {
                 <td style={{ border: '1px solid black', padding: '8px' }}>{data.Severity}</td>
                 <td style={{ border: '1px solid black', padding: '8px' }}>
                   <IconButton >
-                    <EditIcon color="warning" onClick={()=>{ handleEdit(data._id) }} />
+                    <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
                   </IconButton>
                   <IconButton>
-                    <DeleteIcon color='error' onClick={() =>{ handleDelete(data._id)}} />
+                    <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
                   </IconButton>
                 </td>
               </tr>
@@ -95,7 +103,7 @@ const Applications = () => {
         </tbody>
       </Table>
 
-      <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={toggleModal}>
+      <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={handleAdd}>
         add
       </div>
       <Modal
@@ -120,34 +128,9 @@ const Applications = () => {
           }
         }}
       >
-        <Forms onClose={toggleModal} />
+        {modalType === 'add' ? <Forms onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateBug onClose={toggleModal} id={Id} />}
       </Modal>
 
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={toggleModal}
-        contentLabel="Add New Item"
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)'
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '50%',
-            maxHeight: '80vh',
-            overflowY: 'auto',
-            padding: '20px'
-          }
-        }}
-      >
-        <UpdateBug onClose={toggleModal} id={Id} />
-      </Modal>
     </div>
   )
 }

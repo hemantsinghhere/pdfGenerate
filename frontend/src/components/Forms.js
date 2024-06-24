@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import "./Forms.css";
 import axios from "axios";
 
-const Forms = ({ onClose }) => {
+const Forms = ({ onClose, onFormSubmit }) => {
 
     // State to manage form data
     const [formData, setFormData] = useState({
         Title: '',
         Status: '',
-        Severity: 'info',
-        OWASP_Category: '',
+        Severity: 'Info',
+        OWASP_Category: 'A05-Security Misconfigurationl',
         CVSS_Score: '',
-        Affected_Hosts: '',
+        Affected_Hosts: [''],
         Summary: '',
         images: [],
         Steps_of_Reproduce: [''],
@@ -37,7 +37,9 @@ const Forms = ({ onClose }) => {
                 for (let i = 0; i < value.length; i++) {
                     formDataToSubmit.append('images', value[i]);
                 }
-            } else {
+            }else if (Array.isArray(value)) {
+                formDataToSubmit.append(key, JSON.stringify(value));
+             } else {
                 formDataToSubmit.append(key, value);
             }
         }
@@ -51,22 +53,23 @@ const Forms = ({ onClose }) => {
             setFormData({
                 Title: '',
                 Status: '',
-                Severity: 'info',
-                OWASP_Category: '',
+                Severity: 'Info',
+                OWASP_Category: 'A05-Security Misconfiguration',
                 CVSS_Score: '',
-                Affected_Hosts: '',
+                Affected_Hosts: [''],
                 Summary: '',
                 images: [],
                 Steps_of_Reproduce: [''],
                 Impact: [''],
                 Remediation_effort: 'Planned',
                 Remediation: [''],
-                Links: ['']
+                Links: [''], 
             });
         } catch (error) {
             console.error('Error submitting form:', error);
         }
-
+        alert("New Bug Submitted Successfully.")
+        onFormSubmit();
         onClose()
     };
 
@@ -150,13 +153,24 @@ const Forms = ({ onClose }) => {
                         <option value="Critical">Critical</option>
                     </select>
                     <label>OWASP Category:</label>
-                    <input
-                        type="text"
+                    <select
                         name="OWASP_Category"
                         value={formData.OWASP_Category}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="A01-Broken Access Control">A01-Broken Access Control</option>
+                        <option value="A02-Cryptographic Failures">A02-Cryptographic Failures</option>
+                        <option value="A03-Injection ">A03-Injection </option>
+                        <option value="A04-Insecure Design">A04-Insecure Design</option>
+                        <option value="A05-Security Misconfiguration">A05-Security Misconfiguration</option>
+                        <option value="A06-Vulnerable and Outdated Components">A06-Vulnerable and Outdated Components</option>
+                        <option value="A07-Identification and Authentication Failures">A07-Identification and Authentication Failures</option>
+                        <option value="A08-Software and Data Integrity Failures">A08-Software and Data Integrity Failures</option>
+                        <option value="A09-Security Logging and Monitoring Failures">A09-Security Logging and Monitoring Failures</option>
+                        <option value="A10-ServerSide Request Forgery">A10-ServerSide Request Forgery </option>
+                    </select>
+                    
                     <label>CVSS Score:</label>
                     <input
                         type="number"
@@ -167,13 +181,27 @@ const Forms = ({ onClose }) => {
                     />
                     {cvssWarning && <span className="warning">{cvssWarning}</span>}
                     <label>Affected Host:</label>
-                    <input
-                        type="text"
-                        name="Affected_Hosts"
-                        value={formData.Affected_Hosts}
-                        onChange={handleChange}
-                        required
-                    />
+                    {formData.Affected_Hosts.map((affected, index) => (
+                        <input
+                            key={index}
+                            type="text"
+                            value={affected}
+                            onChange={(e) => {
+                                const updatedAffect = [...formData.Affected_Hosts];
+                                updatedAffect[index] = e.target.value;
+                                setFormData({ ...formData, Affected_Hosts: updatedAffect });
+                            }}
+                            required
+                        />
+                    ))}
+                    <button type="button" onClick={() => addField('Affected_Hosts')}>
+                        Add Affected Host
+                    </button>
+                    {formData.Affected_Hosts.length > 1 && (
+                        <button type="button" onClick={() => removeField('Affected_Hosts')}>
+                            Remove
+                        </button>
+                    )}
                     <label>Summary:</label>
                     <textarea
                         name="Summary"
