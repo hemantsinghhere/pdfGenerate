@@ -6,7 +6,7 @@ const UpdateBug = ({ id, onClose }) => {
 
     const [formData, setFormData] = useState({
         Title: '',
-        Status: '',
+        Status: 'Not Fixed',
         Severity: 'Info',
         OWASP_Category: 'A05-Security Misconfiguration',
         CVSS_Score: '',
@@ -73,7 +73,7 @@ const UpdateBug = ({ id, onClose }) => {
             await axios.put(`http://localhost:5000/api/getReport/update/${id}`, formDataToSubmit, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            console.log('Form submitted successfully');
+            console.log('Form update successfully');
 
             console.log("updated form data :", formData)
 
@@ -157,13 +157,18 @@ const UpdateBug = ({ id, onClose }) => {
                     required
                 />
                 <label>Status:</label>
-                <input
-                    type="text"
-                    name="Status"
-                    value={formData.Status}
-                    onChange={handleChange}
-                    required
-                />
+                <select
+                        name="Status"
+                        value={formData.Status}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="Not Fixed">Not Fixed</option>
+                        <option value="Fixed">Fixed</option>
+                        <option value="Being Fix">Being Fix</option>
+                        <option value="Won't Fix">Won't Fix</option>
+                        <option value="In Progress">In Progress</option>
+                    </select>
                 <label>Severity:</label>
                 <select
                     name="Severity"

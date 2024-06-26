@@ -4,8 +4,6 @@ const Company  = require("./company.js")
 
 const schema = mongoose.Schema;
 
-
-
 const bugReportSchema = new schema({
   Title: String,
   Status: String,
@@ -38,7 +36,7 @@ const bugReportSchema = new schema({
 
   company: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company"
+    ref: "Company" 
   }
 });
 

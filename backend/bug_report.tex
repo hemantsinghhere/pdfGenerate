@@ -151,11 +151,13 @@
             \end{center}
             \end{minipage}
             \begin{minipage}{.60\textwidth}
-            \huge XYZ Web Applications Security Assessment Report.                
+            \begin{flushleft}
+                \huge vaptlabs Android Application Security Assessment Report.
+            \end{flushleft}                
             \end{minipage}
             \vspace{80pt}
 
-            \large XYZ Web App
+            \large vaptlabs Android Application
             \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\textwidth,height=5pt]
             \end{tcolorbox}
             
@@ -193,7 +195,7 @@
                         \hline
                         \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Application Name} & \normalsize \cellcolor{tableco2} \textbf{Application URL} & \normalsize \cellcolor{tableco2} \textbf{Scope}  \\    
                         \hline
-                        \normalsize 1. & \normalsize XYZ & \normalsize \url{http://65.21.6.24} & \normalsize XYZ web Application Manually \& using Burpsuite \\
+                        \normalsize 1. & \normalsize vaptlabs & \normalsize \url{https://ibpsonline.ibps.in/rrb} & \normalsize vaptlabs Android Application Manually \& using Burpsuite \\
                         \hline
                         \end{longtable} 
                     \end{center}  
@@ -263,13 +265,13 @@
                  \hline
                  \normalsize High & \normalsize \cellcolor{high}  0 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{medium}  2 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium}  1 \\
                  \hline
                  \normalsize Low & \normalsize \cellcolor{low}  0 \\
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{5ex} 2 \\
+                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{5ex} 1 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -399,11 +401,7 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center 1 & \normalsize Stored XSS on reports & \normalsize A03-Injection   & \normalsize \textbf{\textcolor{medium}{Medium}} &  4.5 \\
-                    \hline
-                    
-
-                    \normalsize \center 2 & \normalsize Unrestricted File Upload on https://app.lemlist.com & \normalsize A04-Insecure Design  & \normalsize \textbf{\textcolor{medium}{Medium}} &  5.3 \\
+                    \normalsize \center 1 & \normalsize t & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{medium}{Medium}} &  5.8 \\
                     \hline
                      
                 \end{longtable}   
@@ -420,34 +418,35 @@
             \hline
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{critical}{\textbf{Critical Severity Findings}}} \\
             \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
-            \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
-            \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{low}{\textbf{Low Severity Findings}}} \\
-            \hline
-            \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
-            \hline
             
-                    Stored XSS on reports & Quick \\
-                    \hline
-                    Unrestricted File Upload on https://app.lemlist.com & Planned \\
-                    \hline\end{longtable}
+        \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
+        \hline
+    
+        \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
+        \hline
+    
+     t &  Planned \\
+    \hline
+        \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{low}{\textbf{Low Severity Findings}}} \\
+        \hline
+    
+        \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
+        \hline
+    \end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large Stored XSS on reports}
+                    \subsection{\large t}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
                         \item \large \textbf{Status:} Not Fixed
                         \item \large \textbf{Severity: \textcolor{infotext} {Medium}}
-                        \item \large \textbf{OWASP Category: A03-Injection }
-                        \item \large \textbf{CVSS Score:} 4.5 
+                        \item \large \textbf{OWASP Category: A05-Security Misconfiguration}
+                        \item \large \textbf{CVSS Score:} 5.8 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \url{https://app.mopub.com}
-\item \large \url{https://app.mopub.com/reports/custom/}
+                            \item \large \url{t}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
+                        \item \large \textbf{Summary:} \\  \large t
                             
                         \item \large \textbf{Screenshot:} \\ \\
                         \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
@@ -457,20 +456,13 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large Go to \url{https://app.mopub.com/reports/custom/}
-
-                        \item \large Click New network report.
-
-                        \item \large On the name, enter payload: "><img src=x onerror=alert(document.domain)>
-
-                        \item \large Click Run and save then XSS will trigger.
+                        \item \large t
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large The attacker can steal data from whoever checks the report.
-\item \large The attacker can steal data from whoever checks the report. 
+                        \item \large t 
                         \end{enumerate}  
                 
                 
@@ -478,81 +470,14 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large The attacker can steal data from whoever checks the report.
-
-                        \item \large The attacker can steal data from whoever checks the report.
-
-                        \item \large The attacker can steal data from whoever checks the report.
+                        \item \large t
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm ]
                             
-                        \item \large \url{https://hackerone.com/reports/485748}
-
-                        \item \large \url{https://hackerone.com/reports/485741}
-                       
-                        \end{enumerate}   
-                    \end{description}
-                    
-                    
-                    \newpage
-                    \subsection{\large Unrestricted File Upload on https://app.lemlist.com}
-                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} New
-                        \item \large \textbf{Severity: \textcolor{infotext} {Medium}}
-                        \item \large \textbf{OWASP Category: A04-Insecure Design}
-                        \item \large \textbf{CVSS Score:} 5.3 
-                        \item \large \textbf{Affected Hosts/URLs:}
-                            \begin{itemize} 
-                            \item \large \url{https://app.lemlist.com}
-                            \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large Hi! i found an Unrestricted File Upload on \url{https://app.lemlist.com} which let me upload anything.
-File Extensions Such as .html and others should not be executed on the server side.
-                            
-                        \item \large \textbf{Screenshot:} \\ \\
-                        \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
-                       
-
-                        \item \large \textbf{Steps of Reproduce:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large Login to \url{https://app.lemlist.com}
-
-                        \item \large Go to Settings > Email Signature > Click the 3 Dots > Upload File
-
-                        \item \large Download page.html (F617851) and Upload it
-
-                        \item \large Right Click and Get the Link of the Uploaded File, Visit the Link.
-                        \end{enumerate}
-                        
-                        \item \large \textbf{Impact:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large An attacker can bypass upload restrictions and deface the page. 
-                        \end{enumerate}  
-                
-                
-                        \item \large \textbf{Remediation:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large Stop Unrestricted File Upload to the server
-
-                        \item \large Validate the extensions of Files.
-                        \end{enumerate}
-
-                        \item \large \textbf{Reference:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm ]
-                            
-                        \item \large \url{https://hackerone.com/reports/722919}
-
-                        \item \large \url{https://docs.imagekit.io/api-reference/api-introduction/api-keys?\_gl=1*1fefd2z*\_gcl\_au*MTc4MDg1NzY3MS4xNzE4OTUzODA4*\_ga*NzUyNzE1NDg3LjE3MTg5NTM4MDg.*\_ga\_WQGX7PLP73*MTcxODk1OTk1Ny4yLjEuMTcxODk2MDEzMi42MC4wLjA.}
-
-                        \item \large \url{https://imagekit.io/dashboard/developer/api-keys}
+                        \item \large \url{t}
                        
                         \end{enumerate}   
                     \end{description}

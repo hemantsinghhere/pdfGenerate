@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./Forms.css";
 import axios from "axios";
+import { CompanyContext } from './CompanyProvider';
 
 const Forms = ({ onClose, onFormSubmit }) => {
+    const { companyId } = useContext(CompanyContext);
+    console.log("companyId", companyId)
 
     // State to manage form data
     const [formData, setFormData] = useState({
         Title: '',
-        Status: '',
+        Status: 'Not Fixed',
         Severity: 'Info',
         OWASP_Category: 'A05-Security Misconfigurationl',
         CVSS_Score: '',
@@ -24,10 +27,6 @@ const Forms = ({ onClose, onFormSubmit }) => {
     // State to manage CVSS score warning
     const [cvssWarning, setCvssWarning] = useState('');
 
-    // http://localhost:5000/api/getReport/submitReport
-
-    // http://103.133.214.149:3000/api/getReport/generatedPdf
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -43,6 +42,8 @@ const Forms = ({ onClose, onFormSubmit }) => {
                 formDataToSubmit.append(key, value);
             }
         }
+        // Add companyId to the form data
+        formDataToSubmit.append('company', companyId);
 
         try {
             await axios.post('http://localhost:5000/api/getReport/submitReport', formDataToSubmit, {
@@ -52,7 +53,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
             console.log("sumitted form data: ",formData)
             setFormData({
                 Title: '',
-                Status: '',
+                Status: 'Not Fixed',
                 Severity: 'Info',
                 OWASP_Category: 'A05-Security Misconfiguration',
                 CVSS_Score: '',
@@ -132,13 +133,18 @@ const Forms = ({ onClose, onFormSubmit }) => {
                         required
                     />
                     <label>Status:</label>
-                    <input
-                        type="text"
+                    <select
                         name="Status"
                         value={formData.Status}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="Not Fixed">Not Fixed</option>
+                        <option value="Fixed">Fixed</option>
+                        <option value="Being Fix">Being Fix</option>
+                        <option value="Won't Fix">Won't Fix</option>
+                        <option value="In Progress">In Progress</option>
+                    </select>
                     <label>Severity:</label>
                     <select
                         name="Severity"

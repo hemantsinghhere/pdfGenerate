@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./Buttons.css";
 import axios from "axios";
 import Modal from 'react-modal';
+import { CompanyContext } from './CompanyProvider';
 
 Modal.setAppElement('#root');
 
 const Buttons = () => {
+    const { companyId } = useContext(CompanyContext);
+    console.log("company id in pdf", companyId)
     const [pdfData, setPdfData] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +20,7 @@ const Buttons = () => {
 
     const handleDownloadPdf = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/getReport/generatedPdf", {
+            const response = await axios.get(`http://localhost:5000/api/getReport/generatedPdf/${companyId}`, {
                 responseType: 'arraybuffer', // This is important for binary data like PDFs
             });
             setPdfData(new Blob([response.data], { type: 'application/pdf' }));

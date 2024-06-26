@@ -5,8 +5,9 @@ const BugReport =  require("./index.js")
 const schema = mongoose.Schema;
 
 const companySchema = new schema({
-    name: String,
-    address: String,
+    Name: String,
+    Application_url: String,
+    Asset: String,
     bugs: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "BugReport"
@@ -17,7 +18,7 @@ const companySchema = new schema({
     },
     updatedAt: {
       type: Date,
-      default: Date.now
+      default: Date.now 
     }
   });
   

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import Forms from './Forms';
 import Modal from 'react-modal';
@@ -7,10 +7,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateBug from './UpdateBug';
+import { CompanyContext } from './CompanyProvider';
+import Buttons from './Buttons';
 
 Modal.setAppElement('#root');
 
 const Applications = () => {
+  const { companyId } = useContext(CompanyContext);
+  console.log("companyId in application", companyId)
 
   const [Id, setId] = useState(null);
 
@@ -38,9 +42,10 @@ const Applications = () => {
 
 
   const fetchDetails = async () => {
-    const res = await axios.get('http://localhost:5000/api/getReport').catch(err => console.log(err));
+    const res = await axios.get(`http://localhost:5000/api/getReport/company/${companyId}`).catch(err => console.log(err));
 
     const data = await res.data;
+    console.log("bug data company", data)
     setBugData(data)
   }
 
@@ -130,7 +135,7 @@ const Applications = () => {
       >
         {modalType === 'add' ? <Forms onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateBug onClose={toggleModal} id={Id} />}
       </Modal>
-
+      <Buttons />
     </div>
   )
 }

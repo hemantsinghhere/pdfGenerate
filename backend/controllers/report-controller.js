@@ -8,10 +8,11 @@ const ImageKit = require("imagekit");
 const https = require('https');
 const { spawnSync } = require('child_process');
 const { default: latex } = require("node-latex");
-const { log } = require("console");
+const { log, table } = require("console");
 const { response } = require("express");
 const { default: mongoose } = require("mongoose");
 const Company = require("../model/company.js");
+const company = require("../model/company.js");
 
 
 const imagesDirectory = './Images';
@@ -28,10 +29,25 @@ const imagekit = new ImageKit({
 
 
 
-const bugReport = async (req, res, next) => {
+const bugReport = async (req, res, next) => { 
     try {
         // Retrieve all BugReport documents from the database
-        const bugReports = await BugReport.find({});
+        const bugReports = await BugReport.find({}).populate("company");
+        res.json(bugReports);
+
+    } catch (err) {
+        console.log("Error: ", err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+const getBugByCompnayId = async (req, res, next) => { 
+    try {
+        // Assuming companyId is available in req.user.companyId or req.session.companyId
+        const companyId = req.params.id; // or however you access companyId
+        
+        // Retrieve bug reports filtered by companyId
+        const bugReports = await BugReport.find({ company: companyId });
         res.json(bugReports);
 
     } catch (err) {
@@ -94,7 +110,7 @@ const submitBug = async (req, res, next) => {
             return res.status(404).json({ error: 'Company not found.' });
         }
 
-        company.bugs.push(bugReport._id);
+        company.bugs.push(bugReport);
         await company.save({ session });
 
         // Commit the transaction
@@ -139,7 +155,13 @@ async function downloadAllImages(bugReports) {
 
 const generatePdf = async (req, res, next) => {
 
-    const bugReports = await BugReport.find({});
+    const companyId = req.params.id;
+
+    const bugReports = await BugReport.find({ company: companyId }).populate("company");
+
+    const companyData = await Company.findById(companyId);
+   
+
     await downloadAllImages(bugReports);
     console.log("downloded all the images")
 
@@ -202,27 +224,61 @@ const generatePdf = async (req, res, next) => {
             \\hline
             \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{critical}{\\textbf{Critical Severity Findings}}} \\\\
             \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{high}{\\textbf{High Severity Findings}}} \\\\
-            \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{medium}{\\textbf{Medium Severity Findings}}} \\\\
-            \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{low}{\\textbf{Low Severity Findings}}} \\\\
-            \\hline
-            \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{infotext}{\\textbf{Informational Findings}}} \\\\
-            \\hline
             `;
 
-    bugReports.forEach(report => {
+
+    bugReports.filter(report => report.Severity === 'Critical').forEach(report => {
         table4 += `
-                    ${report.Title} & ${report.Remediation_effort} \\\\
-                    \\hline`;
+     ${report.Title} &  ${report.Remediation_effort} \\\\
+    \\hline`;
     });
 
-    // bugReports.filter(report => report.Severity === 'Medium').forEach(report => {
-    //     table4 += `
-    //  ${report.Title} &  ${report.Remediation_effort} \\\\
-    // \\hline`;
-    // });
+    table4 += `
+        \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{high}{\\textbf{High Severity Findings}}} \\\\
+        \\hline
+    `;
+
+    bugReports.filter(report => report.Severity === 'High').forEach(report => {
+        table4 += `
+     ${report.Title} &  ${report.Remediation_effort} \\\\
+    \\hline`;
+    });
+
+    table4 += `
+        \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{medium}{\\textbf{Medium Severity Findings}}} \\\\
+        \\hline
+    `;
+
+    bugReports.filter(report => report.Severity === 'Medium').forEach(report => {
+        table4 += `
+     ${report.Title} &  ${report.Remediation_effort} \\\\
+    \\hline`;
+    });
+
+
+    table4 += `
+        \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{low}{\\textbf{Low Severity Findings}}} \\\\
+        \\hline
+    `;
+
+    bugReports.filter(report => report.Severity === 'Low').forEach(report => {
+        table4 += `
+     ${report.Title} &  ${report.Remediation_effort} \\\\
+    \\hline`;
+    });
+
+    table4 += `
+        \\multicolumn{2}{|p{20em}|}{\\normalsize \\textcolor{infotext}{\\textbf{Informational Findings}}} \\\\
+        \\hline
+    `
+
+    bugReports.filter(report => report.Severity === 'Informational').forEach(report => {
+        table4 += `
+     ${report.Title} &  ${report.Remediation_effort} \\\\
+    \\hline`;
+    });
+
+
 
     table4 += `\\end{longtable}`;
 
@@ -380,11 +436,13 @@ const generatePdf = async (req, res, next) => {
             \\end{center}
             \\end{minipage}
             \\begin{minipage}{.60\\textwidth}
-            \\huge XYZ Web Applications Security Assessment Report.                
+            \\begin{flushleft}
+                \\huge ${companyData.Name} ${companyData.Asset} Security Assessment Report.
+            \\end{flushleft}                
             \\end{minipage}
             \\vspace{80pt}
 
-            \\large XYZ Web App
+            \\large ${companyData.Name} ${companyData.Asset}
             \\begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\\textwidth,height=5pt]
             \\end{tcolorbox}
             
@@ -422,7 +480,7 @@ const generatePdf = async (req, res, next) => {
                         \\hline
                         \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Application Name} & \\normalsize \\cellcolor{tableco2} \\textbf{Application URL} & \\normalsize \\cellcolor{tableco2} \\textbf{Scope}  \\\\    
                         \\hline
-                        \\normalsize 1. & \\normalsize XYZ & \\normalsize \\url{http://65.21.6.24} & \\normalsize XYZ web Application Manually \\& using Burpsuite \\\\
+                        \\normalsize 1. & \\normalsize ${companyData.Name} & \\normalsize \\url{${companyData.Application_url}} & \\normalsize ${companyData.Name} ${companyData.Asset} Manually \\& using Burpsuite \\\\
                         \\hline
                         \\end{longtable} 
                     \\end{center}  
@@ -932,4 +990,4 @@ const deleteById = async (req, res, next) => {
         res.status(500).json({ err: "Internal Server Error" })
     }
 }
-module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById };
+module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById, getBugByCompnayId };

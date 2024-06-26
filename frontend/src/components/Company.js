@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,29 +7,35 @@ import AddCom from './AddCom';
 import axios from "axios";
 import { Table } from 'react-bootstrap';
 import {  useNavigate } from "react-router-dom";
+import { CompanyContext } from './CompanyProvider';
+import UpdateCom from './UpdateCom';
 
 
 Modal.setAppElement('#root');
 
 const Company = () => {
   const navigate = useNavigate();
+  const { setCompanyId } = useContext(CompanyContext);
 
   const [Id, setId] = useState(null);
 
   const [comData, setComData] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(''); // 'add' or 'edit'
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   const handleAdd = () => {
+    setModalType('add')
     toggleModal();
   };
 
   const handleEdit = (id) => {
     setId(id);
+    setModalType('edit')
     toggleModal();
   };
 
@@ -54,7 +60,7 @@ const Company = () => {
   };
 
   const handleCom = async(id, name) => {
-    setId(id);
+    setCompanyId(id);
     navigate(`/${name}`);
   }
 
@@ -63,7 +69,7 @@ const Company = () => {
   }, [])
 
   return (
-    <div>
+    <div className='table-container' style={{ margin: "20px" }}>
       <div className="compy">
         <h1>All Company</h1>
         <Table style={{ borderCollapse: 'collapse', width: '100%', fontSize: "12px", }}>
@@ -71,7 +77,7 @@ const Company = () => {
             <tr>
               <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
               <th style={{ border: '1px solid black', padding: '8px' }}>COMPANY NAME</th>
-              <th style={{ border: '1px solid black', padding: '8px' }}>ADDRESS</th>
+              <th style={{ border: '1px solid black', padding: '8px' }}>ASSET</th>
               <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>
             </tr>
           </thead>
@@ -82,11 +88,11 @@ const Company = () => {
                   <td style={{ border: '1px solid black', padding: '8px' }}>
                     {index + 1}
                   </td>
-                  <td style={{ border: '1px solid black', padding: '8px' }} onClick={() => handleCom(data._id, data.name)}>
-                    {data.name}
+                  <td style={{ border: '1px solid black', padding: '8px' }} onClick={() => handleCom(data._id, data.Name)}>
+                    {data.Name}
                   </td>
                  
-                  <td style={{ border: '1px solid black', padding: '8px' }}>{data.address}</td>
+                  <td style={{ border: '1px solid black', padding: '8px' }}>{data.Asset}</td>
                   <td style={{ border: '1px solid black', padding: '8px' }}>
                     <IconButton >
                       <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
@@ -129,7 +135,7 @@ const Company = () => {
           }
         }}
       > 
-        <AddCom onClose={toggleModal} onFormSubmit={fetchDetails}/> 
+        {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom onClose={toggleModal} id={Id} />} 
       </Modal>
     </div>
   )

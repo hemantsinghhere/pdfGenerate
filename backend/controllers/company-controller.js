@@ -31,7 +31,7 @@ const addCompany = async(req, res, next) => {
 const getById = async(req, res, next) => {
     const companyId = req.params.id;
     try {
-        const company = await Company.findById(id);
+        const company = await Company.findById(companyId);
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -49,7 +49,7 @@ const updateById = async(req, res, next) =>{
             return res.status(404).json({ error: 'Bug report not found' });
         }
 
-        res.json({ message: 'Bug report updated successfully', bug });
+        res.json({ message: 'Company details updated successfully', company });
     }catch(error){
         console.log("error", error);
         res.status(500).json({ error: "Internal Server Error"})
@@ -60,7 +60,7 @@ const deleteById = async(req, res, next) =>{
     const id = req.params.id;
     try {
         const company = await Company.findByIdAndDelete(id);
-        res.json({ message: 'Bug Report Delete Successfully', company })
+        res.json({ message: 'Company Details Delete Successfully', company })
 
     } catch (err) {
         console.log("Error :", err);
