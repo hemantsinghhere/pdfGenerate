@@ -24,6 +24,7 @@ const bugReportSchema = new schema({
   Remediation: [String],
   Links: [String],
   Remediation_effort: String,
+  CVSS_URL: String,
   createdAt: {
     type: Date,
     default: Date.now // Automatically set the date when the bug report is created

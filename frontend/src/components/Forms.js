@@ -10,9 +10,9 @@ const Forms = ({ onClose, onFormSubmit }) => {
     // State to manage form data
     const [formData, setFormData] = useState({
         Title: '',
-        Status: 'Not Fixed',
+        Status: 'New',
         Severity: 'Info',
-        OWASP_Category: 'A05-Security Misconfigurationl',
+        OWASP_Category: 'A05-Security Misconfiguration',
         CVSS_Score: '',
         Affected_Hosts: [''],
         Summary: '',
@@ -21,7 +21,8 @@ const Forms = ({ onClose, onFormSubmit }) => {
         Impact: [''],
         Remediation_effort: 'Planned',
         Remediation: [''],
-        Links: ['']
+        Links: [''],
+        CVSS_URL: ''
     });
 
     // State to manage CVSS score warning
@@ -53,7 +54,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
             console.log("sumitted form data: ",formData)
             setFormData({
                 Title: '',
-                Status: 'Not Fixed',
+                Status: 'New',
                 Severity: 'Info',
                 OWASP_Category: 'A05-Security Misconfiguration',
                 CVSS_Score: '',
@@ -65,6 +66,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
                 Remediation_effort: 'Planned',
                 Remediation: [''],
                 Links: [''], 
+                CVSS_URL: ''
             });
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -139,6 +141,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
                         onChange={handleChange}
                         required
                     >
+                        <option value="New">New</option>
                         <option value="Not Fixed">Not Fixed</option>
                         <option value="Fixed">Fixed</option>
                         <option value="Being Fix">Being Fix</option>
@@ -152,7 +155,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
                         onChange={handleChange}
                         required
                     >
-                        <option value="Informational">Info</option>
+                        <option value="Info">Info</option>
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
                         <option value="High">High</option>
@@ -184,6 +187,13 @@ const Forms = ({ onClose, onFormSubmit }) => {
                         value={formData.CVSS_Score}
                         onChange={handleChange}
                         required
+                    />
+                    <label>CVSS Url:</label>
+                    <input
+                        type="text"
+                        name="CVSS_URL"
+                        value={formData.CVSS_URL}
+                        onChange={handleChange}
                     />
                     {cvssWarning && <span className="warning">{cvssWarning}</span>}
                     <label>Affected Host:</label>

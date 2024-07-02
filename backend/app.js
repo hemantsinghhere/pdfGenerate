@@ -9,6 +9,7 @@ const { spawn } = require('child_process');
 const { spawnSync } = require('child_process');
 const { execSync } = require('child_process');
 const axios = require('axios');
+const { user } = require('./routes/user-router');
 
 
 
@@ -26,9 +27,11 @@ mongoose.connect("mongodb+srv://admin:9zNBhxNG56ua13sg@cluster0.oj7avns.mongodb.
 
 app.use("/api/getReport", router);
 app.use("/company",comRouter)
+app.use("/user", user)
 app.use("/api", (req, res, next) => {
     res.send("Hello world");
 });
+
 
 
 console.log("Hello");

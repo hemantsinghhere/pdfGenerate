@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const BugReport =  require("./index.js")
+const User = require("./User.js")
 
 
 const schema = mongoose.Schema;
@@ -12,6 +13,10 @@ const companySchema = new schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "BugReport"
     }],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
     createdAt: {
       type: Date,
       default: Date.now

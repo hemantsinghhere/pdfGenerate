@@ -1,4 +1,6 @@
 const Company = require("../model/company.js");
+const User = require("../model/User.js")
+const { default: mongoose } = require("mongoose");
 
 
 
@@ -17,13 +19,32 @@ const getCompanyData = async(req, res, next) =>{
 }
 const addCompany = async(req, res, next) => {
     const companyData = req.body;
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try{
         const companyProfile = new Company(companyData);
-        console.log("company data:", companyProfile)
-        await companyProfile.save();
+        await companyProfile.save({session});
+
+        const user = await User.findById(companyProfile.user).session(session);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        user.companys.push(companyProfile._id);
+        await user.save({ session });
+
+        await session.commitTransaction();
+        session.endSession();
+
+
         res.json({ message: 'Company data submitted successfully.' });
     }catch(error){
-        console.error("error:", error)
+        await session.abortTransaction();
+        session.endSession();
+
+        console.error("error:", error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }

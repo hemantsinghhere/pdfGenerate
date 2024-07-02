@@ -8,11 +8,8 @@ const ImageKit = require("imagekit");
 const https = require('https');
 const { spawnSync } = require('child_process');
 const { default: latex } = require("node-latex");
-const { log, table } = require("console");
-const { response } = require("express");
 const { default: mongoose } = require("mongoose");
 const Company = require("../model/company.js");
-const company = require("../model/company.js");
 
 
 const imagesDirectory = './Images';
@@ -154,6 +151,7 @@ async function downloadAllImages(bugReports) {
 }
 
 const generatePdf = async (req, res, next) => {
+   
 
     const companyId = req.params.id;
 
@@ -272,7 +270,7 @@ const generatePdf = async (req, res, next) => {
         \\hline
     `
 
-    bugReports.filter(report => report.Severity === 'Informational').forEach(report => {
+    bugReports.filter(report => report.Severity === 'Info').forEach(report => {
         table4 += `
      ${report.Title} &  ${report.Remediation_effort} \\\\
     \\hline`;
@@ -335,6 +333,7 @@ const generatePdf = async (req, res, next) => {
             \\definecolor{total}{RGB}{218,238,243}
             \\definecolor{shadow}{RGB}{227,227,227}
             \\definecolor{infotext}{RGB}{0,176,240}
+            \\definecolor{linkColor}{RGB}{110,178,184}
             \\usepackage{helvet}
             \\renewcommand{\\rmdefault}{phv}
             \\renewcommand{\\sfdefault}{phv}
@@ -343,7 +342,7 @@ const generatePdf = async (req, res, next) => {
             \\urlstyle{same}
 
 
-            \\newcommand{\\urlstring}[1]{\begin{quote}\\url{#1}\\end{quote}}
+            \\newcommand{\\urlstring}[1]{\\begin{quote}\\url{#1}\\end{quote}}
             
 
             
@@ -356,7 +355,7 @@ const generatePdf = async (req, res, next) => {
             \\fancyhead[R]{\\includegraphics[width=.18\\textwidth]{vapt.jpeg}}
             \\fancyfoot[R]{\\textbf{\\thepage}}
             \\fancyfoot[c]{ \\textbf{Company Confidential}} 
-            \\fancyfoot[l]{ \\textbf{VAPTLabs Report}} 
+            \\fancyfoot[l]{ \\textbf{VAPTlabs Report}} 
             \\renewcommand{\\headrulewidth}{0pt}
             \\renewcommand{\\footrule}{\\hspace{-2cm}\\makebox[\\dimexpr\\paperwidth\\relax]{\\rule{\\dimexpr\\paperwidth-1.5cm}{1.0pt}} }
            
@@ -368,7 +367,7 @@ const generatePdf = async (req, res, next) => {
             \\renewcommand{\\headrulewidth}{0pt}
             \\fancyfoot[R]{\\textbf{\\thepage}}
             \\fancyfoot[c]{ \\textbf{Company Confidential}} 
-            \\fancyfoot[l]{ \\textbf{VAPTLabs Report}} 
+            \\fancyfoot[l]{ \\textbf{VAPTlabs Report}}   
             }
 
             \\thispagestyle{plain}
@@ -556,7 +555,7 @@ const generatePdf = async (req, res, next) => {
                  \\hline
                  \\normalsize Informational & \\normalsize \\cellcolor{info} ${info} \\\\
                  \\hline
-                 \\normalsize Total & \\normalsize \\cellcolor{total} \\rule{0pt}{5ex} ${total} \\\\
+                 \\normalsize Total & \\normalsize \\cellcolor{total} \\rule{0pt}{4ex} ${total} \\\\
                  \\hline    
                 \\end{tabular}
                 \\end{minipage}
@@ -686,7 +685,7 @@ const generatePdf = async (req, res, next) => {
                     \\normalsize \\cellcolor{tableco2} \\textbf{Sr. No.} & \\normalsize \\cellcolor{tableco2} \\textbf{Vulnerability Name} & \\normalsize \\cellcolor{tableco2} \\textbf{OWASP Category} & \\normalsize \\cellcolor{tableco2} \\textbf{Severity} & \\normalsize \\cellcolor{tableco2} \\textbf{CVSS Score++} \\\\    
                     \\hline
                     ${bugReports.map((report, index) => `
-                    \\normalsize \\center ${index + 1} & \\normalsize ${report.Title} & \\normalsize ${report.OWASP_Category}  & \\normalsize \\textbf{${report.Severity === 'Informational' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}` : report.Severity === 'High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}`}} &  ${report.CVSS_Score} \\\\
+                    \\normalsize \\center ${index + 1} & \\normalsize ${report.Title} & \\normalsize ${report.OWASP_Category}  & \\normalsize \\textbf{${report.Severity === 'Info' ? `\\textcolor{infotext}{Info}` : report.Severity === 'Medium' ? `\\textcolor{medium}{Medium}` : report.Severity === 'High' ? `\\textcolor{high}{High}` : report.Severity === 'Critical' ? `\\textcolor{critical}{Critical}` : `\\textcolor{low}{Low}`}} &  ${report.CVSS_Score} \\\\
                     \\hline
                     `).join('\n')} 
                 \\end{longtable}   
@@ -756,7 +755,7 @@ const generatePdf = async (req, res, next) => {
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm ]
                             ${report.Links.map((link, index) => `
-                        \\item \\large \\url{${preprocessVariable(link.toString())}}`).join('\n')}
+                        \\item \\large \\textcolor{linkColor}{\\url{${preprocessVariable(link.toString())}}}`).join('\n')}
                        
                         \\end{enumerate}   
                     \\end{description}

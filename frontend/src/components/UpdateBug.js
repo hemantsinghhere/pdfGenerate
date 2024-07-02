@@ -6,7 +6,7 @@ const UpdateBug = ({ id, onClose }) => {
 
     const [formData, setFormData] = useState({
         Title: '',
-        Status: 'Not Fixed',
+        Status: 'New',
         Severity: 'Info',
         OWASP_Category: 'A05-Security Misconfiguration',
         CVSS_Score: '',
@@ -17,7 +17,8 @@ const UpdateBug = ({ id, onClose }) => {
         Impact: [''],
         Remediation_effort: 'Planned',
         Remediation: [''],
-        Links: ['']
+        Links: [''],
+        CVSS_URL: ''
     });
 
     const [cvssWarning, setCvssWarning] = useState('');
@@ -43,7 +44,8 @@ const UpdateBug = ({ id, onClose }) => {
                     Impact: data.Impact || [''],
                     Remediation_effort: data.Remediation_effort,
                     Remediation: data.Remediation || [''],
-                    Links: data.Links || ['']
+                    Links: data.Links || [''],
+                    CVSS_URL: data.CVSS_URL
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -90,7 +92,8 @@ const UpdateBug = ({ id, onClose }) => {
                 Impact: formData.Impact || [''],
                 Remediation_effort: formData.Remediation_effort,
                 Remediation: formData.Remediation || [''],
-                Links: formData.Links || ['']
+                Links: formData.Links || [''],
+                CVSS_URL: formData.CVSS_URL
             });
 
         } catch (error) {
@@ -163,6 +166,7 @@ const UpdateBug = ({ id, onClose }) => {
                         onChange={handleChange}
                         required
                     >
+                        <option value="New">New</option>
                         <option value="Not Fixed">Not Fixed</option>
                         <option value="Fixed">Fixed</option>
                         <option value="Being Fix">Being Fix</option>
@@ -176,7 +180,7 @@ const UpdateBug = ({ id, onClose }) => {
                     onChange={handleChange}
                     required
                 >
-                    <option value="Informational">Info</option>
+                    <option value="Info">Info</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
@@ -208,6 +212,13 @@ const UpdateBug = ({ id, onClose }) => {
                     onChange={handleChange}
                     required
                 />
+                <label>CVSS Url:</label>
+                    <input
+                        type="text"
+                        name="CVSS_URL"
+                        value={formData.CVSS_URL}
+                        onChange={handleChange}
+                    />
                 {cvssWarning && <span className="warning">{cvssWarning}</span>}
                 <label>Affected Host:</label>
                 {formData.Affected_Hosts.map((affected, index) => (
