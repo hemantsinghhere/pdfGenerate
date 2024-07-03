@@ -9,6 +9,7 @@ import { Table } from 'react-bootstrap';
 import {  useNavigate } from "react-router-dom";
 import { CompanyContext } from './CompanyProvider';
 import UpdateCom from './UpdateCom';
+import Logout from "./Logout"
 
 
 Modal.setAppElement('#root');
@@ -16,6 +17,7 @@ Modal.setAppElement('#root');
 const Company = () => {
   const navigate = useNavigate();
   const { setCompanyId } = useContext(CompanyContext);
+  const user_id = localStorage.getItem("userId")
 
   const [Id, setId] = useState(null);
 
@@ -40,10 +42,10 @@ const Company = () => {
   };
 
   const fetchDetails = async () => {
-    const res = await axios.get('http://localhost:5000/company').catch(err => console.log(err));
+    const res = await axios.get(`http://localhost:5000/company/user/${user_id}`).catch(err => console.log(err));
 
     const data = await res.data;
-    setComData(data)
+    setComData(data.company)
   }
 
   const handleDelete = async (id) => {
@@ -71,7 +73,7 @@ const Company = () => {
   return (
     <div className='table-container' style={{ margin: "20px" }}>
       <div className="compy">
-        <h1>All Company</h1>
+        <h1 style={{textAlign: "center"}}>All Company</h1>
         <Table style={{ borderCollapse: 'collapse', width: '100%', fontSize: "12px", }}>
           <thead>
             <tr>
@@ -137,6 +139,10 @@ const Company = () => {
       > 
         {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom onClose={toggleModal} id={Id} />} 
       </Modal>
+      <div className="logout" style={{ display: "flex", margin: "auto", alignItems: "center"}}>
+        <Logout />
+      </div>
+      
     </div>
   )
 }

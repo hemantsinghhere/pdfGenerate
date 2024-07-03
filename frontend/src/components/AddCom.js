@@ -2,19 +2,30 @@ import axios from 'axios';
 import React, { useState } from 'react'
 
 const AddCom = ({ onClose, onFormSubmit }) => {
+  const user_id = localStorage.getItem("userId")
+  console.log("userid", user_id)
   const [comDetails, setComDetails] = useState({
     Name: '',
     Asset: 'Web Application',
-    Application_url: ''
+    Application_url: '' 
   })
 
   const handleSumbit = async(event) => {
     event.preventDefault();
+    const comDataToSubmit = {
+      user: user_id,
+      Name: comDetails.Name,
+      Asset: comDetails.Asset,
+      Application_url: comDetails.Application_url
+    };
 
     try {
-      await axios.post('http://localhost:5000/company/addCompany', comDetails);
+      await axios.post('http://localhost:5000/company/addCompany', comDataToSubmit,{
+        headers: { 'Content-Type': 'application/json' }
+    });
 
       console.log("form submitted successfully")
+      
     }catch(error){
       console.error("Error submitting form:", error)
     }
@@ -22,7 +33,7 @@ const AddCom = ({ onClose, onFormSubmit }) => {
     onFormSubmit();
     onClose();
   }
-
+  console.log("comdetails", comDetails)
   const handleChange = (event) => {
     const {name, value} = event.target;
     setComDetails({
@@ -35,7 +46,7 @@ const AddCom = ({ onClose, onFormSubmit }) => {
   return (
     <div className="form-container">
       <h2>Add Company</h2>
-      <form encType="multipart/form-data" onSubmit={handleSumbit}>
+      <form onSubmit={handleSumbit}>
         <label>Company Name:</label>
         <input
           type="text"
@@ -67,7 +78,6 @@ const AddCom = ({ onClose, onFormSubmit }) => {
           <option value="ios  Application">ios Application</option>
           <option value="ioT Application">ioT Application</option>
         </select>
-
 
         <button type="submit">Submit</button>
       </form>

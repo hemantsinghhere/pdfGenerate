@@ -7,10 +7,9 @@ const { default: mongoose } = require("mongoose");
 const getCompanyData = async(req, res, next) =>{
     try {
         // Retrieve all BugReport documents from the database
-        const companys = await Company.find({});
+        const company = await Company.find({});
 
-        res.json(companys);
-
+        res.json(company);
 
     } catch (err) {
         console.log("Error: ", err);
@@ -19,6 +18,7 @@ const getCompanyData = async(req, res, next) =>{
 }
 const addCompany = async(req, res, next) => {
     const companyData = req.body;
+    console.log("com data", companyData)
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -51,8 +51,19 @@ const addCompany = async(req, res, next) => {
 
 const getById = async(req, res, next) => {
     const companyId = req.params.id;
-    try {
+    try { 
         const company = await Company.findById(companyId);
+        res.json({ company });
+    } catch (err) {
+        console.log("Error:", err);
+        res.status(500).json({ err: "Internal Servre Error" });
+    }
+}
+
+const getByUserId = async(req, res, next) => {
+    const userId = req.params.id;
+    try {
+        const company = await Company.find({ user : userId}).populate("user");
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -80,7 +91,7 @@ const updateById = async(req, res, next) =>{
 const deleteById = async(req, res, next) =>{
     const id = req.params.id;
     try {
-        const company = await Company.findByIdAndDelete(id);
+        const company = await Company.findByIdAndDelete(id).populate('user');
         res.json({ message: 'Company Details Delete Successfully', company })
 
     } catch (err) {
@@ -89,4 +100,4 @@ const deleteById = async(req, res, next) =>{
     }
 }
 
-module.exports = {getCompanyData, addCompany, getById, updateById, deleteById}
+module.exports = {getCompanyData, addCompany, getById, updateById, deleteById, getByUserId}

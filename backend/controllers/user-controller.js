@@ -19,34 +19,29 @@ const getAllUsers = async (req, res) => {
 };
 
 const signup = async (req, res) => {
-    const {name, email, password} = req.body;
-
-    let existingUser;
-    try{
-        existingUser = await User.findOne({email});
-    }catch(err){
-       return console.log(err);
-    }
-    if(existingUser){
-        return res.status(422).json({message: 'User already exists'});
-    }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({
+    const { name, email, password } = req.body;
+  
+    try {
+      let existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(422).json({ message: 'User already exists' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const user = new User({
         name,
         email,
         password: hashedPassword,
-    }); 
-
-    try{
-        await user.save();
-    }catch(err){    
-        return res.status(500).json({ message: 'Server error while saving user' });
+      });
+  
+      await user.save();
+      return res.status(201).json({ user });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Server error while saving user' });
     }
-    // Generate JWT token
-    // const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    return res.status(201).json({user});
-}
+  };
+  
 
 const login = async (req, res) => {
     const {email, password} = req.body;
@@ -67,9 +62,9 @@ const login = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: existingUser._id, email: existingUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // const token = jwt.sign({ userId: existingUser._id, email: existingUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    return res.status(200).json({message: 'Logged in successfully', user: existingUser, token});
+    return res.status(200).json({message: 'Logged in successfully', user: existingUser});
     
 }
 
