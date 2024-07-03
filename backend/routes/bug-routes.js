@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const verifyToken = require('../controllers/Token')
 
 const { bugReport, generatePdf, updateBug, getBugById, deleteById, submitBug, getBugByCompnayId } = require("../controllers/report-controller");
 
@@ -14,7 +15,7 @@ router.get("/", bugReport );
 
 
 router.post("/submitReport",upload.array("images"), submitBug);
-router.get("/generatedPdf/:id", generatePdf)
+router.get("/generatedPdf/:id",verifyToken, generatePdf)
 router.put("/update/:id",upload.array("images"), updateBug);
 router.get("/:id", getBugById);
 router.get("/company/:id", getBugByCompnayId)

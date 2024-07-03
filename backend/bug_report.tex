@@ -153,12 +153,12 @@
             \end{minipage}
             \begin{minipage}{.60\textwidth}
             \begin{flushleft}
-                \huge Aurm ios  Application Security Assessment Report.
+                \huge Google ios Application Security Assessment Report.
             \end{flushleft}                
             \end{minipage}
             \vspace{80pt}
 
-            \large Aurm ios  Application
+            \large Google ios Application
             \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\textwidth,height=5pt]
             \end{tcolorbox}
             
@@ -196,7 +196,7 @@
                         \hline
                         \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Application Name} & \normalsize \cellcolor{tableco2} \textbf{Application URL} & \normalsize \cellcolor{tableco2} \textbf{Scope}  \\    
                         \hline
-                        \normalsize 1. & \normalsize Aurm & \normalsize \url{https://aurm.in} & \normalsize Aurm ios  Application Manually \& using Burpsuite \\
+                        \normalsize 1. & \normalsize Google & \normalsize \url{www.google.com} & \normalsize Google ios Application Manually \& using Burpsuite \\
                         \hline
                         \end{longtable} 
                     \end{center}  
@@ -218,8 +218,8 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={high,low}, text=inside, radius=\piechartRadius]{
-                    50/High,50/Low
+                \pie[color={low}, text=inside, radius=\piechartRadius]{
+                    100/Low
                 }
                 \end{tikzpicture}
 
@@ -264,7 +264,7 @@
                  \hline
                  \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{high}  1 \\
+                 \normalsize High & \normalsize \cellcolor{high}  0 \\
                  \hline
                  \normalsize Medium & \normalsize \cellcolor{medium}  0 \\
                  \hline
@@ -272,7 +272,7 @@
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{4ex} 2 \\
+                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{4ex} 1 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -402,11 +402,7 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center 1 & \normalsize Reflected Cross site Scripting (XSS)  & \normalsize A03-Injection   & \normalsize \textbf{\textcolor{high}{High}} &  8.3 \\
-                    \hline
-                    
-
-                    \normalsize \center 2 & \normalsize df & \normalsize A05-Security Misconfigurationl  & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.8 \\
+                    \normalsize \center 1 & \normalsize t & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.6 \\
                     \hline
                      
                 \end{longtable}   
@@ -427,8 +423,6 @@
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
         \hline
     
-     Reflected Cross site Scripting (XSS)  &  Planned \\
-    \hline
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
         \hline
     
@@ -438,23 +432,22 @@
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
         \hline
     
-     df &  Planned \\
+     t &  Planned \\
     \hline\end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large Reflected Cross site Scripting (XSS) }
+                    \subsection{\large t}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
                         \item \large \textbf{Status:} New
-                        \item \large \textbf{Severity: \textcolor{infotext} {High}}
-                        \item \large \textbf{OWASP Category: A03-Injection }
-                        \item \large \textbf{CVSS Score:} 8.3 
+                        \item \large \textbf{Severity: \textcolor{infotext} {Info}}
+                        \item \large \textbf{OWASP Category: A05-Security Misconfiguration}
+                        \item \large \textbf{CVSS Score:} 2.6 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \url{https://www.starbucks.com}
+                            \item \large \url{gh}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large Reflected Cross site Scripting (XSS) on \url{https://www.starbucks.com/account/signin?ReturnUrl.}
-The attacker can execute javascript on the victims account just after the authentication process.
+                        \item \large \textbf{Summary:} \\  \large gh
                             
                         \item \large \textbf{Screenshot:} \\ \\
                         \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
@@ -464,17 +457,13 @@ The attacker can execute javascript on the victims account just after the authen
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large Open the url: \url{https://www.starbucks.com/account/signin?ReturnUrl=\%19Jav\%09asc\%09ript\%3ahttps\%20\%3a\%2f\%2fwww\%2estarbucks\%2ecom\%2f\%250Aalert\%2528document.domain\%2529}
-
-                        \item \large Login to the url.
-
-                        \item \large The JS will execute on users(victims) account.
+                        \item \large edr
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large The attacker can execute JS code. 
+                        \item \large fe 
                         \end{enumerate}  
                 
                 
@@ -482,62 +471,14 @@ The attacker can execute javascript on the victims account just after the authen
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large Content based escaping on the users input, in this case the redirect parameter.
+                        \item \large fre
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm ]
                             
-                        \item \large \textcolor{linkColor}{\url{https://hackerone.com/reports/438240}}
-                       
-                        \end{enumerate}   
-                    \end{description}
-                    
-                    
-                    \newpage
-                    \subsection{\large df}
-                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} New
-                        \item \large \textbf{Severity: \textcolor{infotext} {Info}}
-                        \item \large \textbf{OWASP Category: A05-Security Misconfigurationl}
-                        \item \large \textbf{CVSS Score:} 2.8 
-                        \item \large \textbf{Affected Hosts/URLs:}
-                            \begin{itemize} 
-                            \item \large \url{sd}
-                            \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large sd
-                            
-                        \item \large \textbf{Screenshot:} \\ \\
-                        \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
-                       
-
-                        \item \large \textbf{Steps of Reproduce:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large dfsd
-                        \end{enumerate}
-                        
-                        \item \large \textbf{Impact:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large sd 
-                        \end{enumerate}  
-                
-                
-                        \item \large \textbf{Remediation:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm]
-                            
-                        \item \large sd
-                        \end{enumerate}
-
-                        \item \large \textbf{Reference:}
-                        \linespread{1.0}
-                        \begin{enumerate}[leftmargin=0.5cm ]
-                            
-                        \item \large \textcolor{linkColor}{\url{sd}}
+                        \item \large \textcolor{linkColor}{\url{fre}}
                        
                         \end{enumerate}   
                     \end{description}

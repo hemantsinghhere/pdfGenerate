@@ -52,8 +52,10 @@ const Auth = () => {
         sendRequest(requestType)
             .then((data) => {
                 if (data) {
+                    console.log("token", data.token)
                     localStorage.setItem("userId", data.user._id);
                     localStorage.setItem("isLoggedIn", "true");
+                    localStorage.setItem("token", data.token);
                     dispatch(authActions.login());
                     navigate("/user");
                 }

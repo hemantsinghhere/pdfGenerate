@@ -20,8 +20,12 @@ const Buttons = () => {
 
     const handleDownloadPdf = async () => {
         try {
+            const token = localStorage.getItem('token');
             const response = await axios.get(`http://localhost:5000/api/getReport/generatedPdf/${companyId}`, {
                 responseType: 'arraybuffer', // This is important for binary data like PDFs
+                headers: {
+                    'Authorization': `Bearer ${token}`, // Add authorization token if required
+                }
             });
             setPdfData(new Blob([response.data], { type: 'application/pdf' }));
             toggleModal();

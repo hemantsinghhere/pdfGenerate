@@ -151,12 +151,17 @@ async function downloadAllImages(bugReports) {
 }
 
 const generatePdf = async (req, res, next) => {
-   
+
 
     const companyId = req.params.id;
 
-    const bugReports = await BugReport.find({ company: companyId }).populate("company");
+    // Check if the user is authorized to access this company's data
+    if (!req.user.companys.includes(companyId)) {
+        return res.status(403).json({ message: 'Unauthorized access' });
+    }
 
+
+    const bugReports = await BugReport.find({ company: companyId }).populate("company");
     const companyData = await Company.findById(companyId);
    
 

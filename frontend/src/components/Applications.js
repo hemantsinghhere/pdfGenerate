@@ -14,7 +14,6 @@ Modal.setAppElement('#root');
 
 const Applications = () => {
   const { companyId } = useContext(CompanyContext);
-  console.log("companyId in application", companyId)
 
   const [Id, setId] = useState(null);
 
