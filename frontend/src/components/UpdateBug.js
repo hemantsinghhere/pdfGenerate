@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const UpdateBug = ({ id, onClose }) => {
+const UpdateBug = ({ id, onClose, onFormSubmit}) => {
 
 
     const [formData, setFormData] = useState({
@@ -28,7 +28,12 @@ const UpdateBug = ({ id, onClose }) => {
         // Fetch existing data
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/getReport/${id}`);
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:5000/api/getReport/u/${id}`,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                     }
+                });
                 const data = response.data.bug;
                 console.log("data are:", data)
                 setFormData({
@@ -53,11 +58,14 @@ const UpdateBug = ({ id, onClose }) => {
         };
         fetchData();
     }, [id]);
+
+
+
     console.log("form data :", formData)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        const token = localStorage.getItem('token');
         const formDataToSubmit = new FormData();
         for (const [key, value] of Object.entries(formData)) {
             if (key === 'images') {
@@ -72,8 +80,20 @@ const UpdateBug = ({ id, onClose }) => {
         }
 
         try {
-            await axios.put(`http://localhost:5000/api/getReport/update/${id}`, formDataToSubmit, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            // admin
+            // await axios.put(`http://localhost:5000/api/getReport/update/${id}`, formDataToSubmit, {
+            //     headers: { 
+            //         'Content-Type': 'multipart/form-data',
+            //     }
+            // });
+
+            //user
+
+            await axios.put(`http://localhost:5000/api/getReport/update/u/${id}`, formDataToSubmit, {
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                }
             });
             console.log('Form update successfully');
 
@@ -101,6 +121,7 @@ const UpdateBug = ({ id, onClose }) => {
         }
 
         alert("Bug Update Successfully.")
+        onFormSubmit();
         onClose()
     };
 

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { authActions } from "../store"
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const Auth = () => {
         }));
     };
 
+
+
     const sendRequest = async (type = "login") => {
         try {
             const res = await axios.post(`http://localhost:5000/user/${type}`, {
@@ -34,7 +37,7 @@ const Auth = () => {
             });
             const data = await res.data;
             return data;
-            
+
         } catch (err) {
             console.log("error", err)
             setError(err.response.data.message || 'Something went wrong');
@@ -43,7 +46,7 @@ const Auth = () => {
         }
     };
 
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -58,11 +61,31 @@ const Auth = () => {
                     localStorage.setItem("token", data.token);
                     dispatch(authActions.login());
                     navigate("/user");
+
+                    // Decode the token to get the expiration time
+                    const decodedToken = jwtDecode(data.token);
+                    const expirationTime = decodedToken.exp * 1000 - new Date().getTime();
+                    console.log("decoded token", decodedToken);
+                    console.log("expiration time", expirationTime);
+
+                    // Set a timeout to log out the user when the token expires
+                    setTimeout(() => {
+                        alert("Session expired. You will be logged out.");
+                        handleLogout();
+                    }, expirationTime);
                 }
             })
             .catch((err) => console.error(err));
     };
-    
+
+    const handleLogout = () => {
+        dispatch(authActions.logout());
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        navigate("/");
+    };
+
     return (
         <>
             <form onSubmit={handleSubmit} >

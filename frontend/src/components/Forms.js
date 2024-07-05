@@ -30,7 +30,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        const token = localStorage.getItem('token');
         const formDataToSubmit = new FormData();
         for (const [key, value] of Object.entries(formData)) {
             if (key === 'images') {
@@ -47,8 +47,11 @@ const Forms = ({ onClose, onFormSubmit }) => {
         formDataToSubmit.append('company', companyId);
 
         try {
-            await axios.post('http://localhost:5000/api/getReport/submitReport', formDataToSubmit, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            await axios.post('http://localhost:5000/api/getReport/usubmitReport', formDataToSubmit, {
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                 }
             });
             console.log('Form submitted successfully');
             console.log("sumitted form data: ",formData)

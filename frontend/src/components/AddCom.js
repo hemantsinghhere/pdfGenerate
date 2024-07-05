@@ -3,15 +3,15 @@ import React, { useState } from 'react'
 
 const AddCom = ({ onClose, onFormSubmit }) => {
   const user_id = localStorage.getItem("userId")
-  console.log("userid", user_id)
   const [comDetails, setComDetails] = useState({
     Name: '',
     Asset: 'Web Application',
-    Application_url: '' 
+    Application_url: ''
   })
 
-  const handleSumbit = async(event) => {
+  const handleSumbit = async (event) => {
     event.preventDefault();
+    const token = localStorage.getItem('token');
     const comDataToSubmit = {
       user: user_id,
       Name: comDetails.Name,
@@ -20,29 +20,38 @@ const AddCom = ({ onClose, onFormSubmit }) => {
     };
 
     try {
-      await axios.post('http://localhost:5000/company/addCompany', comDataToSubmit,{
-        headers: { 'Content-Type': 'application/json' }
-    });
+      //admin
+      await axios.post('http://localhost:5000/company/addCompany', comDataToSubmit, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+
+        // user
+        // await axios.post('http://localhost:5000/company/addCompany/U', comDataToSubmit,{
+        //   headers: { 
+        //     'Content-Type': 'application/json',
+        //     'Authorization': `Bearer ${token}`
+        //    }
+      });
 
       console.log("form submitted successfully")
-      
-    }catch(error){
+
+    } catch (error) {
       console.error("Error submitting form:", error)
     }
     alert("New Company added Successfully");
     onFormSubmit();
     onClose();
   }
-  console.log("comdetails", comDetails)
   const handleChange = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     setComDetails({
       ...comDetails,
       [name]: value
     })
   }
 
-  
+
   return (
     <div className="form-container">
       <h2>Add Company</h2>

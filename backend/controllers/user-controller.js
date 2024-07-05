@@ -35,8 +35,10 @@ const signup = async (req, res) => {
       });
   
       await user.save();
-      
-      return res.status(201).json({ user });
+      // Generate JWT token
+      const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      console.log("token", token)
+      return res.status(201).json({ user, token });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: 'Server error while saving user' });

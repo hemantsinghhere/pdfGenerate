@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.8)  4 JUL 2024 01:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.8)  5 JUL 2024 18:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1334,18 +1334,18 @@ Overfull \hbox (127.38487pt too wide) has occurred while \output is active
  []
 
 [8]
-<Images/temp-image-0-0.png, id=141, 1877.0125pt x 870.25125pt>
+<Images/temp-image-0-0.png, id=141, 886.512pt x 364.36125pt>
 File: Images/temp-image-0-0.png Graphic file (type png)
 <use Images/temp-image-0-0.png>
 Package pdftex.def Info: Images/temp-image-0-0.png  used on input line 453.
-(pdftex.def)             Requested size: 500.47052pt x 232.03633pt.
+(pdftex.def)             Requested size: 500.48793pt x 205.70325pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 452--454
 
  []
 
 
-Overfull \hbox (5.67699pt too wide) in paragraph at lines 452--454
+Overfull \hbox (5.6944pt too wide) in paragraph at lines 452--454
 [] 
  []
 
@@ -1356,7 +1356,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 452--454
 
 File: vapt.jpeg Graphic file (type jpg)
 <use vapt.jpeg>
-Package pdftex.def Info: vapt.jpeg  used on input line 475.
+Package pdftex.def Info: vapt.jpeg  used on input line 481.
 (pdftex.def)             Requested size: 90.08345pt x 19.34912pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1446,18 +1446,18 @@ Package rerunfilecheck Info: File `bug_report.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  34219 strings out of 474486
- 746378 string characters out of 5743756
+ 746383 string characters out of 5743756
  1944542 words of memory out of 5000000
  55907 multiletter control sequences out of 15000+600000
  576324 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,15n,121p,1024b,1267s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,15n,121p,1024b,1231s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a
 .pfb><C:/Users/rahur/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhv
 r8a.pfb>
-Output written on bug_report.pdf (12 pages, 123071 bytes).
+Output written on bug_report.pdf (12 pages, 148342 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
+ 190 PDF objects out of 1000 (max. 8388607)
  38 named destinations out of 1000 (max. 500000)
  215 words of extra memory for PDF output out of 10000 (max. 10000000)
 

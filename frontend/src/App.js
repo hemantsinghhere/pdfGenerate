@@ -21,19 +21,16 @@ function App() {
     <CompanyProvider>
       <BrowserRouter>
         <Routes>
-        
          {
             !isLoggedIn ? (
               <Route path="/" element={<Auth />} />
             ) : (
               <>
                 <Route path="/user" element={<Company />} />
-                <Route path='/:name' element={<Applications />} />
-                
+                <Route path='/:name' element={<Applications />} /> 
               </>
             )
-          } 
-          
+          }  
         </Routes>
       </BrowserRouter>
     </CompanyProvider>

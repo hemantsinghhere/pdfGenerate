@@ -218,8 +218,8 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={low}, text=inside, radius=\piechartRadius]{
-                    100/Low
+                \pie[color={critical}, text=inside, radius=\piechartRadius]{
+                    100/Critical
                 }
                 \end{tikzpicture}
 
@@ -262,13 +262,13 @@
                 \hline
                 \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \rule{0pt}{5ex} \textbf{Count} \\
                  \hline
-                 \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
+                 \normalsize Critical &   \normalsize \cellcolor{critical} 1  \\
                  \hline
                  \normalsize High & \normalsize \cellcolor{high}  0 \\
                  \hline
                  \normalsize Medium & \normalsize \cellcolor{medium}  0 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low}  1 \\
+                 \normalsize Low & \normalsize \cellcolor{low}  0 \\
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
@@ -402,7 +402,7 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center 1 & \normalsize t & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{infotext}{Info}} &  2.6 \\
+                    \normalsize \center 1 & \normalsize t & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{critical}{Critical}} &  9 \\
                     \hline
                      
                 \end{longtable}   
@@ -420,6 +420,8 @@
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{critical}{\textbf{Critical Severity Findings}}} \\
             \hline
             
+     t &  Planned \\
+    \hline
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
         \hline
     
@@ -431,18 +433,16 @@
     
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
         \hline
-    
-     t &  Planned \\
-    \hline\end{longtable}
+    \end{longtable}
             \end{center}
             
                     \newpage
                     \subsection{\large t}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} New
-                        \item \large \textbf{Severity: \textcolor{infotext} {Info}}
+                        \item \large \textbf{Status:} In Progress
+                        \item \large \textbf{Severity: \textcolor{infotext} {Critical}}
                         \item \large \textbf{OWASP Category: A05-Security Misconfiguration}
-                        \item \large \textbf{CVSS Score:} 2.6 
+                        \item \large \textbf{CVSS Score:} 9 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
                             \item \large \url{gh}

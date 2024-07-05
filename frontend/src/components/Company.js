@@ -42,15 +42,32 @@ const Company = () => {
   };
 
   const fetchDetails = async () => {
-    const res = await axios.get(`http://localhost:5000/company/user/${user_id}`).catch(err => console.log(err));
+    const token = localStorage.getItem('token');
+    //admin
+    // const res = await axios.get(`http://localhost:5000/company/user/${user_id}`,{
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`
+    //  }
+
+     // user
+    const res = await axios.get(`http://localhost:5000/company/user/U/${user_id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+     }
+    }).catch(err => console.log(err));
 
     const data = await res.data;
     setComData(data.company)
   }
 
   const handleDelete = async (id) => {
+    const token = localStorage.getItem('token');
     try {
-      const res = await axios.delete(`http://localhost:5000/company/delete/${id}`);
+      const res = await axios.delete(`http://localhost:5000/company/delete/U/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+       }
+      });
       if (res.status === 200) {
         alert("Bug Deleted Successfully");
         setComData(prevData => prevData.filter(com => com._id !== id));
@@ -137,7 +154,7 @@ const Company = () => {
           }
         }}
       > 
-        {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom onClose={toggleModal} id={Id} />} 
+        {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom id={Id} onClose={toggleModal} onFormSubmit={fetchDetails}/>} 
       </Modal>
       <div className="logout" style={{ display: "flex", margin: "auto", alignItems: "center"}}>
         <Logout />

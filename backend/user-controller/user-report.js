@@ -26,11 +26,18 @@ const imagekit = new ImageKit({
 
 
 
-const bugReport = async (req, res, next) => { 
+const userbugReport = async (req, res, next) => { 
     try {
         // Retrieve all BugReport documents from the database
-        const bugReports = await BugReport.find({}).populate("company");
-        res.json(bugReports);
+        const bugReports = await BugReport.find({})
+            .populate({
+                path: 'company',
+                match: { user: req.user._id } // Ensure the user is associated with the company
+            });
+
+        const filteredBugReports = bugReports.filter(bug => bug.company); // Filter out unauthorized reports
+
+        res.json(filteredBugReports);
 
     } catch (err) {
         console.log("Error: ", err);
@@ -38,10 +45,15 @@ const bugReport = async (req, res, next) => {
     }
 }
 
-const getBugByCompnayId = async (req, res, next) => { 
+const usergetBugByCompnayId = async (req, res, next) => { 
     try {
         // Assuming companyId is available in req.user.companyId or req.session.companyId
         const companyId = req.params.id; // or however you access companyId
+
+         // Check if the user is authorized to access this company's data
+         if (!req.user.companys.includes(companyId)) {
+            return res.status(403).json({ message: 'Unauthorized access' });
+        }
         
         // Retrieve bug reports filtered by companyId
         const bugReports = await BugReport.find({ company: companyId });
@@ -54,7 +66,7 @@ const getBugByCompnayId = async (req, res, next) => {
 }
 
 
-const submitBug = async (req, res, next) => {
+const usersubmitBug = async (req, res, next) => {
     const bugReportData = req.body;
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -107,12 +119,12 @@ const submitBug = async (req, res, next) => {
             return res.status(404).json({ error: 'Company not found.' });
         }
 
-        // // Check if the user is authorized to access this company's data
-        // if (!req.user.companys.includes(company._id.toString())) {
-        //     await session.abortTransaction();
-        //     session.endSession();
-        //     return res.status(403).json({ error: 'Unauthorized access' });
-        // }
+        // Check if the user is authorized to access this company's data
+        if (!req.user.companys.includes(company._id.toString())) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(403).json({ error: 'Unauthorized access' });
+        }
 
         company.bugs.push(bugReport);
         await company.save({ session });
@@ -157,15 +169,15 @@ async function downloadAllImages(bugReports) {
     await Promise.all(downloadPromises);
 }
 
-const generatePdf = async (req, res, next) => {
+const usergeneratePdf = async (req, res, next) => {
 
 
     const companyId = req.params.id;
 
-    // // Check if the user is authorized to access this company's data
-    // if (!req.user.companys.includes(companyId)) {
-    //     return res.status(403).json({ message: 'Unauthorized access' });
-    // }
+    // Check if the user is authorized to access this company's data
+    if (!req.user.companys.includes(companyId)) {
+        return res.status(403).json({ message: 'Unauthorized access' });
+    }
 
 
     const bugReports = await BugReport.find({ company: companyId }).populate("company");
@@ -932,7 +944,7 @@ function sanitizeSummary(content) {
 }
 
 
-const updateBug = async (req, res, next) => {
+const userupdateBug = async (req, res, next) => {
     const updateValues = req.body;
     const bugId = req.params.id;
     try {
@@ -971,6 +983,10 @@ const updateBug = async (req, res, next) => {
         if (!bug) {
             return res.status(404).json({ error: 'Bug report not found' });
         }
+        // Check if the user is authorized to update this bug report
+        if (!req.user.companys.includes(bug.company._id.toString())) {
+            return res.status(403).json({ message: 'Unauthorized access' });
+        }
 
         res.json({ message: 'Bug report updated successfully', bug });
     } catch (err) {
@@ -979,10 +995,16 @@ const updateBug = async (req, res, next) => {
     }
 }
 
-const getBugById = async (req, res, next) => {
+const usergetBugById = async (req, res, next) => {
     const id = req.params.id;
     try {
         const bug = await BugReport.findById(id);
+
+        // Check if the user is authorized to view this bug report
+        if (!req.user.companys.includes(bug.company._id.toString())) {
+            return res.status(403).json({ message: 'Unauthorized access' });
+        }
+
         res.json({ bug });
     } catch (err) {
         console.log("Error:", err);
@@ -990,10 +1012,16 @@ const getBugById = async (req, res, next) => {
     }
 }
 
-const deleteById = async (req, res, next) => {
+const userdeleteById = async (req, res, next) => {
     const id = req.params.id;
     try {
         const bug = await BugReport.findByIdAndDelete(id);
+
+        // Check if the user is authorized to delete this bug report
+        if (!req.user.companys.includes(bug.company._id.toString())) {
+            return res.status(403).json({ message: 'Unauthorized access' });
+        }
+        
         res.json({ message: 'Bug Report Delete Successfully', bug })
 
     } catch (err) {
@@ -1001,4 +1029,4 @@ const deleteById = async (req, res, next) => {
         res.status(500).json({ err: "Internal Server Error" })
     }
 }
-module.exports = { bugReport, submitBug, generatePdf, updateBug, getBugById, deleteById, getBugByCompnayId };
+module.exports = { userbugReport, usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, userdeleteById, usergetBugByCompnayId };

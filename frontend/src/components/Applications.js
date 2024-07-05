@@ -41,7 +41,12 @@ const Applications = () => {
 
 
   const fetchDetails = async () => {
-    const res = await axios.get(`http://localhost:5000/api/getReport/company/${companyId}`).catch(err => console.log(err));
+    const token = localStorage.getItem('token');
+    const res = await axios.get(`http://localhost:5000/api/getReport/company/u/${companyId}`,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+     }
+    }).catch(err => console.log(err));
 
     const data = await res.data;
     console.log("bug data company", data)
@@ -58,7 +63,12 @@ const Applications = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/api/getReport/delete/${id}`);
+      const token = localStorage.getItem('token');
+      const res = await axios.delete(`http://localhost:5000/api/getReport/delete/u/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+       }
+      });
       if (res.status === 200) {
         alert("Bug Deleted Successfully");
         setBugData(prevData => prevData.filter(bug => bug._id !== id));
@@ -132,7 +142,7 @@ const Applications = () => {
           }
         }}
       >
-        {modalType === 'add' ? <Forms onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateBug onClose={toggleModal} id={Id} />}
+        {modalType === 'add' ? <Forms onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateBug id={Id} onClose={toggleModal} onFormSubmit={fetchDetails} />}
       </Modal>
       <Buttons />
     </div>

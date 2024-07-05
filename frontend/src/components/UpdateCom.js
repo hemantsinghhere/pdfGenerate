@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const UpdateCom = ({ id, onClose }) => {
+const UpdateCom = ({ id, onClose, onFormSubmit }) => {
     const [comDetails, setComDetails] = useState({
         Name: '',
         Asset: 'Web Application',
@@ -11,8 +11,13 @@ const UpdateCom = ({ id, onClose }) => {
     useEffect(() => {
         // Fetch existing data
         const fetchData = async () => {
+            const token = localStorage.getItem('token');
             try {
-                const response = await axios.get(`http://localhost:5000/company/${id}`);
+                const response = await axios.get(`http://localhost:5000/company/U/${id}`,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                     }
+                });
                 const data = response.data.company;
                 console.log("data are:", data)
                 setComDetails({
@@ -29,9 +34,14 @@ const UpdateCom = ({ id, onClose }) => {
 
     const handleSumbit = async (event) => {
         event.preventDefault();
+        const token = localStorage.getItem('token');
 
         try {
-            await axios.put(`http://localhost:5000/company/update/${id}`, comDetails);
+            await axios.put(`http://localhost:5000/company/update/U/${id}`, comDetails,{
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                 }
+            });
 
             console.log("form update successfully");
             setComDetails({
@@ -43,6 +53,7 @@ const UpdateCom = ({ id, onClose }) => {
             console.error("Error submitting form:", error)
         }
         alert("Company Details update Successfully");
+        onFormSubmit();
         onClose();
     }
 
