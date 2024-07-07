@@ -366,6 +366,12 @@ const usergeneratePdf = async (req, res, next) => {
             \\urlstyle{same}
 
 
+            \\hypersetup{
+                hidelinks,  
+                colorlinks=false,
+            }
+
+
             \\newcommand{\\urlstring}[1]{\\begin{quote}\\url{#1}\\end{quote}}
             
 

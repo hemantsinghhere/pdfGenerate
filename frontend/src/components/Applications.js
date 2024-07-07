@@ -9,11 +9,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateBug from './UpdateBug';
 import { CompanyContext } from './CompanyProvider';
 import Buttons from './Buttons';
+import { useLocation } from 'react-router-dom';
 
 Modal.setAppElement('#root');
 
 const Applications = () => {
+
+  let loc = useLocation();
+  let temp = loc.pathname.startsWith("/admin")
+  const user_id = localStorage.getItem("userId")
+
   const { companyId } = useContext(CompanyContext);
+  const [comData, setComData] = useState([]);
 
   const [Id, setId] = useState(null);
 
@@ -42,32 +49,52 @@ const Applications = () => {
 
   const fetchDetails = async () => {
     const token = localStorage.getItem('token');
-    const res = await axios.get(`http://localhost:5000/api/getReport/company/u/${companyId}`,{
-      headers: {
-        'Authorization': `Bearer ${token}`
-     }
-    }).catch(err => console.log(err));
+    try {
+      const [bugRes, comRes] = await Promise.all([
+        temp
+          ? axios.get(`http://localhost:5000/api/getReport/company/${companyId}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          })
+          : axios.get(`http://localhost:5000/api/getReport/company/u/${companyId}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          }),
+        temp
+          ? axios.get(`http://localhost:5000/company/user/${user_id}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          })
+          : axios.get(`http://localhost:5000/company/user/U/${user_id}`, {
+            headers: { 'Authorization': `Bearer ${token}` },
+          }),
+      ]);
 
-    const data = await res.data;
-    console.log("bug data company", data)
-    setBugData(data)
-  }
+      if (bugRes && bugRes.data) {
+        setBugData(bugRes.data);
+      }
+
+      if (comRes && comRes.data) {
+        console.log("com res", comRes)
+        setComData(comRes.data.company);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    fetchDetails()
+    fetchDetails();
   }, [])
 
 
-
+ 
 
 
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.delete(`http://localhost:5000/api/getReport/delete/u/${id}`,{
+      const res = await axios.delete(`http://localhost:5000/api/getReport/delete/u/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
-       }
+        }
       });
       if (res.status === 200) {
         alert("Bug Deleted Successfully");
@@ -88,7 +115,14 @@ const Applications = () => {
             <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>VULNERABILITY NAME</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>RISK</th>
-            <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>
+            <th style={{ border: '1px solid black', padding: '8px' }}>LATEST DISCOVERY </th>
+            <th style={{ border: '1px solid black', padding: '8px' }}>ASSETS AFFECTED</th>
+            {
+              temp && (
+                <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>
+              )
+            }
+
           </tr>
         </thead>
         <tbody>
@@ -103,13 +137,28 @@ const Applications = () => {
                 </td>
                 <td style={{ border: '1px solid black', padding: '8px' }}>{data.Severity}</td>
                 <td style={{ border: '1px solid black', padding: '8px' }}>
-                  <IconButton >
-                    <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
-                  </IconButton>
-                  <IconButton>
-                    <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
-                  </IconButton>
+                  {new Date(data.updatedAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                  })}
                 </td>
+                <td style={{ border: '1px solid black', padding: '8px' }}>
+                   {comData.find((com) => com._id === data.company)?.Asset || 'N/A'}
+                </td>
+                {
+                  temp && (
+                    <td style={{ border: '1px solid black', padding: '8px' }}>
+                      <IconButton >
+                        <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
+                      </IconButton>
+                      <IconButton>
+                        <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
+                      </IconButton>
+                    </td>
+                  )
+                }
+
               </tr>
             ))
           }

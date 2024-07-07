@@ -9,12 +9,15 @@ import { Table } from 'react-bootstrap';
 import {  useNavigate } from "react-router-dom";
 import { CompanyContext } from './CompanyProvider';
 import UpdateCom from './UpdateCom';
-import Logout from "./Logout"
+import Logout from "./Logout";
+import { useLocation } from 'react-router-dom';
 
 
 Modal.setAppElement('#root');
 
 const Company = () => {
+  let loc = useLocation();
+  let temp = loc.pathname.startsWith("/admin")
   const navigate = useNavigate();
   const { setCompanyId } = useContext(CompanyContext);
   const user_id = localStorage.getItem("userId")
@@ -43,6 +46,28 @@ const Company = () => {
 
   const fetchDetails = async () => {
     const token = localStorage.getItem('token');
+    let res;
+    if (temp) {
+      // admin
+      res = await axios.get(`http://localhost:5000/company/user/${user_id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }).catch(err => console.log(err));
+    } else {
+      // user
+      res = await axios.get(`http://localhost:5000/company/user/U/${user_id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }).catch(err => console.log(err));
+    }
+
+    if (res && res.data) {
+      const data = await res.data;
+      setComData(data.company);
+    }
+ 
     //admin
     // const res = await axios.get(`http://localhost:5000/company/user/${user_id}`,{
     //   headers: {
@@ -50,14 +75,14 @@ const Company = () => {
     //  }
 
      // user
-    const res = await axios.get(`http://localhost:5000/company/user/U/${user_id}`,{
-      headers: {
-        'Authorization': `Bearer ${token}`
-     }
-    }).catch(err => console.log(err));
+    // const res = await axios.get(`http://localhost:5000/company/user/U/${user_id}`,{
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`
+    //  }
+    // }).catch(err => console.log(err));
 
-    const data = await res.data;
-    setComData(data.company)
+    // const data = await res.data;
+    // setComData(data.company)
   }
 
   const handleDelete = async (id) => {
@@ -80,7 +105,9 @@ const Company = () => {
 
   const handleCom = async(id, name) => {
     setCompanyId(id);
-    navigate(`/${name}`);
+    {
+      temp ? navigate(`/admin/${name}`) : navigate(`/user/${name}`)
+    }
   }
 
   useEffect(() => {
@@ -97,7 +124,7 @@ const Company = () => {
               <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
               <th style={{ border: '1px solid black', padding: '8px' }}>COMPANY NAME</th>
               <th style={{ border: '1px solid black', padding: '8px' }}>ASSET</th>
-              <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>
+              {temp && <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>}
             </tr>
           </thead>
           <tbody>
@@ -112,14 +139,16 @@ const Company = () => {
                   </td>
                  
                   <td style={{ border: '1px solid black', padding: '8px' }}>{data.Asset}</td>
-                  <td style={{ border: '1px solid black', padding: '8px' }}>
-                    <IconButton >
-                      <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
-                    </IconButton>
-                    <IconButton>
-                      <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
-                    </IconButton>
-                  </td>
+                  {temp && (
+                <td style={{ border: '1px solid black', padding: '8px' }}>
+                  <IconButton>
+                    <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
+                  </IconButton>
+                  <IconButton>
+                    <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
+                  </IconButton>
+                </td>
+              )}
                 </tr>
               ))
             }

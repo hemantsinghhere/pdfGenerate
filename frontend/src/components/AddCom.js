@@ -21,17 +21,17 @@ const AddCom = ({ onClose, onFormSubmit }) => {
 
     try {
       //admin
-      await axios.post('http://localhost:5000/company/addCompany', comDataToSubmit, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      // await axios.post('http://localhost:5000/company/addCompany', comDataToSubmit, {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
 
         // user
-        // await axios.post('http://localhost:5000/company/addCompany/U', comDataToSubmit,{
-        //   headers: { 
-        //     'Content-Type': 'application/json',
-        //     'Authorization': `Bearer ${token}`
-        //    }
+        await axios.post('http://localhost:5000/company/addCompany/U', comDataToSubmit,{
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+           }
       });
 
       console.log("form submitted successfully")

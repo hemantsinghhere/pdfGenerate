@@ -1,9 +1,6 @@
 const express = require('express');
 const { signup, login, getAllUsers } = require('../controllers/user-controller');
 
-
-
-
 const user = express.Router();
 
 

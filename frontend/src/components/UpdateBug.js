@@ -29,13 +29,20 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('token');
+                // admin
+                // const response = await axios.get(`http://localhost:5000/api/getReport/u/${id}`,{
+                //     headers: {
+                //         'Authorization': `Bearer ${token}`
+                //      }
+                // });
+
+                // user
                 const response = await axios.get(`http://localhost:5000/api/getReport/u/${id}`,{
                     headers: {
                         'Authorization': `Bearer ${token}`
                      }
                 });
                 const data = response.data.bug;
-                console.log("data are:", data)
                 setFormData({
                     Title: data.Title,
                     Status: data.Status,
@@ -61,7 +68,7 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
 
 
 
-    console.log("form data :", formData)
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -96,8 +103,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                 }
             });
             console.log('Form update successfully');
-
-            console.log("updated form data :", formData)
 
             setFormData({
                 Title: formData.Title,

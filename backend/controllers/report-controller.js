@@ -313,11 +313,9 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{background}
             \\usetikzlibrary{calc}
             \\usetikzlibrary{fadings}
-            \\usepackage{titletoc}
             \\usepackage{adjustbox}
             \\usepackage{subfigure}
             \\usepackage{pagecolor}
-            \\usepackage{titletoc}
             \\usepackage[T1]{fontenc}
             \\usepackage[scaled]{uarial}
             \\usetikzlibrary{pie, fit}
@@ -352,7 +350,13 @@ const generatePdf = async (req, res, next) => {
             \\usepackage{xurl}
             \\usepackage{hyphenat}
             \\urlstyle{same}
+            \\usepackage{titletoc}
 
+
+            \\hypersetup{
+                hidelinks,  
+                colorlinks=false,
+            }   
 
             \\newcommand{\\urlstring}[1]{\\begin{quote}\\url{#1}\\end{quote}}
             
@@ -437,6 +441,10 @@ const generatePdf = async (req, res, next) => {
             {\\titlerule*[0.5pc]{.}\\contentspage}
 
             \\renewcommand{\\@}{\\space\\ignorespaces}
+            
+
+
+            
 
             \\begin{document}
 

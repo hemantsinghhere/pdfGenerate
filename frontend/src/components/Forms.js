@@ -5,7 +5,6 @@ import { CompanyContext } from './CompanyProvider';
 
 const Forms = ({ onClose, onFormSubmit }) => {
     const { companyId } = useContext(CompanyContext);
-    console.log("companyId", companyId)
 
     // State to manage form data
     const [formData, setFormData] = useState({
@@ -47,6 +46,13 @@ const Forms = ({ onClose, onFormSubmit }) => {
         formDataToSubmit.append('company', companyId);
 
         try {
+            // admin
+            // await axios.post('http://localhost:5000/api/getReport/submitReport', formDataToSubmit, {
+            //     headers: { 
+            //         'Content-Type': 'multipart/form-data',
+            //      }
+            // });
+            //user
             await axios.post('http://localhost:5000/api/getReport/usubmitReport', formDataToSubmit, {
                 headers: { 
                     'Content-Type': 'multipart/form-data',
@@ -54,7 +60,6 @@ const Forms = ({ onClose, onFormSubmit }) => {
                  }
             });
             console.log('Form submitted successfully');
-            console.log("sumitted form data: ",formData)
             setFormData({
                 Title: '',
                 Status: 'New',
@@ -123,8 +128,6 @@ const Forms = ({ onClose, onFormSubmit }) => {
 
 
     
-
-
     return (
             <div className="form-container">
                 <h2>Submit Form</h2>

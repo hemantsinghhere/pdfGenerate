@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 
-const Auth = () => {
+const UserLogin = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isSignup, setIsSignup] = useState(false);
@@ -58,12 +59,12 @@ const Auth = () => {
                     localStorage.setItem("isLoggedIn", "true");
                     localStorage.setItem("token", data.token);
                     dispatch(authActions.login());
-                    navigate("/admin/companylist");
+                    navigate("/userportal");
 
                     // Decode the token to get the expiration time
                     const decodedToken = jwtDecode(data.token);
                     const expirationTime = decodedToken.exp * 1000 - new Date().getTime();
-                    
+
 
                     // Set a timeout to log out the user when the token expires
                     setTimeout(() => {
@@ -82,7 +83,6 @@ const Auth = () => {
         localStorage.removeItem("token");
         navigate("/");
     };
-
     return (
         <>
             <form onSubmit={handleSubmit} >
@@ -100,11 +100,11 @@ const Auth = () => {
                     <Typography
                         padding={3}
                         textAlign='center'
-                        variant='h3'>
-                        {isSignup ? "Signup" : "Login"}
+                        variant='h4'>
+                        User Login
                     </Typography>
 
-                    {
+                    {/* {
                         isSignup &&
                         <TextField
                             name="name"
@@ -113,7 +113,7 @@ const Auth = () => {
                             placeholder='Name'
                             margin="normal"
                         />
-                    }
+                    } */}
 
                     <TextField
                         onChange={handleChange}
@@ -141,12 +141,12 @@ const Auth = () => {
                     >
                         Submit
                     </Button>
-                    <Button
+                    {/* <Button
                         sx={{ borderRadius: 3, marginTop: 3 }}
                         onClick={() => setIsSignup(!isSignup)}
                     >
                         Change to {isSignup ? "Login" : "Signup"}
-                    </Button>
+                    </Button> */}
                 </Box>
             </form>
             <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
@@ -158,4 +158,4 @@ const Auth = () => {
     )
 }
 
-export default Auth
+export default UserLogin
