@@ -13,9 +13,9 @@ const UpdateCom = ({ id, onClose, onFormSubmit }) => {
         const fetchData = async () => {
             const token = localStorage.getItem('token');
             try {
-                const response = await axios.get(`http://localhost:5000/company/U/${id}`,{
+                const response = await axios.get(`http://localhost:5000/company/${id}`,{
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}` 
                      }
                 });
                 const data = response.data.company;
@@ -37,7 +37,7 @@ const UpdateCom = ({ id, onClose, onFormSubmit }) => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.put(`http://localhost:5000/company/update/U/${id}`, comDetails,{
+            await axios.put(`http://localhost:5000/company/update/${id}`, comDetails,{
                 headers: {
                     'Authorization': `Bearer ${token}`
                  }

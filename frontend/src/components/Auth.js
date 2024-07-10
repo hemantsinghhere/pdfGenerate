@@ -5,6 +5,7 @@ import { authActions } from "../store"
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import crypto from 'crypto-js';
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -26,27 +27,31 @@ const Auth = () => {
         }));
     };
 
-
+    const hashPassword = (password) => {
+        return crypto.SHA256(password).toString();
+    };
 
     const sendRequest = async (type = "login") => {
         try {
+            const hashedPassword = hashPassword(inputs.password);
+
             const res = await axios.post(`http://localhost:5000/user/${type}`, {
                 name: inputs.name,
                 email: inputs.email,
-                password: inputs.password
+                password: hashedPassword
             });
+
             const data = await res.data;
             return data;
-
         } catch (err) {
-            console.log("error", err)
+            console.log("error", err);
             setError(err.response.data.message || 'Something went wrong');
             setOpen(true);
             return null;
         }
     };
 
-
+ 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -159,3 +164,6 @@ const Auth = () => {
 }
 
 export default Auth
+
+
+
