@@ -32,6 +32,39 @@ const companySchema = new schema({
     this.updatedAt = Date.now();
     next();
   });
+
+
+// Middleware to remove company ID from user's companys array before deleting the company
+companySchema.pre('findOneAndDelete', async function (next) {
+  try {
+      const company = await this.model.findOne(this.getFilter());
+      if (company.user) {
+          await mongoose.model("User").updateOne(
+              { _id: company.user },
+              { $pull: { companys: company._id } }
+          );
+      }
+      next();
+  } catch (err) {
+      next(err);
+  }
+});
+
+// Middleware to remove user ID from company's user field before deleting the company
+companySchema.pre('findOneAndDelete', async function (next) {
+  try {
+      const company = await this.model.findOne(this.getFilter());
+      if (company.bugs && company.bugs.length > 0) {
+          await mongoose.model("BugReport").updateMany(
+              { _id: { $in: company.bugs } },
+              { $unset: { company: "" } }
+          );
+      }
+      next();
+  } catch (err) {
+      next(err);
+  }
+});
   
   module.exports = mongoose.model("Company", companySchema);
   

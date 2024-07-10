@@ -47,5 +47,21 @@ bugReportSchema.pre('save', function (next) {
   next();
 });
 
+// Middleware to remove bug ID from company's bugs array before deleting the bug
+bugReportSchema.pre('findOneAndDelete', async function (next) {
+  try {
+      const bugReport = await this.model.findOne(this.getFilter());
+      if (bugReport.company) {
+          await mongoose.model("Company").updateOne(
+              { _id: bugReport.company },
+              { $pull: { bugs: bugReport._id } }
+          );
+      }
+      next();
+  } catch (err) {
+      next(err);
+  }
+});
+
 
 module.exports = mongoose.model("BugReport", bugReportSchema);

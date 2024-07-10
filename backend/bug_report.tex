@@ -159,12 +159,12 @@
             \end{minipage}
             \begin{minipage}{.60\textwidth}
             \begin{flushleft}
-                \huge Google ios Application Security Assessment Report.
+                \huge Google Web Application Security Assessment Report.
             \end{flushleft}                
             \end{minipage}
             \vspace{80pt}
 
-            \large Google ios Application
+            \large Google Web Application
             \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=1.0\textwidth,height=5pt]
             \end{tcolorbox}
             
@@ -202,7 +202,7 @@
                         \hline
                         \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Application Name} & \normalsize \cellcolor{tableco2} \textbf{Application URL} & \normalsize \cellcolor{tableco2} \textbf{Scope}  \\    
                         \hline
-                        \normalsize 1. & \normalsize Google & \normalsize \url{www.google.com} & \normalsize Google ios Application Manually \& using Burpsuite \\
+                        \normalsize 1. & \normalsize Google & \normalsize \url{www.google.com} & \normalsize Google Web Application Manually \& using Burpsuite \\
                         \hline
                         \end{longtable} 
                     \end{center}  
@@ -224,8 +224,8 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={critical}, text=inside, radius=\piechartRadius]{
-                    100/Critical
+                \pie[color={low}, text=inside, radius=\piechartRadius]{
+                    100/Low
                 }
                 \end{tikzpicture}
 
@@ -268,13 +268,13 @@
                 \hline
                 \normalsize \cellcolor{black!10} \textbf{Severity} & \normalsize \cellcolor{black!10} \rule{0pt}{5ex} \textbf{Count} \\
                  \hline
-                 \normalsize Critical &   \normalsize \cellcolor{critical} 1  \\
+                 \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
                  \normalsize High & \normalsize \cellcolor{high}  0 \\
                  \hline
                  \normalsize Medium & \normalsize \cellcolor{medium}  0 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low}  0 \\
+                 \normalsize Low & \normalsize \cellcolor{low}  1 \\
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
@@ -408,7 +408,7 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center 1 & \normalsize t & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{critical}{Critical}} &  9 \\
+                    \normalsize \center 1 & \normalsize as & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{infotext}{Info}} &  3 \\
                     \hline
                      
                 \end{longtable}   
@@ -426,8 +426,6 @@
             \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{critical}{\textbf{Critical Severity Findings}}} \\
             \hline
             
-     t &  Planned \\
-    \hline
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
         \hline
     
@@ -439,21 +437,23 @@
     
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
         \hline
-    \end{longtable}
+    
+     as &  Planned \\
+    \hline\end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large t}
+                    \subsection{\large as}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} In Progress
-                        \item \large \textbf{Severity: \textcolor{infotext} {Critical}}
+                        \item \large \textbf{Status:} New
+                        \item \large \textbf{Severity: \textcolor{infotext} {Info}}
                         \item \large \textbf{OWASP Category: A05-Security Misconfiguration}
-                        \item \large \textbf{CVSS Score:} 9 
+                        \item \large \textbf{CVSS Score:} 3 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \url{gh}
+                            \item \large \url{as}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large gh
+                        \item \large \textbf{Summary:} \\  \large sa
                             
                         \item \large \textbf{Screenshot:} \\ \\
                         \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
@@ -463,13 +463,13 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large edr
+                        \item \large sde
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large fe 
+                        \item \large sd 
                         \end{enumerate}  
                 
                 
@@ -477,14 +477,14 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large fre
+                        \item \large ds
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm ]
                             
-                        \item \large \textcolor{linkColor}{\url{fre}}
+                        \item \large \textcolor{linkColor}{\url{ds}}
                        
                         \end{enumerate}   
                     \end{description}

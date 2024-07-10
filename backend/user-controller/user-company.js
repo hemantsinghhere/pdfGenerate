@@ -18,7 +18,6 @@ const UgetCompanyData = async(req, res, next) =>{
 }
 const UaddCompany = async(req, res, next) => {
     const companyData = { ...req.body, user: req.user._id };
-    console.log("com data", companyData)
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -52,7 +51,7 @@ const UaddCompany = async(req, res, next) => {
 const UgetById = async(req, res, next) => {
     const companyId = req.params.id;
     try {
-        const company = await Company.findOne({ _id: companyId, user: req.user._id });
+        const company = await Company.findOne({ _id: companyId, user: req.user._id }).select('Name Application_url Asset ');
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -66,7 +65,7 @@ const UgetByUserId = async(req, res, next) => {
         return res.status(403).json({ error: 'Access denied' });
     }
     try {
-        const company = await Company.find({ user : userId}).populate("user");
+        const company = await Company.find({ user : userId}).select('Name Asset');
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -93,7 +92,7 @@ const UupdateById = async(req, res, next) =>{
 const UdeleteById = async(req, res, next) =>{
     const id = req.params.id;
     try {
-        const company = await Company.findOneAndDelete({ _id: id, user: req.user._id }).populate('user');
+        const company = await Company.findOneAndDelete({ _id: id, user: req.user._id });
         res.json({ message: 'Company Details Delete Successfully', company })
 
     } catch (err) {

@@ -18,7 +18,6 @@ const getCompanyData = async(req, res, next) =>{
 }
 const addCompany = async(req, res, next) => {
     const companyData = req.body;
-    console.log("com data", companyData)
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -38,7 +37,7 @@ const addCompany = async(req, res, next) => {
         await session.commitTransaction();
         session.endSession();
 
-
+ 
         res.json({ message: 'Company data submitted successfully.' });
     }catch(error){
         await session.abortTransaction();
@@ -52,7 +51,7 @@ const addCompany = async(req, res, next) => {
 const getById = async(req, res, next) => {
     const companyId = req.params.id;
     try { 
-        const company = await Company.findById(companyId);
+        const company = await Company.findById(companyId).select('Name Application_url Asset ');
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -63,7 +62,7 @@ const getById = async(req, res, next) => {
 const getByUserId = async(req, res, next) => {
     const userId = req.params.id;
     try {
-        const company = await Company.find({ user : userId}).populate("user");
+        const company = await Company.find({ user : userId}).select('Name Asset');
         res.json({ company });
     } catch (err) {
         console.log("Error:", err);
@@ -91,7 +90,7 @@ const updateById = async(req, res, next) =>{
 const deleteById = async(req, res, next) =>{
     const id = req.params.id;
     try {
-        const company = await Company.findByIdAndDelete(id).populate('user');
+        const company = await Company.findByIdAndDelete(id);
         res.json({ message: 'Company Details Delete Successfully', company })
 
     } catch (err) {
