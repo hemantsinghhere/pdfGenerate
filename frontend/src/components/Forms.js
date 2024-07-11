@@ -8,6 +8,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
 
     // State to manage form data
     const [formData, setFormData] = useState({
+        BugName: '',
         Title: '',
         Status: 'New',
         Severity: 'Info',
@@ -61,6 +62,7 @@ const Forms = ({ onClose, onFormSubmit }) => {
             });
             console.log('Form submitted successfully');
             setFormData({
+                BugName: '',
                 Title: '',
                 Status: 'New',
                 Severity: 'Info',
@@ -132,6 +134,14 @@ const Forms = ({ onClose, onFormSubmit }) => {
             <div className="form-container">
                 <h2>Submit Form</h2>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <label>Bug Name:</label>
+                    <input
+                        type="text"
+                        name="BugName"
+                        value={formData.BugName}
+                        onChange={handleChange}
+                        required
+                    />
                     <label>Title:</label>
                     <input
                         type="text"

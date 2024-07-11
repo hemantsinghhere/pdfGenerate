@@ -5,6 +5,7 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
 
 
     const [formData, setFormData] = useState({
+        BugName: '',
         Title: '',
         Status: 'New',
         Severity: 'Info',
@@ -44,6 +45,7 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                 });
                 const data = response.data.bug;
                 setFormData({
+                    BugName: data.BugName,
                     Title: data.Title,
                     Status: data.Status,
                     Severity: data.Severity,
@@ -105,6 +107,7 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
             console.log('Form update successfully');
 
             setFormData({
+                BugName: formData.BugName,
                 Title: formData.Title,
                 Status: formData.Status,
                 Severity: formData.Severity,
@@ -177,20 +180,25 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
         <div className="form-container">
             <h2>Update Form</h2>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <label>Bug Name:</label>
+                <input
+                    type="text"
+                    name="BugName"
+                    value={formData.BugName}
+                    onChange={handleChange}
+                />
                 <label>Title:</label>
                 <input
                     type="text"
                     name="Title"
                     value={formData.Title}
                     onChange={handleChange}
-                    required
                 />
                 <label>Status:</label>
                 <select
                         name="Status"
                         value={formData.Status}
                         onChange={handleChange}
-                        required
                     >
                         <option value="New">New</option>
                         <option value="Not Fixed">Not Fixed</option>
@@ -204,7 +212,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     name="Severity"
                     value={formData.Severity}
                     onChange={handleChange}
-                    required
                 >
                     <option value="Info">Info</option>
                     <option value="Low">Low</option>
@@ -217,7 +224,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     name="OWASP_Category"
                     value={formData.OWASP_Category}
                     onChange={handleChange}
-                    required
                 >
                     <option value="A01-Broken Access Control">A01-Broken Access Control</option>
                     <option value="A02-Cryptographic Failures">A02-Cryptographic Failures</option>
@@ -236,7 +242,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     name="CVSS_Score"
                     value={formData.CVSS_Score}
                     onChange={handleChange}
-                    required
                 />
                 <label>CVSS Url:</label>
                     <input
@@ -255,9 +260,7 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                         onChange={(e) => {
                             const updatedAffect = [...formData.Affected_Hosts];
                             updatedAffect[index] = e.target.value;
-                            setFormData({ ...formData, Affected_Hosts: updatedAffect });
                         }}
-                        required
                     />
                 ))}
                 <button type="button" onClick={() => addField('Affected_Hosts')}>
@@ -273,7 +276,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     name="Summary"
                     value={formData.Summary}
                     onChange={handleChange}
-                    required
                 />
                 <label>Screenshot:</label>
                 <input
@@ -281,7 +283,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     accept="image/*"
                     onChange={handleFileUpload}
                     multiple
-                    required
                 />
                 <label>Step of Reproduce:</label>
                 {formData.Steps_of_Reproduce.map((step, index) => (
@@ -294,7 +295,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                             updatedSteps[index] = e.target.value;
                             setFormData({ ...formData, Steps_of_Reproduce: updatedSteps });
                         }}
-                        required
                     />
                 ))}
                 <button type="button" onClick={() => addField('Steps_of_Reproduce')}>
@@ -316,7 +316,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                             updatedImpact[index] = e.target.value;
                             setFormData({ ...formData, Impact: updatedImpact });
                         }}
-                        required
                     />
                 ))}
                 <button type="button" onClick={() => addField('Impact')}>
@@ -338,7 +337,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                             updatedRemediation[index] = e.target.value;
                             setFormData({ ...formData, Remediation: updatedRemediation });
                         }}
-                        required
                     />
                 ))}
                 <button type="button" onClick={() => addField('Remediation')}>
@@ -360,7 +358,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                             updatedLinks[index] = e.target.value;
                             setFormData({ ...formData, Links: updatedLinks });
                         }}
-                        required
                     />
                 ))}
                 <button type="button" onClick={() => addField('Links')}>
@@ -376,7 +373,6 @@ const UpdateBug = ({ id, onClose, onFormSubmit}) => {
                     name="Remediation_effort"
                     value={formData.Remediation_effort}
                     onChange={handleChange}
-                    required
                 >
                     <option value="Planned">Planned</option>
                     <option value="Quick">Quick</option>

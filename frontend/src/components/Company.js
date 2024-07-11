@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddCom from './AddCom';
 import axios from "axios";
 import { Table } from 'react-bootstrap';
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CompanyContext } from './CompanyProvider';
 import UpdateCom from './UpdateCom';
 import Logout from "./Logout";
@@ -67,14 +67,14 @@ const Company = () => {
       const data = await res.data;
       setComData(data.company);
     }
- 
+
     //admin
     // const res = await axios.get(`http://localhost:5000/company/user/${user_id}`,{
     //   headers: {
     //     'Authorization': `Bearer ${token}`
     //  }
 
-     // user
+    // user
     // const res = await axios.get(`http://localhost:5000/company/user/U/${user_id}`,{
     //   headers: {
     //     'Authorization': `Bearer ${token}`
@@ -88,10 +88,10 @@ const Company = () => {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.delete(`http://localhost:5000/company/delete/U/${id}`,{
+      const res = await axios.delete(`http://localhost:5000/company/delete/U/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
-       }
+        }
       });
       if (res.status === 200) {
         alert("Bug Deleted Successfully");
@@ -103,7 +103,7 @@ const Company = () => {
     }
   };
 
-  const handleCom = async(id, name) => {
+  const handleCom = async (id, name) => {
     setCompanyId(id);
     {
       temp ? navigate(`/admin/${name}`) : navigate(`/user/${name}`)
@@ -117,7 +117,7 @@ const Company = () => {
   return (
     <div className='table-container' style={{ margin: "20px" }}>
       <div className="compy">
-        <h1 style={{textAlign: "center"}}>All Company</h1>
+        <h1 style={{ textAlign: "center" }}>All Company</h1>
         <Table style={{ borderCollapse: 'collapse', width: '100%', fontSize: "12px", }}>
           <thead>
             <tr>
@@ -137,28 +137,32 @@ const Company = () => {
                   <td style={{ border: '1px solid black', padding: '8px' }} onClick={() => handleCom(data._id, data.Name)}>
                     {data.Name}
                   </td>
-                 
+
                   <td style={{ border: '1px solid black', padding: '8px' }}>{data.Asset}</td>
                   {temp && (
-                <td style={{ border: '1px solid black', padding: '8px' }}>
-                  <IconButton>
-                    <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
-                  </IconButton>
-                  <IconButton>
-                    <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
-                  </IconButton>
-                </td>
-              )}
+                    <td style={{ border: '1px solid black', padding: '8px' }}>
+                      <IconButton>
+                        <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
+                      </IconButton>
+                      <IconButton>
+                        <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
+                      </IconButton>
+                    </td>
+                  )}
                 </tr>
               ))
             }
 
           </tbody>
         </Table>
+        
+        {
+          temp &&
+          <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={handleAdd}>
+            add
+          </div>
+        }
 
-        <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={handleAdd}>
-          add
-        </div>
       </div>
 
       <Modal
@@ -182,13 +186,13 @@ const Company = () => {
             padding: '20px'
           }
         }}
-      > 
-        {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom id={Id} onClose={toggleModal} onFormSubmit={fetchDetails}/>} 
+      >
+        {modalType === 'add' ? <AddCom onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateCom id={Id} onClose={toggleModal} onFormSubmit={fetchDetails} />}
       </Modal>
-      <div className="logout" style={{ display: "flex", margin: "auto", alignItems: "center"}}>
+      <div className="logout" style={{ display: "flex", margin: "auto", alignItems: "center" }}>
         <Logout />
       </div>
-      
+
     </div>
   )
 }

@@ -173,7 +173,6 @@ const generatePdf = async (req, res, next) => {
    
 
     await downloadAllImages(bugReports);
-    console.log("downloded all the images")
 
     
 

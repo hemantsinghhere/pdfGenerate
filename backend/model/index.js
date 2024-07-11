@@ -5,6 +5,7 @@ const Company  = require("./company.js")
 const schema = mongoose.Schema;
 
 const bugReportSchema = new schema({
+  BugName: String,
   Title: String,
   Status: String,
   Severity: String,

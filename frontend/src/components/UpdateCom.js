@@ -74,7 +74,6 @@ const UpdateCom = ({ id, onClose, onFormSubmit }) => {
                     name="Name"
                     value={comDetails.Name}
                     onChange={handleChange}
-                    required
                 />
 
 
@@ -84,7 +83,6 @@ const UpdateCom = ({ id, onClose, onFormSubmit }) => {
                     name="Application_url"
                     value={comDetails.Application_url}
                     onChange={handleChange}
-                    requireds
                 />
 
                 <label>Asset:</label>
@@ -92,7 +90,6 @@ const UpdateCom = ({ id, onClose, onFormSubmit }) => {
                     name="Asset"
                     value={comDetails.Asset}
                     onChange={handleChange}
-                    required
                 >
                     <option value="Web Application">Web Application</option>
                     <option value="Android Application">Android Application</option>

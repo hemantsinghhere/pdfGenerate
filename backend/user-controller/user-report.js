@@ -19,14 +19,14 @@ if (!fs.existsSync(imagesDirectory)) {
 }
 
 const imagekit = new ImageKit({
-    publicKey : "public_PxFSEdLkJHrQEvnT1ZOk8gS74WA=",
-    privateKey : "private_C5di7uripkauX4iczpv6kXrnG4s=",
-    urlEndpoint : "https://ik.imagekit.io/lwmj8ey7f"
-  });
+    publicKey: "public_PxFSEdLkJHrQEvnT1ZOk8gS74WA=",
+    privateKey: "private_C5di7uripkauX4iczpv6kXrnG4s=",
+    urlEndpoint: "https://ik.imagekit.io/lwmj8ey7f"
+});
 
 
 
-const userbugReport = async (req, res, next) => { 
+const userbugReport = async (req, res, next) => {
     try {
         // Retrieve all BugReport documents from the database
         const bugReports = await BugReport.find({})
@@ -45,16 +45,16 @@ const userbugReport = async (req, res, next) => {
     }
 }
 
-const usergetBugByCompnayId = async (req, res, next) => { 
+const usergetBugByCompnayId = async (req, res, next) => {
     try {
         // Assuming companyId is available in req.user.companyId or req.session.companyId
         const companyId = req.params.id; // or however you access companyId
 
-         // Check if the user is authorized to access this company's data
-         if (!req.user.companys.includes(companyId)) {
+        // Check if the user is authorized to access this company's data
+        if (!req.user.companys.includes(companyId)) {
             return res.status(403).json({ message: 'Unauthorized access' });
         }
-        
+
         // Retrieve bug reports filtered by companyId
         const bugReports = await BugReport.find({ company: companyId });
         res.json(bugReports);
@@ -108,7 +108,7 @@ const usersubmitBug = async (req, res, next) => {
 
         // Create a new BugReport document and save it to the database
         const bugReport = new BugReport(bugReportData);
-        await bugReport.save({ session});
+        await bugReport.save({ session });
 
         // Find the company and update its projects
         const company = await Company.findById(bugReportData.company).session(session);
@@ -182,12 +182,12 @@ const usergeneratePdf = async (req, res, next) => {
 
     const bugReports = await BugReport.find({ company: companyId }).populate("company");
     const companyData = await Company.findById(companyId);
-   
+
 
     await downloadAllImages(bugReports);
     console.log("downloded all the images")
 
-    
+
 
     let low = 0; let medium = 0; let high = 0; let critical = 0; let info = 0; let total = 0;
     for (const report of bugReports) {
@@ -237,7 +237,7 @@ const usergeneratePdf = async (req, res, next) => {
         { value: parseFloat(inf), label: 'Info', color: 'info' }
     ].filter(item => item.value !== 0);
 
-    
+
 
 
     let table4 = `\\begin{longtable}{|p{30em}|p{10em}|}
@@ -734,7 +734,7 @@ const usergeneratePdf = async (req, res, next) => {
 
     for (let i = 0; i < bugReports.length; i++) {
         const report = bugReports[i];
-        
+
 
         latexContent += `
                     \\newpage
@@ -747,16 +747,16 @@ const usergeneratePdf = async (req, res, next) => {
                         \\item \\large \\textbf{Affected Hosts/URLs:}
                             \\begin{itemize} 
                             ${report.Affected_Hosts.map((affectedItem) =>
-                                `\\item \\large \\url{${preprocessVariable(affectedItem.toString())}}`).join('\n')}
+            `\\item \\large \\url{${preprocessVariable(affectedItem.toString())}}`).join('\n')}
                             \\end{itemize}
                         \\item \\large \\textbf{Summary:} \\\\  \\large ${sanitizeSummary(preprocessVariable(report.Summary.toString()))}
                             
                         \\item \\large \\textbf{Screenshot:} \\\\ \\\\
                         ${report.Proof_of_concept.map((image, imageIndex) => {
-                            const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.png`);
-                            const imageFileName = path.basename(imageFilePath);
-                            return `\\includegraphics[width=1.0\\textwidth,height=0.5\\textheight,keepaspectratio]{Images/${imageFileName}} \\\\`;
-                        }).join('\n')}
+                const imageFilePath = path.join(imagesDirectory, `temp-image-${i}-${imageIndex}.png`);
+                const imageFileName = path.basename(imageFilePath);
+                return `\\includegraphics[width=1.0\\textwidth,height=0.5\\textheight,keepaspectratio]{Images/${imageFileName}} \\\\`;
+            }).join('\n')}
                        
 
                         \\item \\large \\textbf{Steps of Reproduce:}
@@ -770,7 +770,7 @@ const usergeneratePdf = async (req, res, next) => {
                         \\linespread{1.0}
                         \\begin{enumerate}[leftmargin=0.5cm]
                         ${report.Impact.map((impactItem) =>
-            `\\item \\large ${preprocessVariable(impactItem.toString())}`).join('\n')} 
+                `\\item \\large ${preprocessVariable(impactItem.toString())}`).join('\n')} 
                         \\end{enumerate}  
                 
                 
@@ -920,7 +920,7 @@ const usergeneratePdf = async (req, res, next) => {
     console.log("inline filename");
     res.send(pdfBuffer);
 
-    console.log("Bug report generated"); 
+    console.log("Bug report generated");
 
     // Delete the temporary image files
     for (let index = 0; index < bugReports.length; index++) {
@@ -1001,6 +1001,29 @@ const userupdateBug = async (req, res, next) => {
     }
 }
 
+const userupdateBugStatus = async (req, res, next) => {
+    const { Status } = req.body;
+    const bugId = req.params.id;
+    try {
+        // Find the bug report by ID
+        const bug = await BugReport.findById(bugId);
+
+        if (!bug) {
+            return res.status(404).json({ error: 'Bug report not found' });
+        }
+        // Check if the user is authorized to update this bug report
+        if (!req.user.companys.includes(bug.company._id.toString())) {
+            return res.status(403).json({ message: 'Unauthorized access' });
+        }
+        // Update the status of the bug
+        const updatedBug = await BugReport.findByIdAndUpdate(bugId, { Status }, { new: true });
+        res.json({ message: 'Bug report updated successfully', bug: updatedBug });
+    } catch (err) {
+        console.log("Error:", err);
+        res.status(500).json({ err: "Internal Servre Error" });
+    }
+}
+
 const usergetBugById = async (req, res, next) => {
     const id = req.params.id;
     try {
@@ -1027,7 +1050,7 @@ const userdeleteById = async (req, res, next) => {
         if (!req.user.companys.includes(bug.company._id.toString())) {
             return res.status(403).json({ message: 'Unauthorized access' });
         }
-        
+
         res.json({ message: 'Bug Report Delete Successfully', bug })
 
     } catch (err) {
@@ -1035,4 +1058,4 @@ const userdeleteById = async (req, res, next) => {
         res.status(500).json({ err: "Internal Server Error" })
     }
 }
-module.exports = { userbugReport, usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, userdeleteById, usergetBugByCompnayId };
+module.exports = { userbugReport, usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, userdeleteById, usergetBugByCompnayId, userupdateBugStatus };

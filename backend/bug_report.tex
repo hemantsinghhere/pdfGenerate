@@ -224,8 +224,8 @@
                 \begin{tcolorbox}[colback=blue!10!white,colframe=white,width=0.85\textwidth]
                 \begin{tikzpicture}
                 \centering
-                \pie[color={low}, text=inside, radius=\piechartRadius]{
-                    100/Low
+                \pie[color={high,medium}, text=inside, radius=\piechartRadius]{
+                    50/High,50/Medium
                 }
                 \end{tikzpicture}
 
@@ -270,15 +270,15 @@
                  \hline
                  \normalsize Critical &   \normalsize \cellcolor{critical} 0  \\
                  \hline
-                 \normalsize High & \normalsize \cellcolor{high}  0 \\
+                 \normalsize High & \normalsize \cellcolor{high}  1 \\
                  \hline
-                 \normalsize Medium & \normalsize \cellcolor{medium}  0 \\
+                 \normalsize Medium & \normalsize \cellcolor{medium}  1 \\
                  \hline
-                 \normalsize Low & \normalsize \cellcolor{low}  1 \\
+                 \normalsize Low & \normalsize \cellcolor{low}  0 \\
                  \hline
                  \normalsize Informational & \normalsize \cellcolor{info} 0 \\
                  \hline
-                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{4ex} 1 \\
+                 \normalsize Total & \normalsize \cellcolor{total} \rule{0pt}{4ex} 2 \\
                  \hline    
                 \end{tabular}
                 \end{minipage}
@@ -408,7 +408,11 @@
                     \normalsize \cellcolor{tableco2} \textbf{Sr. No.} & \normalsize \cellcolor{tableco2} \textbf{Vulnerability Name} & \normalsize \cellcolor{tableco2} \textbf{OWASP Category} & \normalsize \cellcolor{tableco2} \textbf{Severity} & \normalsize \cellcolor{tableco2} \textbf{CVSS Score++} \\    
                     \hline
                     
-                    \normalsize \center 1 & \normalsize as & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{infotext}{Info}} &  3 \\
+                    \normalsize \center 1 & \normalsize Stored XSS on reports. & \normalsize A05-Security Misconfiguration  & \normalsize \textbf{\textcolor{medium}{Medium}} &  4 \\
+                    \hline
+                    
+
+                    \normalsize \center 2 & \normalsize Cross-Site Scripting (XSS) on www.starbucks.com | .co.uk login pages & \normalsize A03-Injection   & \normalsize \textbf{\textcolor{high}{High}} &  7.3 \\
                     \hline
                      
                 \end{longtable}   
@@ -429,47 +433,57 @@
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{high}{\textbf{High Severity Findings}}} \\
         \hline
     
+     Cross-Site Scripting (XSS) on www.starbucks.com | .co.uk login pages &  Planned \\
+    \hline
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{medium}{\textbf{Medium Severity Findings}}} \\
         \hline
     
+     Stored XSS on reports. &  Planned \\
+    \hline
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{low}{\textbf{Low Severity Findings}}} \\
         \hline
     
         \multicolumn{2}{|p{20em}|}{\normalsize \textcolor{infotext}{\textbf{Informational Findings}}} \\
         \hline
-    
-     as &  Planned \\
-    \hline\end{longtable}
+    \end{longtable}
             \end{center}
             
                     \newpage
-                    \subsection{\large as}
+                    \subsection{\large Stored XSS on reports.}
                     \begin{description}[itemsep=2pt, leftmargin=0.2cm]
-                        \item \large \textbf{Status:} New
-                        \item \large \textbf{Severity: \textcolor{infotext} {Info}}
+                        \item \large \textbf{Status:} In Progress
+                        \item \large \textbf{Severity: \textcolor{infotext} {Medium}}
                         \item \large \textbf{OWASP Category: A05-Security Misconfiguration}
-                        \item \large \textbf{CVSS Score:} 3 
+                        \item \large \textbf{CVSS Score:} 4 
                         \item \large \textbf{Affected Hosts/URLs:}
                             \begin{itemize} 
-                            \item \large \url{as}
+                            \item \large \url{https://app.mopub.com}
                             \end{itemize}
-                        \item \large \textbf{Summary:} \\  \large sa
+                        \item \large \textbf{Summary:} \\  \large Stored XSS, also known as persistent XSS, is the more damaging than non-persistent XSS. It occurs when a malicious script is injected directly into a vulnerable web application.
+
                             
                         \item \large \textbf{Screenshot:} \\ \\
                         \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-0.png} \\
+\includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-0-1.png} \\
                        
 
                         \item \large \textbf{Steps of Reproduce:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large sde
+                        \item \large Go to \url{https://app.mopub.com/reports/custom/}
+
+                        \item \large Click New network report.
+
+                        \item \large On the name, enter payload: "><img src=x onerror=alert(document.domain)>
+
+                        \item \large Click Run and save then XSS will trigger.
                         \end{enumerate}
                         
                         \item \large \textbf{Impact:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
-                        \item \large sd 
+                        \item \large The attacker can steal data from whoever checks the report. 
                         \end{enumerate}  
                 
                 
@@ -477,14 +491,69 @@
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm]
                             
-                        \item \large ds
+                        \item \large we can sanitize the HTML characters
                         \end{enumerate}
 
                         \item \large \textbf{Reference:}
                         \linespread{1.0}
                         \begin{enumerate}[leftmargin=0.5cm ]
                             
-                        \item \large \textcolor{linkColor}{\url{ds}}
+                        \item \large \textcolor{linkColor}{\url{https://hackerone.com/reports/485748}}
+                       
+                        \end{enumerate}   
+                    \end{description}
+                    
+                    
+                    \newpage
+                    \subsection{\large Cross-Site Scripting (XSS) on www.starbucks.com | .co.uk login pages}
+                    \begin{description}[itemsep=2pt, leftmargin=0.2cm]
+                        \item \large \textbf{Status:} New
+                        \item \large \textbf{Severity: \textcolor{infotext} {High}}
+                        \item \large \textbf{OWASP Category: A03-Injection }
+                        \item \large \textbf{CVSS Score:} 7.3 
+                        \item \large \textbf{Affected Hosts/URLs:}
+                            \begin{itemize} 
+                            \item \large \url{https://www.starbucks.com/account/signin}
+\item \large \url{https://www.starbucks.co.uk/account/signin}
+                            \end{itemize}
+                        \item \large \textbf{Summary:} \\  \large The login page at \url{https://www.starbucks.com/account/signin} builds several links by the relative URL path. An attacker can actually control the relative path:
+                            
+                        \item \large \textbf{Screenshot:} \\ \\
+                        \includegraphics[width=1.0\textwidth,height=0.5\textheight,keepaspectratio]{Images/temp-image-1-0.png} \\
+                       
+
+                        \item \large \textbf{Steps of Reproduce:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Open Chrome or Firefox
+
+                        \item \large Visit \url{https://www.starbucks.com/account/(A(\%22\%20\%252fonmouseover=\%22alert\%25\%32\%38\%64\%6f\%63\%75\%6d\%65\%6e\%74.\%64\%6f\%6d\%61\%69\%6e\%25\%32\%39\%22))/signin} and in the upper right-hand corner, move your mouse over the "Find the Store" button.
+
+                        \item \large The XSS will trigger and you'll get an alert() with the value of document.domain
+                        \end{enumerate}
+                        
+                        \item \large \textbf{Impact:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                        \item \large Attacker will hijack your sessions 
+                        \end{enumerate}  
+                
+                
+                        \item \large \textbf{Remediation:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm]
+                            
+                        \item \large Sanitize HTMl characters is a good practice
+
+                        \item \large Dompurify javascript library can be used to remediate this.
+                        \end{enumerate}
+
+                        \item \large \textbf{Reference:}
+                        \linespread{1.0}
+                        \begin{enumerate}[leftmargin=0.5cm ]
+                            
+                        \item \large \textcolor{linkColor}{\url{https://hackerone.com/reports/881115}}
                        
                         \end{enumerate}   
                     \end{description}

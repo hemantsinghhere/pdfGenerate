@@ -23,7 +23,7 @@ const UaddCompany = async(req, res, next) => {
     session.startTransaction();
 
     try{
-        const companyProfile = new Company(companyData);
+        const companyProfile = new Company(companyData); 
         await companyProfile.save({session});
 
         const user = await User.findById(companyProfile.user).session(session);
@@ -51,8 +51,39 @@ const UaddCompany = async(req, res, next) => {
 const UgetById = async(req, res, next) => {
     const companyId = req.params.id;
     try {
-        const company = await Company.findOne({ _id: companyId, user: req.user._id }).select('Name Application_url Asset ');
-        res.json({ company });
+        const company = await Company.findOne({ _id: companyId, user: req.user._id });
+        const totalbugs = company.bugs.length;
+        let Low = 0, Medium = 0, High = 0, Critical = 0, Info = 0;
+
+        for (let i = 0; i < totalbugs; i++) {
+            const bugId = company.bugs[i].toString();
+            const bug = await BugReport.findById(bugId);
+            if (bug) {
+                const severity = bug.Severity;
+                console.log('Severity:', severity);
+                switch (severity) {
+                    case 'Low':
+                        Low++;
+                        break;
+                    case 'Medium':
+                        Medium++;
+                        break;
+                    case 'High':
+                        High++;
+                        break;
+                    case 'Critical':
+                        Critical++;
+                        break;
+                    case 'Info':
+                        Info++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        res.json({ company, totalbugs, Low, Medium, High, Critical, Info });
     } catch (err) {
         console.log("Error:", err);
         res.status(500).json({ err: "Internal Servre Error" });

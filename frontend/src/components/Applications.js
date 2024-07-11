@@ -10,6 +10,7 @@ import UpdateBug from './UpdateBug';
 import { CompanyContext } from './CompanyProvider';
 import Buttons from './Buttons';
 import { useLocation } from 'react-router-dom';
+import UpdateStatus from './UpdateStatus';
 
 Modal.setAppElement('#root');
 
@@ -85,7 +86,7 @@ const Applications = () => {
   }, [])
 
 
- 
+
 
 
   const handleDelete = async (id) => {
@@ -113,14 +114,18 @@ const Applications = () => {
         <thead>
           <tr>
             <th style={{ border: '1px solid black', padding: '8px' }}>ID</th>
+            <th style={{ border: '1px solid black', padding: '8px' }}>Bug Name</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>VULNERABILITY NAME</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>RISK</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>LATEST DISCOVERY </th>
             <th style={{ border: '1px solid black', padding: '8px' }}>ASSETS AFFECTED</th>
             {
-              temp && (
+              temp ? (
                 <th style={{ border: '1px solid black', padding: '8px' }}>Update / Delete</th>
-              )
+              ) :
+                (
+                  <th style={{ border: '1px solid black', padding: '8px' }}>Update Status</th>
+                )
             }
 
           </tr>
@@ -131,6 +136,9 @@ const Applications = () => {
               <tr style={{ border: '1px solid black', padding: '8px', textAlign: "center" }} >
                 <td style={{ border: '1px solid black', padding: '8px' }}>
                   {index + 1}
+                </td>
+                <td style={{ border: '1px solid black', padding: '8px' }}>
+                  {data.BugName}
                 </td>
                 <td style={{ border: '1px solid black', padding: '8px' }}>
                   {data.Title}
@@ -144,10 +152,10 @@ const Applications = () => {
                   })}
                 </td>
                 <td style={{ border: '1px solid black', padding: '8px' }}>
-                   {comData.find((com) => com._id === data.company)?.Asset || 'N/A'}
+                  {comData.find((com) => com._id === data.company)?.Asset || 'N/A'}
                 </td>
                 {
-                  temp && (
+                  temp ? (
                     <td style={{ border: '1px solid black', padding: '8px' }}>
                       <IconButton >
                         <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
@@ -156,6 +164,10 @@ const Applications = () => {
                         <DeleteIcon color='error' onClick={() => { handleDelete(data._id) }} />
                       </IconButton>
                     </td>
+                  ) : (
+                    <IconButton >
+                      <EditIcon color="warning" onClick={() => { handleEdit(data._id) }} />
+                    </IconButton>
                   )
                 }
 
@@ -166,9 +178,13 @@ const Applications = () => {
         </tbody>
       </Table>
 
-      <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={handleAdd}>
-        add
-      </div>
+      {
+        temp &&
+        <div className="add" style={{ border: '2px solid black', padding: '8px', textAlign: "center", margin: "10px 0" }} onClick={handleAdd}>
+          add
+        </div>
+      }
+
       <Modal
         isOpen={isModalOpen}
         onRequestClose={toggleModal}
@@ -191,7 +207,18 @@ const Applications = () => {
           }
         }}
       >
-        {modalType === 'add' ? <Forms onClose={toggleModal} onFormSubmit={fetchDetails} /> : <UpdateBug id={Id} onClose={toggleModal} onFormSubmit={fetchDetails} />}
+        {modalType === 'add' ?
+          (
+            <Forms onClose={toggleModal} onFormSubmit={fetchDetails} />
+          )
+          :
+          (
+            temp ?
+              <UpdateBug id={Id} onClose={toggleModal} onFormSubmit={fetchDetails} />
+              :
+              <UpdateStatus id={Id} onClose={toggleModal} onFormSubmit={fetchDetails} />
+          )
+        }
       </Modal>
       <Buttons />
     </div>
