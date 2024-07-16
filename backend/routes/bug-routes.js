@@ -3,7 +3,7 @@ const multer = require('multer');
 const verifyToken = require('../controllers/Token')
 
 const { bugReport, generatePdf, updateBug, getBugById, deleteById, submitBug, getBugByCompnayId } = require("../controllers/report-controller");
-const { usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, usergetBugByCompnayId, userdeleteById, userupdateBugStatus } = require('../user-controller/user-report');
+const { usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, usergetBugByCompnayId, userdeleteById, userupdateBugStatus,getCommentsByBugId, addComment} = require('../user-controller/user-report');
 
 // set multer storage
 const storage = multer.memoryStorage();
@@ -33,5 +33,7 @@ router.get("/u/:id", verifyToken, usergetBugById);
 router.get("/company/u/:id", verifyToken, usergetBugByCompnayId)
 router.delete("/delete/u/:id", verifyToken, userdeleteById)
 
+router.get("/comments/:id",verifyToken, getCommentsByBugId)
+router.post("/addComment/:id", verifyToken, addComment)
 
 module.exports = {router}

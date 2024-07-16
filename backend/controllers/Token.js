@@ -19,6 +19,7 @@ const verifyToken = async (req, res, next) => {
         }
 
         req.user = user; // Attach the user object to the request
+        console.log(req.user);
         next(); // Proceed to the next middleware or route handler
     } catch (error) {
         console.error('Error verifying token:', error);

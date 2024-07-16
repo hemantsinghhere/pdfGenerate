@@ -10,7 +10,7 @@ const { spawnSync } = require('child_process');
 const { default: latex } = require("node-latex");
 const { default: mongoose } = require("mongoose");
 const Company = require("../model/company.js");
-
+const Comment = require("../model/comment.js");
 
 const imagesDirectory = './Images';
 
@@ -1058,4 +1058,33 @@ const userdeleteById = async (req, res, next) => {
         res.status(500).json({ err: "Internal Server Error" })
     }
 }
-module.exports = { userbugReport, usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, userdeleteById, usergetBugByCompnayId, userupdateBugStatus };
+
+const getCommentsByBugId = async(req,res,next) => {
+    const bugId = req.params.id;
+    try{
+        const comments =  await Comment.find({bug : bugId})
+        if(comments.length === 0){
+            res.json({message : "no comments found"})
+        }else{
+            res.json(comments);
+        }
+    }catch(err){
+        console.log("Error: ", err);
+        res.status(500).json({ error: 'error fetching comments' });
+    }
+}
+
+const addComment = async (req, res) => {
+    const bugId = req.params.id;
+    console.log("hii from cmt");
+    const comment = new Comment({ ...req.body, user: req.user._id, bug: bugId });
+    await comment.save();
+    
+    const bug = await BugReport.findById(bugId);
+    bug.comments.push(comment);
+    await bug.save();
+  
+    res.status(201).json(comment);
+};
+
+module.exports = { userbugReport, usersubmitBug, usergeneratePdf, userupdateBug, usergetBugById, userdeleteById, usergetBugByCompnayId, userupdateBugStatus,getCommentsByBugId,addComment };

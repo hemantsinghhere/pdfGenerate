@@ -39,8 +39,16 @@ const bugReportSchema = new schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Company" 
-  }
+  },
+
+  comments : [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment"
+  }]
+
 });
+
+
 
 // Middleware to update the updatedAt field before saving
 bugReportSchema.pre('save', function (next) {
